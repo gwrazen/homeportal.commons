@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<a href="http://homeportal.pl"><img src="http://homeportal.pl/resources/img/logo_big.png"/></a>
+<hr size="1">
+<h3>Witaj $dto.name,</h3>
+
+Twoje konto zostało doładowane. Ilość doładowanych punktów: $dto.amount
+<br />
+<b>Obecnie posiadasz $dto.points punktów promocji!</b>
+<br />
+<br />
+Zapraszamy do wyróżniania ofert. Zaloguj się <a href="http://homeportal.pl/zaloguj/">TUTAJ</a> i promuj swoje oferty!
+<br />
+<br />
+<br />
+<hr size="1">
+Dziękujemy. W razie pytan prosimy o kontakt: <a href="http://homeportal.pl/kontakt/">Zespół homeportal.pl</a>
+<br />
+
+</body>
+</html>

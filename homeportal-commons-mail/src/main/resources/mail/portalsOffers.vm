@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href="http://homeportal.pl"><img src="http://homeportal.pl/resources/img/logo_big.png"/></a>
+<hr size="1">
+<h2><b style="color: #5c6367">NOWE OFERTY PRYWATNE Z PORTALI</b></h2>
+
+#foreach($cityKey in $dto.cityMap.keySet())
+
+#set($cityResult = $dto.cityMap.get($cityKey))
+<h3><b>$cityKey.name ($cityResult.getQuantity()):</b></h3>
+
+<table>
+    #foreach($category in $cityResult.keySet())
+        <tr>
+            <td>$category : </td><td><b>$cityResult.get($category)</b></td>
+        </tr>
+    #end
+</table>
+
+#end
+<br />
+<a href="http://homeportal.pl/account/portals/offers/"><h3><b>Baza danych ofert prywatnch z portali dostępna jest po zalogowaniu się do homeportal.pl</b></h3></a>
+<br />
+<hr size="1">
+Dziękujemy. W razie pytań prosimy o kontakt: <a href="http://homeportal.pl/kontakt/">Zespół homeportal.pl</a>
+<br />
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body style="font-size: 14px; color: #666666;">
+<a href="http://homeportal.pl"><img src="http://homeportal.pl/resources/img/logo_big.png"/></a>
+<hr size="1">
+<h4>Raport dla: $dto.companyName</h4>
+
+    #if($dto.conversionErrorsExists)
+    <h4>bledy konwersji:</h4>
+    <table>
+        <thead>
+        <tr>
+            <td>identyfikator oferty</td>
+            <td>rodzaj bledu</td>
+            <td>uzytkownik</td>
+        </tr>
+        </thead>
+        #foreach( $error in $dto.conversionErrors)
+            <tr>
+                <td>$error.identity</td>
+                <td>$error.message</td>
+                <td>$error.userName</td>
+            </tr>
+        #end
+    </table>
+    #end
+
+    #if($dto.importErrorsExists)
+    <h4>bledy importu:</h4>
+    <table>
+        <thead>
+        <tr>
+            <td>identyfikator oferty</td>
+            <td>rodzaj bledu</td>
+            <td>uzytkownik</td>
+        </tr>
+        </thead>
+        #foreach( $error in $dto.importErrors)
+            <tr>
+                <td>$error.identity</td>
+                <td>$error.message</td>
+                <td>$error.userName</td>
+            </tr>
+        #end
+    </table>
+    #end
+
+<h4>podsumowanie:</h4>
+<table cellspacing="3px">
+    <tr>
+        <td>data:</td><td><b>$dto.date</b></td>
+    </tr>
+    <tr>
+        <td>start:</td><td><b>$dto.startTime</b></td>
+    </tr>
+    <tr>
+        <td>katalog:</td><td><b>$dto.directoryNormalized</b></td>
+    </tr>
+    <tr>
+        <td>konwersja:</td><td><b>$dto.convertedQty</b></td>
+    </tr>
+    <tr>
+        <td>bledy konwersji:</td><td><b>$dto.conversionErrorQty</b></td>
+    </tr>
+    <tr>
+        <td>bledy importu:</td><td><b>$dto.importErrorQty</b></td>
+    </tr>
+    <tr>
+        <td>dodane:</td><td><b>$dto.addedQty</b></td>
+    </tr>
+    <tr>
+        <td>uaktualnione:</td><td><b>$dto.updatedQty</b></td>
+    </tr>
+    <tr>
+        <td>usuniete:</td><td><b>$dto.deletedQty</b></td>
+    </tr>
+    <tr>
+        <td>czas trwania:</td><td><b>$dto.duration</b></td>
+    </tr>
+</table>
+
+</br>
+
+<hr size="1">
+Dziękujemy. W razie pytan prosimy o kontakt: <a href="http://homeportal.pl/kontakt/">Zespół homeportal.pl</a>
+
+<div style="text-align: center;">
+    <a href="#">
+        <img src="http://homeportal.pl/resources/img/logo_small.png"/>
+    </a>
+</div>
+</body>
+
+</html>
