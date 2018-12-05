@@ -1,7 +1,7 @@
 package pl.homeportal.mail;
 
 import org.apache.log4j.Logger;
-import pl.homeportal.i18n.Language;
+import pl.homeportal.commons.i18n.Language;
 
 import javax.mail.Session;
 

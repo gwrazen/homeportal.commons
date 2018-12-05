@@ -13,12 +13,23 @@
     <artifactId>homeportal-commons-mail</artifactId>
     <name>Homeportal :: Commons :: Mail</name>
     <packaging>jar</packaging>
-    <description>Homeportal Commons Mail module</description>
     <version>1.0</version>
 
     <dependencies>
 
         <!-- INTERNALS -->
+
+        <dependency>
+            <groupId>pl.homeportal</groupId>
+            <artifactId>homeportal-commons-i18n</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.homeportal</groupId>
+            <artifactId>homeportal-commons-utils</artifactId>
+            <version>1.0</version>
+        </dependency>
         
         <!-- EXTERNALS -->
 

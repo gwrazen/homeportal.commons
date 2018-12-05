@@ -10,10 +10,9 @@
     </parent>
 
     <groupId>pl.homeportal</groupId>
-    <artifactId>homeportal-commons-others</artifactId>
-    <name>Homeportal :: Commons :: Others</name>
+    <artifactId>homeportal-commons-utils</artifactId>
+    <name>Homeportal :: Commons :: Utils</name>
     <packaging>jar</packaging>
-    <description>Homeportal Commons Others module</description>
     <version>1.0</version>
 
     <dependencies>
@@ -71,6 +70,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
     </dependencies>
