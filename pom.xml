@@ -6,7 +6,6 @@
 
     <groupId>pl.homeportal</groupId>
     <artifactId>homeportal-commons</artifactId>
-    <name>Homeportal :: Commons</name>
     <version>1.0</version>
     <packaging>pom</packaging>
 
