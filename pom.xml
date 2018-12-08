@@ -9,8 +9,6 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
-    <description/>
-
     <modules>
         <module>homeportal-commons-i18n</module>
         <module>homeportal-commons-mail</module>
