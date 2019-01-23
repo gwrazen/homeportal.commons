@@ -1,4 +1,4 @@
-package pl.homeportal.mail;
+package pl.homeportal.commons.mail;
 
 import javax.mail.Session;
 import java.util.Properties;

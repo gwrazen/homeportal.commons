@@ -1,6 +1,7 @@
-package pl.homeportal.mail;
+package pl.homeportal.commons.mail;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.homeportal.commons.i18n.Language;
 
 import javax.mail.Session;
@@ -15,7 +16,7 @@ import javax.mail.Session;
  */
 public abstract class GenericNotifier<T>
 {
-    private static final Logger LOG = Logger.getLogger(GenericNotifier.class.getSimpleName());
+    private static final Logger LOG = LoggerFactory.getLogger(GenericNotifier.class.getSimpleName());
 
     protected static final String DTO = "dto";
 

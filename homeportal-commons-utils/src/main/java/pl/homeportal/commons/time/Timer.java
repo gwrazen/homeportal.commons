@@ -14,6 +14,7 @@ public class Timer
     public void start()
     {
         start = System.currentTimeMillis();
+        end = 0;
     }
 
     public void end()

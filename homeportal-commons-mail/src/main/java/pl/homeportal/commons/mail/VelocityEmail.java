@@ -1,12 +1,13 @@
-package pl.homeportal.mail;
+package pl.homeportal.commons.mail;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -20,7 +21,7 @@ import java.io.StringWriter;
  */
 public class VelocityEmail extends HtmlEmail
 {
-    private static final Logger LOG = Logger.getLogger(VelocityEmail.class.getSimpleName());
+    private static final Logger LOG = LoggerFactory.getLogger(VelocityEmail.class.getSimpleName());
 
     private static final String ENCODING = "UTF-8";
     private static final VelocityEngine VELOCITY_ENGINE = new VelocityEngine();

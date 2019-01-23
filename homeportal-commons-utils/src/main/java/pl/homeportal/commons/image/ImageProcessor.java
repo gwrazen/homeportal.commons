@@ -1,11 +1,13 @@
 package pl.homeportal.commons.image;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,7 @@ public class ImageProcessor extends Thread
 
 class ImageProcessorTask implements Runnable
 {
-    private static final Logger LOG = Logger.getLogger(ImageProcessorTask.class.getSimpleName());
+    private static final Logger LOG = LoggerFactory.getLogger(ImageProcessorTask.class.getSimpleName());
 
     private static final int SMALL_WIDTH = 320;
     private static final int SMALL_HEIGHT = 240;
@@ -103,20 +105,8 @@ class ImageProcessorTask implements Runnable
             String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + JPG;
             File small = new File(smallLink);
             ImageResizer.resizeUnproportionally(originalImage, small, SMALL_WIDTH, SMALL_HEIGHT, JPG);
-
-            String mediumLink = destinationDir.getAbsolutePath() + SLASH + name + MEDIUM + DOT + JPG;
-            File medium = new File(mediumLink);
-            BufferedImage mediumImage = Scalr.resize(originalImage, Scalr.Method.SPEED, MEDIUM_WIDTH, MEDIUM_HEIGHT);
-            ImageIO.write(mediumImage, JPG, medium);
-            mediumImage.getGraphics().dispose();
-            mediumImage = null;
-
-            String largeLink = destinationDir.getAbsolutePath() + SLASH + name + LARGE + DOT + JPG;
-            File large = new File(largeLink);
-            BufferedImage largeImage = Scalr.resize(originalImage, Scalr.Method.SPEED, LARGE_WIDTH, LARGE_HEIGHT);
-            ImageIO.write(largeImage, JPG, large);
-            largeImage.getGraphics().dispose();
-            largeImage = null;
+            resizeImage(originalImage, MEDIUM, MEDIUM_WIDTH, MEDIUM_HEIGHT);
+            resizeImage(originalImage, LARGE, LARGE_WIDTH, LARGE_HEIGHT);
             sourceFile.close();
         }
         catch (Exception e)
@@ -127,6 +117,20 @@ class ImageProcessorTask implements Runnable
         finished = true;
     }
 
+    public boolean isFinished()
+    {
+        return finished;
+    }
+
+    private void resizeImage(BufferedImage originalImage, String medium2, int mediumWidth, int mediumHeight) throws IOException
+    {
+        String mediumLink = destinationDir.getAbsolutePath() + SLASH + name + medium2 + DOT + JPG;
+        File medium = new File(mediumLink);
+        BufferedImage mediumImage = Scalr.resize(originalImage, Scalr.Method.SPEED, mediumWidth, mediumHeight);
+        ImageIO.write(mediumImage, JPG, medium);
+        mediumImage.getGraphics().dispose();
+    }
+
     private String getName(String name)
     {
         return name.substring(0, name.lastIndexOf(DOT)).toLowerCase();
@@ -135,10 +139,5 @@ class ImageProcessorTask implements Runnable
     private String getExtension(String name)
     {
         return name.substring(name.lastIndexOf(DOT) + 1, name.length());
-    }
-
-    public boolean isFinished()
-    {
-        return finished;
     }
 }

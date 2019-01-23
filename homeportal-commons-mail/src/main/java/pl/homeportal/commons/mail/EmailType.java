@@ -1,4 +1,4 @@
-package pl.homeportal.mail;
+package pl.homeportal.commons.mail;
 
 /**
  * Created with IntelliJ IDEA.
