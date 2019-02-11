@@ -41,6 +41,14 @@ public class SearchQuery implements SortFieldAware, Serializable
         parameters.add(query.toString());
     }
 
+    public void addPhraseParameter(QueryParameter parameter, String value)
+    {
+        StringBuilder query = new StringBuilder();
+        query.append("(" + parameter.getValue() + ":\"" + value + "\")");
+
+        parameters.add(query.toString());
+    }
+
 
     public void addRangeParameter(QueryParameter type, String from, String to)
     {
@@ -125,12 +133,6 @@ public class SearchQuery implements SortFieldAware, Serializable
         return propertyTypeBridge.objectToString(string);
     }
 
-    @Override
-    public String toString()
-    {
-        return getQueryString();
-    }
-
     public static boolean isEmpty(SearchQuery searchQuery)
     {
         return (searchQuery == null || searchQuery.getParameterQty() == 0) ? true : false;
@@ -139,5 +141,11 @@ public class SearchQuery implements SortFieldAware, Serializable
     public static boolean isNotEmpty(SearchQuery searchQuery)
     {
         return !isEmpty(searchQuery);
+    }
+
+    @Override
+    public String toString()
+    {
+        return getQueryString();
     }
 }

@@ -1,8 +1,8 @@
 package pl.homeportal.commons.data.repository;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
@@ -14,6 +14,8 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.search.SearchQuery;
 
@@ -24,6 +26,7 @@ import java.util.Set;
 
 import static pl.homeportal.commons.data.search.SearchQuery.isEmpty;
 
+@Transactional
 public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements FullTextRepository<T, ID>
 {
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 20;
@@ -34,20 +37,31 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     private static final String ASC = "asc";
 
     private final Class<T> domainClass;
-    private final FullTextEntityManager entityManager;
+    private final EntityManager entityManager;
 
     public FullTextRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager)
     {
         super(entityInformation, entityManager);
         this.domainClass = entityInformation.getJavaType();
-        this.entityManager = Search.getFullTextEntityManager(entityManager);
+        this.entityManager = entityManager;
     }
 
     public FullTextRepositoryImpl(Class<T> domainClass, EntityManager entityManager)
     {
         super(domainClass, entityManager);
         this.domainClass = domainClass;
-        this.entityManager = Search.getFullTextEntityManager(entityManager);
+        this.entityManager = entityManager;
+    }
+
+    @Override
+    public <S extends T> S save(S t)
+    {
+        FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        t = super.save(t);
+        fullTextEntityManager.index(t);
+        fullTextEntityManager.flushToIndexes();
+
+        return t;
     }
 
     @Override
@@ -61,7 +75,8 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         } catch (ParseException e) {
             throw new IllegalArgumentException("Parsing exception", e);
         }
-        FullTextQuery fullTextQuery = entityManager.createFullTextQuery(luceneQuery, domainClass);
+        FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, domainClass);
         if (sortFields != null && sortFields.length > 0)
         {
             Sort sort = new Sort(sortFields);
@@ -104,6 +119,17 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
+    public List<T> findBySearchQuery(SearchQuery searchQuery)
+    {
+        Assert.isTrue(!searchQuery.isEmpty());
+
+        FullTextQuery query = createFullTextQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
+        List<T> list = query.getResultList();
+
+        return list;
+    }
+
+    @Override
     public List<T> findBySearchQuery(SearchQuery searchQuery, int page, int maxQty)
     {
         if(searchQuery.isEmpty())
@@ -130,7 +156,7 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     {
         try
         {
-            entityManager
+            getFullTextEntityManager()
             .createIndexer(domainClass)
             .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
             .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
@@ -147,15 +173,16 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     @Override
     public void indexOne(T entity)
     {
-        entityManager.merge(entity);
-        entityManager.index(entity);
-        entityManager.flushToIndexes();
+        FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        entity = fullTextEntityManager.merge(entity);
+        fullTextEntityManager.index(entity);
+        fullTextEntityManager.flushToIndexes();
     }
 
     @Override
     public void optimizeIndex()
     {
-        entityManager.getSearchFactory().optimize();
+        getFullTextEntityManager().getSearchFactory().optimize();
     }
 
     // fixme all methods below should be moved to other repository
@@ -191,6 +218,11 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         return query.getResultList();
     }
 
+    protected SortField [] getDefaultSortFields(SortFieldAware query)
+    {
+        return query.getSortFields().toArray(new SortField[query.getSortFields().size()]);
+    }
+
     private String getBlokedIDs(Set<Integer> blockedIDs) {
         StringBuilder IDs = new StringBuilder();
         for (Integer blockedID : blockedIDs)
@@ -202,18 +234,18 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         return IDs.toString();
     }
 
+    private FullTextEntityManager getFullTextEntityManager()
+    {
+        return Search.getFullTextEntityManager(entityManager);
+    }
+
     private Analyzer getAnalyzer()
     {
-        return new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
     }
 
     private String getOrderBy(boolean reverse)
     {
         return reverse ? DESC : ASC;
-    }
-
-    protected SortField [] getDefaultSortFields(SortFieldAware query)
-    {
-        return query.getSortFields().toArray(new SortField[query.getSortFields().size()]);
     }
 }
