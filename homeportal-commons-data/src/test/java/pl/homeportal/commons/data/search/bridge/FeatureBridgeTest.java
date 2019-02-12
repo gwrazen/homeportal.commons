@@ -17,11 +17,19 @@ public class FeatureBridgeTest
     }
 
     @Test
+    public void testObjectToStringNull()
+    {
+        String features = featureBridge.objectToString(null);
+        assertNull(features);
+    }
+
+    @Test
     public void testObjectToStringEmptyString()
     {
         String features = featureBridge.objectToString(" ");
         assertNull(features);
     }
+
     @Test
     public void testObjectToStringSpecialCharacters()
     {
