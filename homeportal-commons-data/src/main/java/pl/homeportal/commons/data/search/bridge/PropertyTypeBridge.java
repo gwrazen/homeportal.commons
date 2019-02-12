@@ -8,6 +8,7 @@ public class PropertyTypeBridge implements StringBridge
     /**
      * Method removes all spaces and lower casing
      */
+    @Override
     public String objectToString(Object object)
     {
         if ( null != object )
@@ -20,5 +21,4 @@ public class PropertyTypeBridge implements StringBridge
 
         return null;
     }
-
 }

@@ -19,5 +19,4 @@ public class DateBridge extends StringBridge
 
         return null;
     }
-
 }
