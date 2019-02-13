@@ -2,6 +2,7 @@ package pl.homeportal.commons.data.search.bridge;
 
 import org.hibernate.search.bridge.builtin.StringBridge;
 import pl.homeportal.commons.data.model.feature.FeatureConstants;
+import pl.homeportal.commons.utils.Constants;
 
 public class FeatureBridge extends StringBridge
 {
@@ -35,8 +36,8 @@ public class FeatureBridge extends StringBridge
             {
                 feature = feature.substring(index + 1);
                 feature = feature.toLowerCase();
-                feature = feature.replaceAll(SPECIAL_CHARACTERS, "");
-                feature = feature.replaceAll(MORE_THAN_ONE_SPACE, " ");
+                feature = feature.replaceAll(SPECIAL_CHARACTERS, Constants.EMPTY_STRING);
+                feature = feature.replaceAll(MORE_THAN_ONE_SPACE, Constants.SPACE);
                 features.append(feature);
                 features.append(" ");
             }
@@ -46,6 +47,6 @@ public class FeatureBridge extends StringBridge
 
     private String getSeparator()
     {
-        return "\\" + FeatureConstants.FEATURE_SEPARATOR;
+        return Constants.BACKSLASH + FeatureConstants.FEATURE_SEPARATOR;
     }
 }

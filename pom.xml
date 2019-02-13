@@ -82,6 +82,8 @@
         <hibernate.entitymanager.version>5.0.10.Final</hibernate.entitymanager.version>
         <hibernate.search.orm.version>5.5.4.Final</hibernate.search.orm.version>
         <lucene.queryparser.version>5.3.1</lucene.queryparser.version>
+        <spring.data.jpa.version>2.1.2.RELEASE</spring.data.jpa.version>
+        <spring.context.version>5.1.4.RELEASE</spring.context.version>
     </properties>
 
     <dependencyManagement>
@@ -129,18 +131,6 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!--<dependency>-->
-                <!--<groupId>javax.persistence</groupId>-->
-                <!--<artifactId>persistence-api</artifactId>-->
-                <!--<version>${javax.persitence.api.version}</version>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>org.hibernate.javax.persistence</groupId>-->
-                <!--<artifactId>hibernate-jpa-2.1-api</artifactId>-->
-                <!--<version>${hibernate.javax.persitence.api.version}</version>-->
-            <!--</dependency>-->
-
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
@@ -168,7 +158,13 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jpa</artifactId>
-                <version>2.1.2.RELEASE</version>
+                <version>${spring.data.jpa.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.context.version}</version>
             </dependency>
 
             <!-- TEST -->

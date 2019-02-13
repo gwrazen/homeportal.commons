@@ -186,7 +186,7 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     // fixme all methods below should be moved to other repository
-    public List<Integer> findUnindexedIDs(int maxResults, Set<Integer> blockedIDs) throws Exception
+    public List<Integer> findUnindexedIDs(int maxResults, Set<Integer> blockedIDs)
     {
         String queryString;
         if(blockedIDs.isEmpty())

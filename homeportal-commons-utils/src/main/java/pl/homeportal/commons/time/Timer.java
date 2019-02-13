@@ -1,11 +1,11 @@
 package pl.homeportal.commons.time;
 
-import lombok.Builder;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by gwrazen on 31/08/2015.
  */
-@Builder
+@Component
 public class Timer
 {
     private long start;
@@ -27,5 +27,4 @@ public class Timer
         float taken = (end - start)/1000f;
         return taken + "s";
     }
-
 }

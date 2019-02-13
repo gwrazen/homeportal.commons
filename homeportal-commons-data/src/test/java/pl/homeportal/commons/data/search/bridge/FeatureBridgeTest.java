@@ -1,6 +1,7 @@
 package pl.homeportal.commons.data.search.bridge;
 
 import org.junit.Test;
+import pl.homeportal.commons.utils.Constants;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -26,14 +27,14 @@ public class FeatureBridgeTest
     @Test
     public void testObjectToStringEmptyString()
     {
-        String features = featureBridge.objectToString(" ");
+        String features = featureBridge.objectToString(Constants.SPACE);
         assertNull(features);
     }
 
     @Test
     public void testObjectToStringSpecialCharacters()
     {
-        String features = featureBridge.objectToString(".");
+        String features = featureBridge.objectToString(Constants.DOT);
         assertNull(features);
     }
 
