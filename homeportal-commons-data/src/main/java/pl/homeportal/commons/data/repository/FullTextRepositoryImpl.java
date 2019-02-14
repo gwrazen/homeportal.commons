@@ -185,53 +185,9 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         getFullTextEntityManager().getSearchFactory().optimize();
     }
 
-    // fixme all methods below should be moved to other repository
-    public List<Integer> findUnindexedIDs(int maxResults, Set<Integer> blockedIDs)
-    {
-        String queryString;
-        if(blockedIDs.isEmpty())
-        {
-            queryString = "select o.ID from offers o where o.Indexed = false";
-        }
-        else
-        {
-            queryString = "select o.ID from offers o where o.Indexed = false and o.ID not in (" + getBlokedIDs(blockedIDs) + ")";
-        }
-        javax.persistence.Query query = entityManager.createNativeQuery(queryString);
-        query.setFirstResult(0);
-        query.setMaxResults(maxResults);
-
-        return query.getResultList();
-    }
-
-    public int countUnindexed() throws Exception
-    {
-        return ((Long) entityManager.createQuery("select count(*) from PortalOffer where indexed = false").getSingleResult()).intValue();
-    }
-
-    public List<T> listUnindexed(int maxResults) throws Exception
-    {
-        javax.persistence.Query query = entityManager.createQuery("from PortalOffer where indexed = false");
-        query.setFirstResult(0);
-        query.setMaxResults(maxResults);
-
-        return query.getResultList();
-    }
-
     protected SortField [] getDefaultSortFields(SortFieldAware query)
     {
         return query.getSortFields().toArray(new SortField[query.getSortFields().size()]);
-    }
-
-    private String getBlokedIDs(Set<Integer> blockedIDs) {
-        StringBuilder IDs = new StringBuilder();
-        for (Integer blockedID : blockedIDs)
-        {
-            IDs.append(blockedID);
-            IDs.append(",");
-        }
-        IDs.append("0");
-        return IDs.toString();
     }
 
     private FullTextEntityManager getFullTextEntityManager()
