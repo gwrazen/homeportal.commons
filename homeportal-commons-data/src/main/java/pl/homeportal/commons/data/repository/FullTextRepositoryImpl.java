@@ -105,7 +105,6 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         query.setFirstResult(maxResults * currentPage);
 
         return query.getResultList();
-
     }
 
     @Override
