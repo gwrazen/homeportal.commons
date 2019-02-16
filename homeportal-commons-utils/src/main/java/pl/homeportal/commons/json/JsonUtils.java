@@ -11,7 +11,6 @@ import java.net.URL;
 
 public class JsonUtils
 {
-
     public static String readJsonFromFile(Class aClass, String fileName) throws IOException
     {
         URL url = Resources.getResource(aClass, fileName);
