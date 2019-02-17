@@ -15,38 +15,8 @@
 
         <!-- INTERNALS -->
 
-
         <!-- EXTERNALS -->
 
     </dependencies>
 
-    <build>
-
-        <testSourceDirectory>src/test/java/</testSourceDirectory>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
-
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-
-        <plugins>
-
-        </plugins>
-
-
-    </build>
 </project>
