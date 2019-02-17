@@ -9,8 +9,8 @@ public class DateFormats
         SECOND,MINUTE,DAY;
     }
 
-    public static final String DATE_WITH_SECOND = "dd-MM-yyyy hh:mm:ss";
-    public static final String DATE_WITH_MINUTE = "dd-MM-yyyy hh:mm";
+    public static final String DATE_WITH_SECOND = "dd-MM-yyyy HH:mm:ss";
+    public static final String DATE_WITH_MINUTE = "dd-MM-yyyy HH:mm";
     public static final String DATE_WITH_DAY = "dd-MM-yyyy";
 
     public static SimpleDateFormat sdfWithSecondPrecision()
