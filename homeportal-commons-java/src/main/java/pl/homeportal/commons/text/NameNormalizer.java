@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.Normalizer;
 
 /**
+ *
+ * fixme use constants
  * Created by gwrazen on 28/07/2015.
  */
 public class NameNormalizer

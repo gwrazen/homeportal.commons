@@ -2,7 +2,7 @@ package pl.homeportal.commons.data.search.bridge;
 
 import org.hibernate.search.bridge.builtin.StringBridge;
 import pl.homeportal.commons.data.model.feature.FeatureConstants;
-import pl.homeportal.commons.utils.Constants;
+import pl.homeportal.commons.text.Constants;
 
 public class FeatureBridge extends StringBridge
 {

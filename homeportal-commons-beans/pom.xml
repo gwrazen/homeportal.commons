@@ -9,14 +9,12 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>homeportal-commons-i18n</artifactId>
+    <artifactId>homeportal-commons-beans</artifactId>
 
     <dependencies>
 
         <!-- INTERNALS -->
-
         <!-- EXTERNALS -->
-
     </dependencies>
 
 </project>

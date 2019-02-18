@@ -1,4 +1,4 @@
-package pl.homeportal.commons.utils;
+package pl.homeportal.commons.text;
 
 public class Constants
 {

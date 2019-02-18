@@ -16,7 +16,7 @@
         <!-- INTERNALS -->
         <dependency>
             <groupId>pl.homeportal</groupId>
-            <artifactId>homeportal-commons-utils</artifactId>
+            <artifactId>homeportal-commons-java</artifactId>
             <version>1.0</version>
         </dependency>
 

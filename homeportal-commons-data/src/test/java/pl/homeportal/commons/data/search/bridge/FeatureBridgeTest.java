@@ -1,7 +1,7 @@
 package pl.homeportal.commons.data.search.bridge;
 
 import org.junit.Test;
-import pl.homeportal.commons.utils.Constants;
+import pl.homeportal.commons.text.Constants;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

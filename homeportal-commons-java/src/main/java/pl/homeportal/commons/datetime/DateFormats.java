@@ -1,4 +1,4 @@
-package pl.homeportal.commons.time;
+package pl.homeportal.commons.datetime;
 
 import java.text.SimpleDateFormat;
 

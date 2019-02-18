@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>pl.homeportal</groupId>
-            <artifactId>homeportal-commons-i18n</artifactId>
+            <artifactId>homeportal-commons-java</artifactId>
             <version>1.0</version>
         </dependency>
 
