@@ -26,6 +26,8 @@ public interface FullTextRepository<T, ID extends Serializable> extends JpaRepos
 
     void indexAll();
 
+    void indexAll(int batchSize, int threads);
+
     void indexOne(T entity);
 
     void optimizeIndex();

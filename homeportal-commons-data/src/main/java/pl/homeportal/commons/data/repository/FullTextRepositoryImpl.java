@@ -170,6 +170,25 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
+    public void indexAll(int batchSize, int threads)
+    {
+        try
+        {
+            getFullTextEntityManager()
+            .createIndexer(domainClass)
+            .batchSizeToLoadObjects(batchSize)
+            .threadsToLoadObjects(threads)
+            .cacheMode(CacheMode.NORMAL)
+            .optimizeOnFinish(true)
+            .startAndWait();
+        }
+        catch (InterruptedException e)
+        {
+            throw new RuntimeException("Indexing interrupted", e);
+        }
+    }
+
+    @Override
     public void indexOne(T entity)
     {
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
