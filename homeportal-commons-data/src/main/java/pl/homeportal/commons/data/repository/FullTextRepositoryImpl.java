@@ -22,7 +22,6 @@ import pl.homeportal.commons.data.search.SearchQuery;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import static pl.homeportal.commons.data.search.SearchQuery.isEmpty;
 
@@ -65,7 +64,7 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
-    public FullTextQuery createFullTextQuery(String queryString, SortField[] sortFields)
+    public FullTextQuery createQuery(String queryString, SortField[] sortFields)
     {
         QueryParser parser = new QueryParser(ID, getAnalyzer());
         parser.setLowercaseExpandedTerms(true);
@@ -87,18 +86,18 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
-    public int count(SearchQuery query)
+    public int countBySearchQuery(SearchQuery query)
     {
         if ( isEmpty(query) )
         {
             return new Long(count()).intValue();
         }
 
-        return createFullTextQuery(query.getQueryString(), null).getResultSize();
+        return createQuery(query.getQueryString(), null).getResultSize();
     }
 
     @Override
-    public List<T> find(int currentPage, int maxResults)
+    public List<T> findAll(int currentPage, int maxResults)
     {
         javax.persistence.Query query = entityManager.createQuery("from PortalOffer order by AddedDate desc");
         query.setMaxResults(maxResults);
@@ -108,7 +107,7 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
-    public List<T> findAndSort(int currentPage, int maxResults, String sort, boolean reverse)
+    public List<T> findAllAndSort(int currentPage, int maxResults, String sort, boolean reverse)
     {
         javax.persistence.Query query = entityManager.createQuery("from " + domainClass.getSimpleName() + " order by " + sort + " " + getOrderBy(reverse));
         query.setMaxResults(maxResults);
@@ -118,31 +117,31 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
-    public List<T> findBySearchQuery(SearchQuery searchQuery)
+    public List<T> findAllBySearchQuery(SearchQuery searchQuery)
     {
         Assert.isTrue(!searchQuery.isEmpty());
 
-        FullTextQuery query = createFullTextQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
+        FullTextQuery query = createQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
         List<T> list = query.getResultList();
 
         return list;
     }
 
     @Override
-    public List<T> findBySearchQuery(SearchQuery searchQuery, int page, int maxQty)
+    public List<T> findAllBySearchQuery(SearchQuery searchQuery, int page, int maxQty)
     {
         if(searchQuery.isEmpty())
         {
             if(searchQuery.isSort())
             {
                 SortField sortField = searchQuery.getSortFields().get(0);
-                return findAndSort(page, maxQty, sortField.getField(), sortField.getReverse());
+                return findAllAndSort(page, maxQty, sortField.getField(), sortField.getReverse());
             }
 
-            return find(page, maxQty);
+            return findAll(page, maxQty);
         }
 
-        FullTextQuery query = createFullTextQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
+        FullTextQuery query = createQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
         query.setMaxResults(maxQty);
         query.setFirstResult(maxQty * page);
         List<T> list = query.getResultList();
