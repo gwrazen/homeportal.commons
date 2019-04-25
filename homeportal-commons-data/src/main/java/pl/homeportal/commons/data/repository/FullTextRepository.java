@@ -16,13 +16,7 @@ public interface FullTextRepository<T, ID extends Serializable> extends JpaRepos
 
     int countBySearchQuery(SearchQuery query);
 
-    List<T> findAll(int page, int maxQty);
-
-    List<T> findAllAndSort(int currentPage, int maxResults, String sort, boolean reverse);
-
     List<T> findAllBySearchQuery(SearchQuery searchQuery);
-
-    List<T> findAllBySearchQuery(SearchQuery searchQuery, int page, int maxQty);
 
     void indexAll();
 
