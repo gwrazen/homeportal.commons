@@ -12,17 +12,11 @@ import java.util.List;
 @NoRepositoryBean
 public interface FullTextRepository<T, ID extends Serializable> extends JpaRepository<T, ID>
 {
-    FullTextQuery createFullTextQuery(String queryString, SortField[] sortFields);
+    FullTextQuery createQuery(String queryString, SortField[] sortFields);
 
-    int count(SearchQuery query);
+    int countBySearchQuery(SearchQuery query);
 
-    List<T> find(int page, int maxQty);
-
-    List<T> findAndSort(int currentPage, int maxResults, String sort, boolean reverse);
-
-    List<T> findBySearchQuery(SearchQuery searchQuery);
-
-    List<T> findBySearchQuery(SearchQuery searchQuery, int page, int maxQty);
+    List<T> findAllBySearchQuery(SearchQuery searchQuery);
 
     void indexAll();
 

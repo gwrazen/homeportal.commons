@@ -1,5 +1,7 @@
 package pl.homeportal.commons.data.search;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.DateTools.Resolution;
 import org.apache.lucene.search.SortField;
@@ -7,20 +9,27 @@ import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.search.bridge.NumericBridge;
 import pl.homeportal.commons.data.search.bridge.PropertyTypeBridge;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  *
- * @author gwrazen
+ * @author Grzegorz Wrażeń
  */
-public class SearchQuery implements SortFieldAware, Serializable
+public class SearchQuery implements SortFieldAware
 {
-    private final List<String> parameters = new LinkedList<String>();
-    private final LinkedList<SortField> sortFields = new LinkedList<SortField>();
+    private final List<String> parameters = new LinkedList<>();
+    private final LinkedList<SortField> sortFields = new LinkedList<>();
     private final PropertyTypeBridge propertyTypeBridge = new PropertyTypeBridge();
+
+    @Setter
+    @Getter
+    private int pageNumber = 0;
+
+    @Setter
+    @Getter
+    private int pageSize   = 20;
 
     public void addParameter(QueryParameter parameter, String value)
     {
@@ -77,12 +86,12 @@ public class SearchQuery implements SortFieldAware, Serializable
         return parameters.size();
     }
 
-    public boolean isEmpty()
+    public boolean isQueryEmpty()
     {
         return parameters.isEmpty() ? true : false;
     }
 
-    public boolean isSort()
+    public boolean isSortEmpty()
     {
         return sortFields.isEmpty() ? false : true;
     }
@@ -131,16 +140,6 @@ public class SearchQuery implements SortFieldAware, Serializable
     private Object normalize(String string)
     {
         return propertyTypeBridge.objectToString(string);
-    }
-
-    public static boolean isEmpty(SearchQuery searchQuery)
-    {
-        return (searchQuery == null || searchQuery.getParameterQty() == 0) ? true : false;
-    }
-
-    public static boolean isNotEmpty(SearchQuery searchQuery)
-    {
-        return !isEmpty(searchQuery);
     }
 
     @Override

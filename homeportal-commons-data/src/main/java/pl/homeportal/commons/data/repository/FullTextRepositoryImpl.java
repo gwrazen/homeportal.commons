@@ -3,38 +3,39 @@ package pl.homeportal.commons.data.repository;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.homeportal.commons.data.SortFieldAware;
+import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.SearchQuery;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import static pl.homeportal.commons.data.search.SearchQuery.isEmpty;
 
 @Transactional
-public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements FullTextRepository<T, ID>
+public class FullTextRepositoryImpl<T extends AbstractEntity, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements FullTextRepository<T, ID>
 {
+    public static final String SEARCH_QUERY_CANNOT_BE_NULL = "SearchQuery cannot be null!";
+
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 20;
     private static final int THREADS_TO_LOAD_OBJECTS = 100;
 
-    private static final String ID = "id";
-    private static final String DESC = "desc";
-    private static final String ASC = "asc";
+    private static final String ID   = "id";
 
     private final Class<T> domainClass;
     private final EntityManager entityManager;
@@ -65,86 +66,69 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
     }
 
     @Override
-    public FullTextQuery createFullTextQuery(String queryString, SortField[] sortFields)
+    public void delete(T t)
     {
-        QueryParser parser = new QueryParser(ID, getAnalyzer());
-        parser.setLowercaseExpandedTerms(true);
-        Query luceneQuery;
-        try {
-            luceneQuery = parser.parse(queryString);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Parsing exception", e);
-        }
+        super.delete(t);
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
-        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, domainClass);
-        if (sortFields != null && sortFields.length > 0)
-        {
-            Sort sort = new Sort(sortFields);
-            fullTextQuery.setSort(sort);
-        }
-
-        return fullTextQuery;
+        fullTextEntityManager.purge(domainClass, t.getId());
+        fullTextEntityManager.flushToIndexes();
     }
 
     @Override
-    public int count(SearchQuery query)
+    public void deleteAll()
     {
-        if ( isEmpty(query) )
+        super.deleteAll();
+        FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        fullTextEntityManager.purgeAll(domainClass);
+        fullTextEntityManager.flushToIndexes();
+    }
+
+    @Override
+    public FullTextQuery createQuery(String queryString, SortField [] sortFields)
+    {
+        try
+        {
+            QueryParser parser = new QueryParser(ID, getAnalyzer());
+            parser.setLowercaseExpandedTerms(true);
+            Query luceneQuery = parser.parse(queryString);
+            FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+            FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, domainClass);
+            if (sortFields != null && sortFields.length > 0)
+            {
+                fullTextQuery.setSort(new org.apache.lucene.search.Sort(sortFields));
+            }
+            return fullTextQuery;
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException("Probably parsing lucene query exception", e);
+        }
+    }
+
+    @Override
+    public int countBySearchQuery(SearchQuery sQuery)
+    {
+        Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
+        if ( sQuery.isQueryEmpty() )
         {
             return new Long(count()).intValue();
         }
 
-        return createFullTextQuery(query.getQueryString(), null).getResultSize();
+        return createQuery(sQuery.getQueryString(), null).getResultSize();
     }
 
     @Override
-    public List<T> find(int currentPage, int maxResults)
+    public List<T> findAllBySearchQuery(SearchQuery sQuery)
     {
-        javax.persistence.Query query = entityManager.createQuery("from PortalOffer order by AddedDate desc");
-        query.setMaxResults(maxResults);
-        query.setFirstResult(maxResults * currentPage);
-
-        return query.getResultList();
-    }
-
-    @Override
-    public List<T> findAndSort(int currentPage, int maxResults, String sort, boolean reverse)
-    {
-        javax.persistence.Query query = entityManager.createQuery("from " + domainClass.getSimpleName() + " order by " + sort + " " + getOrderBy(reverse));
-        query.setMaxResults(maxResults);
-        query.setFirstResult(maxResults * currentPage);
-
-        return query.getResultList();
-    }
-
-    @Override
-    public List<T> findBySearchQuery(SearchQuery searchQuery)
-    {
-        Assert.isTrue(!searchQuery.isEmpty());
-
-        FullTextQuery query = createFullTextQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
-        List<T> list = query.getResultList();
-
-        return list;
-    }
-
-    @Override
-    public List<T> findBySearchQuery(SearchQuery searchQuery, int page, int maxQty)
-    {
-        if(searchQuery.isEmpty())
+        Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
+        if(sQuery.isQueryEmpty())
         {
-            if(searchQuery.isSort())
-            {
-                SortField sortField = searchQuery.getSortFields().get(0);
-                return findAndSort(page, maxQty, sortField.getField(), sortField.getReverse());
-            }
-
-            return find(page, maxQty);
+            return findAll(createPageable(sQuery)).getContent();
         }
 
-        FullTextQuery query = createFullTextQuery(searchQuery.getQueryString(), getDefaultSortFields(searchQuery));
-        query.setMaxResults(maxQty);
-        query.setFirstResult(maxQty * page);
+        FullTextQuery query = createQuery(sQuery.getQueryString(), getDefaultSortFields(sQuery));
+        query.setMaxResults(sQuery.getPageSize());
+        query.setFirstResult(sQuery.getPageNumber() * sQuery.getPageSize());
         List<T> list = query.getResultList();
 
         return list;
@@ -218,8 +202,19 @@ public class FullTextRepositoryImpl<T, ID extends Serializable> extends SimpleJp
         return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
     }
 
-    private String getOrderBy(boolean reverse)
+    private Pageable createPageable(SearchQuery sQuery)
     {
-        return reverse ? DESC : ASC;
+        final List<Sort.Order> orders = new ArrayList<>();
+        LinkedList<SortField> sortFields = sQuery.getSortFields();
+        for (SortField sortField : sortFields)
+        {
+            if(sortField.getReverse())
+            {
+                orders.add(Sort.Order.desc(sortField.getField()));
+            }
+            orders.add(Sort.Order.asc(sortField.getField()));
+        }
+        return new PageRequest(sQuery.getPageNumber(), sQuery.getPageSize(), Sort.by(orders));
     }
+
 }

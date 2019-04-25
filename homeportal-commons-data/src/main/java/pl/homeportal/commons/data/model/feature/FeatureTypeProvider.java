@@ -8,19 +8,19 @@ import java.util.List;
  */
 public class FeatureTypeProvider
 {
-    private static List<FeatureType> forRentApartment = new LinkedList<FeatureType>();
-    private static List<FeatureType> forRentHouse  = new LinkedList<FeatureType>();
-    private static List<FeatureType> forRentOffice = new LinkedList<FeatureType>();
-    private static List<FeatureType> forRentHall   = new LinkedList<FeatureType>();
-    private static List<FeatureType> forRentLand   = new LinkedList<FeatureType>();
-    private static List<FeatureType> forRentObject   = new LinkedList<FeatureType>();
+    private static List<FeatureType> forRentApartment = new LinkedList<>();
+    private static List<FeatureType> forRentHouse  = new LinkedList<>();
+    private static List<FeatureType> forRentOffice = new LinkedList<>();
+    private static List<FeatureType> forRentHall   = new LinkedList<>();
+    private static List<FeatureType> forRentLand   = new LinkedList<>();
+    private static List<FeatureType> forRentObject   = new LinkedList<>();
 
-    private static List<FeatureType> forSaleApartment = new LinkedList<FeatureType>();
-    private static List<FeatureType> forSaleHouse  = new LinkedList<FeatureType>();
-    private static List<FeatureType> forSaleOffice = new LinkedList<FeatureType>();
-    private static List<FeatureType> forSaleHall   = new LinkedList<FeatureType>();
-    private static List<FeatureType> forSaleLand   = new LinkedList<FeatureType>();
-    private static List<FeatureType> forSaleObject   = new LinkedList<FeatureType>();
+    private static List<FeatureType> forSaleApartment = new LinkedList<>();
+    private static List<FeatureType> forSaleHouse  = new LinkedList<>();
+    private static List<FeatureType> forSaleOffice = new LinkedList<>();
+    private static List<FeatureType> forSaleHall   = new LinkedList<>();
+    private static List<FeatureType> forSaleLand   = new LinkedList<>();
+    private static List<FeatureType> forSaleObject   = new LinkedList<>();
 
     static
     {
