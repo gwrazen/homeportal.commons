@@ -2,27 +2,34 @@ package pl.homeportal.commons.data.repository;
 
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextQuery;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.domain.Pageable;
 import pl.homeportal.commons.data.search.SearchQuery;
 
-import java.io.Serializable;
 import java.util.List;
 
-@NoRepositoryBean
-public interface FullTextRepository<T, ID extends Serializable> extends JpaRepository<T, ID>
+public interface FullTextRepository<T>
 {
-    FullTextQuery createQuery(String queryString, SortField[] sortFields);
+    <S extends T> S save(S t);
 
-    int countBySearchQuery(SearchQuery query);
+    void delete(T t);
 
-    List<T> findAllBySearchQuery(SearchQuery searchQuery);
+    void deleteAll(Class<T> t);
 
-    void indexAll();
+    long count(Class<T> t);
 
-    void indexAll(int batchSize, int threads);
+    int countBySearchQuery(SearchQuery query, Class<T> t);
+
+    List<T> findAll(Pageable pageable, Class<T> t);
+
+    List<T> findAllBySearchQuery(SearchQuery searchQuery, Class<T> t);
+
+    void indexAll(Class<T> t);
+
+    void indexAll(int batchSize, int threads, Class<T> t);
 
     void indexOne(T entity);
 
     void optimizeIndex();
+
+    FullTextQuery createQuery(String queryString, SortField[] sortFields, Class<T> t);
 }
