@@ -132,12 +132,12 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         try
         {
             getFullTextEntityManager()
-                    .createIndexer(t)
-                    .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
-                    .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
-                    .cacheMode(CacheMode.NORMAL)
-                    .optimizeOnFinish(true)
-                    .startAndWait();
+                .createIndexer(t)
+                .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
+                .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
+                .cacheMode(CacheMode.NORMAL)
+                .optimizeOnFinish(true)
+                .startAndWait();
         }
         catch (InterruptedException e)
         {
@@ -151,12 +151,12 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         try
         {
             getFullTextEntityManager()
-                    .createIndexer(t)
-                    .batchSizeToLoadObjects(batchSize)
-                    .threadsToLoadObjects(threads)
-                    .cacheMode(CacheMode.NORMAL)
-                    .optimizeOnFinish(true)
-                    .startAndWait();
+                .createIndexer(t)
+                .batchSizeToLoadObjects(batchSize)
+                .threadsToLoadObjects(threads)
+                .cacheMode(CacheMode.NORMAL)
+                .optimizeOnFinish(true)
+                .startAndWait();
         }
         catch (InterruptedException e)
         {
