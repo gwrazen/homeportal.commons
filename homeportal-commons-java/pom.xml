@@ -26,10 +26,10 @@
             <artifactId>commons-email</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.velocity</groupId>-->
+<!--            <artifactId>velocity</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>imagej</groupId>
