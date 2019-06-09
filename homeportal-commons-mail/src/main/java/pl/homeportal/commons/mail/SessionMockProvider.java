@@ -15,12 +15,9 @@ public class SessionMockProvider
     public Session getSession()
     {
         Session s = null;
-        try
-        {
+        try {
             s = Session.getDefaultInstance(new Properties());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return s;

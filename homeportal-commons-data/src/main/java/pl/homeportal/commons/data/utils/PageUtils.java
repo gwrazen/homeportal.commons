@@ -12,7 +12,7 @@ public class PageUtils
     public static Pageable createPageable(int pageNumber, int pageSize, String sort, boolean reverse)
     {
         Sort.Direction direction = Sort.Direction.ASC;
-        if(reverse)
+        if (reverse)
         {
             direction = Sort.Direction.DESC;
         }

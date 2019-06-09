@@ -18,7 +18,7 @@ public class ExecutionTimeAspect
     {
         long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
-        float executionTime = (System.currentTimeMillis() - start)/1000f;
+        float executionTime = (System.currentTimeMillis() - start) / 1000f;
         LOG.info(joinPoint.getSignature() + " executed in " + executionTime + "s");
         return proceed;
     }

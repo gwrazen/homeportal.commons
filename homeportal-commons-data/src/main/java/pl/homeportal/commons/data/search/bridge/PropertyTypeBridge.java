@@ -11,9 +11,9 @@ public class PropertyTypeBridge implements StringBridge
     @Override
     public String objectToString(Object object)
     {
-        if ( null != object )
+        if (null != object)
         {
-            String string = (String)object;
+            String string = (String) object;
             string = string.replaceAll(" ", "");
             string = string.toLowerCase();
             return string;

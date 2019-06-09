@@ -30,7 +30,7 @@ public abstract class GenericNotifier<T>
 
     protected void send(VelocityEmail email)
     {
-        if ( isEnabled() )
+        if (isEnabled())
         {
             String response = email.send();
             LOG.info("Email sent. Template: " + email.getEmailType().getTemplateName() + ", response: " + response);

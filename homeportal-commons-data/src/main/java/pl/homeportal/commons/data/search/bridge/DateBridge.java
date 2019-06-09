@@ -11,7 +11,7 @@ public class DateBridge extends StringBridge
     @Override
     public String objectToString(Object object)
     {
-        if ( object != null )
+        if (object != null)
         {
             String date = DateTools.dateToString((Date) object, Resolution.SECOND);
             return date;

@@ -26,4 +26,15 @@ public class AbstractEntity<IDENTITY extends Number> implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     protected IDENTITY id;
+
+    @Override
+    public String toString()
+    {
+        return new StringBuffer()
+                .append(getClass().getSimpleName())
+                .append(" [id=")
+                .append(getId())
+                .append("]")
+                .toString();
+    }
 }

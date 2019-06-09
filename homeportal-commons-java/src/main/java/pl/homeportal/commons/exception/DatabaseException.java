@@ -5,5 +5,4 @@ package pl.homeportal.commons.exception;
  */
 public class DatabaseException extends SystemException
 {
-
 }

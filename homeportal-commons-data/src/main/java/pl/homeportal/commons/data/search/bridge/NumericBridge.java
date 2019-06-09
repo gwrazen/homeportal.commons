@@ -5,9 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 /**
- *
  * @author gwrazen
  */
 public class NumericBridge implements StringBridge
@@ -16,20 +14,21 @@ public class NumericBridge implements StringBridge
 
     private static final int MAX_LENGTH = 10;
     private static final int ZERO = 0;
+
     /**
      * <pre>Method index Long value instead of Double</pre>
+     *
      * @param o <code>Double</code>
      * @return <code>String</code>
      */
     public String objectToString(Object o)
     {
-        if ( null != o )
-        {
+        if (null != o) {
             try
             {
-                Number number = (Number)o;
+                Number number = (Number) o;
                 String value = String.valueOf(number.intValue());
-                if(value.length() < MAX_LENGTH)
+                if (value.length() < MAX_LENGTH)
                 {
                     value = pad(value);
                 }
@@ -47,7 +46,7 @@ public class NumericBridge implements StringBridge
     private String pad(String value)
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < MAX_LENGTH - value.length() ; ++i )
+        for (int i = 0; i < MAX_LENGTH - value.length(); ++i)
         {
             builder.append(ZERO);
         }
@@ -58,7 +57,7 @@ public class NumericBridge implements StringBridge
 
     public Long stringToObject(String value)
     {
-        if ( null != value )
+        if (null != value)
         {
             try
             {
