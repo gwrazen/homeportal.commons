@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Grzegorz Wrażeń
+ * Created by Grzegorz Wrażeń
  */
 public class SearchQuery implements SortFieldAware
 {
