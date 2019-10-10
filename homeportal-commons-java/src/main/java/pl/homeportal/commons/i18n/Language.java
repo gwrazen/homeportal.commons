@@ -14,7 +14,7 @@ public enum Language
 
     private String value;
 
-    private Language(String language)
+    Language(String language)
     {
         this.value = language;
     }
@@ -28,7 +28,7 @@ public enum Language
     {
         for (Language language : values())
         {
-            if(language.getValue().equalsIgnoreCase(value))
+            if (language.getValue().equalsIgnoreCase(value))
                 return language;
         }
 

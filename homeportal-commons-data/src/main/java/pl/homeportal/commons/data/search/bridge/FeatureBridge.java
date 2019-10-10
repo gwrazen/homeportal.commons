@@ -4,26 +4,26 @@ import org.hibernate.search.bridge.builtin.StringBridge;
 import pl.homeportal.commons.data.model.feature.FeatureConstants;
 import pl.homeportal.commons.text.Constants;
 
-public class FeatureBridge extends StringBridge
-{
+public class FeatureBridge extends StringBridge {
+
     private static final String SPECIAL_CHARACTERS = "[^\\p{L}\\p{Nd}\\s]+";
     private static final String MORE_THAN_ONE_SPACE = "\\s{2,}";
 
     @Override
     public String objectToString(Object object)
     {
-        if ( null == object )
+        if (null == object)
         {
             return null;
         }
 
-        String original = (String)object;
-        if(original.trim().length() == 0)
+        String original = (String) object;
+        if (original.trim().length() == 0)
         {
             return null;
         }
 
-        if(original.replaceAll(SPECIAL_CHARACTERS, "").trim().length() == 0)
+        if (original.replaceAll(SPECIAL_CHARACTERS, "").trim().length() == 0)
         {
             return null;
         }
@@ -31,8 +31,8 @@ public class FeatureBridge extends StringBridge
         StringBuilder features = new StringBuilder();
         for (String feature : original.split(getSeparator()))
         {
-            int index =  feature.indexOf(FeatureConstants.NAME_SEPARATOR);
-            if(index != -1)
+            int index = feature.indexOf(FeatureConstants.NAME_SEPARATOR);
+            if (index != -1)
             {
                 feature = feature.substring(index + 1);
                 feature = feature.toLowerCase();

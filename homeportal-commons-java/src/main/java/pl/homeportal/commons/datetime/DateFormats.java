@@ -6,7 +6,7 @@ public class DateFormats
 {
     public enum Precision
     {
-        SECOND,MINUTE,DAY;
+        SECOND, MINUTE, DAY;
     }
 
     public static final String DATE_WITH_SECOND = "dd-MM-yyyy HH:mm:ss";
@@ -47,7 +47,8 @@ public class DateFormats
                 return new SimpleDateFormat(DATE_WITH_DAY);
             }
 
-            default: throw new IllegalArgumentException("Precision not found.");
+            default:
+                throw new IllegalArgumentException("Precision not found.");
         }
     }
 }

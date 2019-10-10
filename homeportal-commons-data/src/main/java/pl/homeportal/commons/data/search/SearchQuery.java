@@ -14,8 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
- * @author Grzegorz Wrażeń
+ * Created by Grzegorz Wrażeń
  */
 public class SearchQuery implements SortFieldAware
 {
@@ -29,7 +28,7 @@ public class SearchQuery implements SortFieldAware
 
     @Setter
     @Getter
-    private int pageSize   = 20;
+    private int pageSize = 20;
 
     public void addParameter(QueryParameter parameter, String value)
     {
@@ -106,7 +105,8 @@ public class SearchQuery implements SortFieldAware
             {
                 query.append(parameter);
 
-            } else
+            }
+            else
             {
                 query.append(" AND ");
                 query.append(parameter);

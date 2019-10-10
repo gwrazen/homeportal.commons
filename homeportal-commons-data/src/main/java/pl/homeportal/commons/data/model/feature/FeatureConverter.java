@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- *
  * @author gwrazen
  * |name:value^value^value||title:value^value^value|
  */
@@ -17,11 +16,11 @@ public class FeatureConverter
 
         StringTokenizer tokenizer = new StringTokenizer(features, FeatureConstants.FEATURE_SEPARATOR);
 
-        while ( tokenizer.hasMoreTokens() )
+        while (tokenizer.hasMoreTokens())
         {
             String token = tokenizer.nextToken();
             String name = extractName(token);
-            String [] values = extractValues(token);
+            String[] values = extractValues(token);
             featureMap.put(name, values[0]);
         }
 
@@ -30,7 +29,7 @@ public class FeatureConverter
 
     private String[] extractValues(String fItem)
     {
-        String [] values = fItem.substring(fItem.indexOf(FeatureConstants.NAME_SEPARATOR) + 1, fItem.length()).split(FeatureConstants.VALUE_SEPARATOR);
+        String[] values = fItem.substring(fItem.indexOf(FeatureConstants.NAME_SEPARATOR) + 1, fItem.length()).split(FeatureConstants.VALUE_SEPARATOR);
         return values;
     }
 
@@ -43,7 +42,6 @@ public class FeatureConverter
         }
         catch (Exception e)
         {
-            System.out.println("lujator");
             return fItem;
         }
     }

@@ -20,12 +20,12 @@ public class ImageProcessor extends Thread
     {
         super();
     }
-    
+
     public void add(String fileName, InputStream sourceFile, File destinationDir)
     {
         tasks.add(new ImageProcessorTask(fileName, sourceFile, destinationDir));
     }
-    
+
     @Override
     public void run()
     {
@@ -33,7 +33,7 @@ public class ImageProcessor extends Thread
         {
             new Thread(task).start();
         }
-        
+
         int finished = 0;
         while (finished < tasks.size())
         {
@@ -41,20 +41,19 @@ public class ImageProcessor extends Thread
             {
                 Thread.sleep(1);
             }
-            catch (Exception e){}
-            
+            catch (Exception e)
+            {
+            }
+
             finished = 0;
             for (ImageProcessorTask task : tasks)
             {
-                if (task.isFinished())
-                {
+                if (task.isFinished()) {
                     ++finished;
                 }
             }
-            
         }
     }
-    
 }
 
 class ImageProcessorTask implements Runnable
@@ -70,12 +69,12 @@ class ImageProcessorTask implements Runnable
     private static final int LARGE_WIDTH = 1024;
     private static final int LARGE_HEIGHT = 768;
 
-    private static final String JPG  = "jpg";
-    private static final String SMALL  = "_s";
+    private static final String JPG = "jpg";
+    private static final String SMALL = "_s";
     private static final String MEDIUM = "_m";
-    private static final String LARGE  = "_l";
-    private static final String DOT    = ".";
-    private static final String SLASH  = "/";
+    private static final String LARGE = "_l";
+    private static final String DOT = ".";
+    private static final String SLASH = "/";
 
 
     private InputStream sourceFile;

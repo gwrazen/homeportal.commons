@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static pl.homeportal.commons.text.Constants.SPACE;
+
 
 public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTextRepository<T>
 {
@@ -31,7 +33,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
 
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 20;
     private static final int THREADS_TO_LOAD_OBJECTS = 100;
-    private static final String ID   = "id";
+    private static final String ID = "id";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -60,8 +62,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     public void deleteAll(Class<T> t)
     {
         FullTextEntityManager entityManager = getFullTextEntityManager();
-        for (T one : findAll(t))
-        {
+        for (T one : findAll(t)) {
             entityManager.remove(one);
         }
         entityManager.purgeAll(t);
@@ -78,7 +79,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     public int countBySearchQuery(SearchQuery sQuery, Class<T> t)
     {
         Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
-        if ( sQuery.isQueryEmpty() )
+        if (sQuery.isQueryEmpty())
         {
             return new Long(count(t)).intValue();
         }
@@ -113,7 +114,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     public List<T> findAllBySearchQuery(SearchQuery sQuery, Class<T> t)
     {
         Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
-        if(sQuery.isQueryEmpty())
+        if (sQuery.isQueryEmpty())
         {
             return findAll(createPageable(sQuery), t);
         }
@@ -132,12 +133,12 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         try
         {
             getFullTextEntityManager()
-                .createIndexer(t)
-                .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
-                .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
-                .cacheMode(CacheMode.NORMAL)
-                .optimizeOnFinish(true)
-                .startAndWait();
+                    .createIndexer(t)
+                    .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
+                    .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
+                    .cacheMode(CacheMode.NORMAL)
+                    .optimizeOnFinish(true)
+                    .startAndWait();
         }
         catch (InterruptedException e)
         {
@@ -151,12 +152,12 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         try
         {
             getFullTextEntityManager()
-                .createIndexer(t)
-                .batchSizeToLoadObjects(batchSize)
-                .threadsToLoadObjects(threads)
-                .cacheMode(CacheMode.NORMAL)
-                .optimizeOnFinish(true)
-                .startAndWait();
+                    .createIndexer(t)
+                    .batchSizeToLoadObjects(batchSize)
+                    .threadsToLoadObjects(threads)
+                    .cacheMode(CacheMode.NORMAL)
+                    .optimizeOnFinish(true)
+                    .startAndWait();
         }
         catch (InterruptedException e)
         {
@@ -179,13 +180,13 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         getFullTextEntityManager().getSearchFactory().optimize();
     }
 
-    public SortField [] getDefaultSortFields(SortFieldAware query)
+    public SortField[] getDefaultSortFields(SortFieldAware query)
     {
         return query.getSortFields().toArray(new SortField[query.getSortFields().size()]);
     }
 
     @Override
-    public FullTextQuery createQuery(String queryString, SortField [] sortFields, Class<T> t)
+    public FullTextQuery createQuery(String queryString, SortField[] sortFields, Class<T> t)
     {
         try
         {
@@ -220,10 +221,8 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         final List<Sort.Order> orders = new ArrayList<>();
         LinkedList<SortField> sortFields = sQuery.getSortFields();
-        for (SortField sortField : sortFields)
-        {
-            if(sortField.getReverse())
-            {
+        for (SortField sortField : sortFields) {
+            if (sortField.getReverse()) {
                 orders.add(Sort.Order.desc(sortField.getField()));
             }
             orders.add(Sort.Order.asc(sortField.getField()));
@@ -235,7 +234,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         for (Sort.Order order : sort)
         {
-            return order.getProperty() + " " + order.getDirection().name();
+            return order.getProperty() + SPACE + order.getDirection().name();
         }
         return " id asc";
     }

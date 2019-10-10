@@ -66,13 +66,11 @@ public class VelocityEmail extends HtmlEmail
         }
         finally
         {
-            if (writer != null)
-            {
-                try
-                {
+            if (writer != null) {
+                try {
                     writer.close();
+                } catch (IOException e) {
                 }
-                catch (IOException e){}
             }
         }
     }
@@ -91,5 +89,4 @@ public class VelocityEmail extends HtmlEmail
     {
         return VELOCITY_ENGINE.getTemplate(emailType.getTemplateName(), ENCODING);
     }
-
 }
