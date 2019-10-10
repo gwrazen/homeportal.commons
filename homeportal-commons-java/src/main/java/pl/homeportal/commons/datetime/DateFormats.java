@@ -30,16 +30,20 @@ public class DateFormats
 
     public static SimpleDateFormat sdf(Precision precision)
     {
-        switch (precision) {
-            case SECOND: {
+        switch (precision)
+        {
+            case SECOND:
+            {
                 return new SimpleDateFormat(DATE_WITH_SECOND);
             }
 
-            case MINUTE: {
+            case MINUTE:
+            {
                 return new SimpleDateFormat(DATE_WITH_MINUTE);
             }
 
-            case DAY: {
+            case DAY:
+            {
                 return new SimpleDateFormat(DATE_WITH_DAY);
             }
 
