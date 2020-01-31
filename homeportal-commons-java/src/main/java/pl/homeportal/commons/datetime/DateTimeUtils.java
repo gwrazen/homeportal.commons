@@ -29,8 +29,18 @@ public class DateTimeUtils
         return new Date(System.currentTimeMillis() - DAY);
     }
 
+    public static Date today()
+    {
+        return new Date(System.currentTimeMillis());
+    }
+
     public static Date tomorrow()
     {
         return new Date(System.currentTimeMillis() + DAY);
+    }
+
+    public static Date todayMinusDays(int days)
+    {
+        return new Date(System.currentTimeMillis() - (DAY * days));
     }
 }

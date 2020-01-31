@@ -62,10 +62,19 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     public void deleteAll(Class<T> t)
     {
         FullTextEntityManager entityManager = getFullTextEntityManager();
-        for (T one : findAll(t)) {
+        for (T one : findAll(t))
+        {
             entityManager.remove(one);
         }
         entityManager.purgeAll(t);
+        entityManager.flushToIndexes();
+    }
+
+    @Override
+    public void purge(T t)
+    {
+        FullTextEntityManager entityManager = getFullTextEntityManager();
+        entityManager.purge(t.getClass(), t.getId());
         entityManager.flushToIndexes();
     }
 
@@ -221,8 +230,10 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         final List<Sort.Order> orders = new ArrayList<>();
         LinkedList<SortField> sortFields = sQuery.getSortFields();
-        for (SortField sortField : sortFields) {
-            if (sortField.getReverse()) {
+        for (SortField sortField : sortFields)
+        {
+            if (sortField.getReverse())
+            {
                 orders.add(Sort.Order.desc(sortField.getField()));
             }
             orders.add(Sort.Order.asc(sortField.getField()));

@@ -15,13 +15,7 @@ public interface FullTextRepository<T>
 
     void deleteAll(Class<T> t);
 
-    long count(Class<T> t);
-
-    int countBySearchQuery(SearchQuery query, Class<T> t);
-
-    List<T> findAll(Pageable pageable, Class<T> t);
-
-    List<T> findAllBySearchQuery(SearchQuery searchQuery, Class<T> t);
+    void purge(T t);
 
     void indexAll(Class<T> t);
 
@@ -30,6 +24,14 @@ public interface FullTextRepository<T>
     void indexOne(T entity);
 
     void optimizeIndex();
+
+    long count(Class<T> t);
+
+    int countBySearchQuery(SearchQuery query, Class<T> t);
+
+    List<T> findAll(Pageable pageable, Class<T> t);
+
+    List<T> findAllBySearchQuery(SearchQuery searchQuery, Class<T> t);
 
     FullTextQuery createQuery(String queryString, SortField[] sortFields, Class<T> t);
 }
