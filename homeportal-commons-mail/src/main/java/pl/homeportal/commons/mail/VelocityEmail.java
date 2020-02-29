@@ -1,5 +1,7 @@
 package pl.homeportal.commons.mail;
 
+import lombok.Getter;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.velocity.Template;
@@ -9,26 +11,27 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.mail.Session;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: gwrazen
- * Date: 16/11/13
- * Time: 19:10
- * To change this template use File | Settings | File Templates.
+ * Created by Grzegorz Wrażeń on 16-11-2013 at  19:10
  */
+
 public class VelocityEmail extends HtmlEmail
 {
     private static final Logger LOG = LoggerFactory.getLogger(VelocityEmail.class.getSimpleName());
 
     private static final String ENCODING = "UTF-8";
+    private static final String INCORRECT_ADDRESS = "Incorrect address: %s";
     private static final VelocityEngine VELOCITY_ENGINE = new VelocityEngine();
+    private static final String DTO = "dto";
 
-    private VelocityContext context = new VelocityContext();
-
-    private final EmailType emailType;
+    @Getter
+    private final EmailTemplate template;
+    private final VelocityContext context;
 
     static
     {
@@ -39,12 +42,123 @@ public class VelocityEmail extends HtmlEmail
         VELOCITY_ENGINE.init();
     }
 
-    public VelocityEmail(EmailType emailType) throws EmailException
+    private VelocityEmail(EmailTemplate template)
     {
         super();
-        this.emailType = emailType;
-        setCharset(ENCODING);
-        setSmtpPort(465);
+        this.template = template;
+        this.setCharset(ENCODING);
+        this.context = new VelocityContext();
+    }
+
+    public static VelocityEmail of(EmailTemplate template)
+    {
+        return new VelocityEmail(template);
+    }
+
+    public VelocityEmail session(Session session)
+    {
+        this.setMailSession(session);
+        return this;
+    }
+
+    public VelocityEmail subject(String subject)
+    {
+        this.setSubject(subject);
+        return this;
+    }
+
+    public VelocityEmail from(String fromEmail)
+    {
+        try
+        {
+            this.setFrom(fromEmail);
+            return this;
+        }
+        catch (EmailException e)
+        {
+            LOG.warn(String.format(INCORRECT_ADDRESS, fromEmail), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public VelocityEmail from(String fromEmail, String displayName)
+    {
+        try
+        {
+            this.setFrom(fromEmail, displayName);
+            return this;
+        }
+        catch (EmailException e)
+        {
+            LOG.warn(String.format(INCORRECT_ADDRESS, fromEmail), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public  VelocityEmail tos(Set<String> tos)
+    {
+        if (CollectionUtils.isEmpty(tos))
+        {
+            return this;
+        }
+
+        tos.forEach(address -> {
+            try
+            {
+                this.addTo(address);
+            }
+            catch (EmailException e)
+            {
+                LOG.warn(String.format(INCORRECT_ADDRESS, address), e);
+            }
+        });
+        return this;
+    }
+
+    public VelocityEmail ccs(Set<String> tos)
+    {
+        if (CollectionUtils.isEmpty(tos))
+        {
+            return this;
+        }
+
+        tos.forEach(address -> {
+            try
+            {
+                this.addCc(address);
+            }
+            catch (EmailException e)
+            {
+                LOG.warn(String.format(INCORRECT_ADDRESS, address), e);
+            }
+        });
+        return this;
+    }
+
+    public VelocityEmail bccs(Set<String> tos)
+    {
+        if (CollectionUtils.isEmpty(tos))
+        {
+            return this;
+        }
+
+        tos.forEach(address -> {
+            try
+            {
+                this.addBcc(address);
+            }
+            catch (EmailException e)
+            {
+                LOG.warn(String.format(INCORRECT_ADDRESS, address), e);
+            }
+        });
+        return this;
+    }
+
+    public VelocityEmail model(BaseDTO model)
+    {
+        this.context.put(DTO, model);
+        return this;
     }
 
     @Override
@@ -66,27 +180,26 @@ public class VelocityEmail extends HtmlEmail
         }
         finally
         {
-            if (writer != null) {
-                try {
+            if (writer != null)
+            {
+                try
+                {
                     writer.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                 }
             }
         }
     }
 
-    public void addModel(String key, Object value)
+    public String getTemplateName()
     {
-        context.put(key, value);
-    }
-
-    public EmailType getEmailType()
-    {
-        return emailType;
+        return template.getTemplateName();
     }
 
     private Template getTemplate()
     {
-        return VELOCITY_ENGINE.getTemplate(emailType.getTemplateName(), ENCODING);
+        return VELOCITY_ENGINE.getTemplate(getTemplateName(), ENCODING);
     }
 }

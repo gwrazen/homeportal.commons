@@ -1,5 +1,9 @@
 package pl.homeportal.commons.i18n;
 
+import org.springframework.cglib.core.Local;
+
+import java.util.Locale;
+
 /**
  * Created with IntelliJ IDEA.
  * User: gwrazen
@@ -33,5 +37,10 @@ public enum Language
         }
 
         return null;
+    }
+
+    public Locale locale()
+    {
+        return Locale.forLanguageTag(value);
     }
 }

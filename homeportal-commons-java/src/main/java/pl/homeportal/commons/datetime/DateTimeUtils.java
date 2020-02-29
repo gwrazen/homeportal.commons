@@ -43,4 +43,9 @@ public class DateTimeUtils
     {
         return new Date(System.currentTimeMillis() - (DAY * days));
     }
+
+    public static Date todayPlusDays(int days)
+    {
+        return new Date(System.currentTimeMillis() + (DAY * days));
+    }
 }
