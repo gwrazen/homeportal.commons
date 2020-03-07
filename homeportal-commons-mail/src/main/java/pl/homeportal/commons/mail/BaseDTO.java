@@ -3,9 +3,12 @@ package pl.homeportal.commons.mail;
 import lombok.Getter;
 import pl.homeportal.commons.i18n.Language;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 /**
  * Created by Grzegorz Wrażeń on 24-02-2020
@@ -21,43 +24,59 @@ public abstract class BaseDTO
     private Set<String> ccs;
     private Set<String> bccs;
 
-    protected BaseDTO(Language language)
+    protected BaseDTO(Language language, Collection<String> allTos, Collection<String> allCcs, Collection<String> allBccs)
     {
         this.language = language;
+        addAllTos(allTos);
+        addAllCcs(allCcs);
+        addAllBccs(allBccs);
     }
 
-    public BaseDTO addTo(String email)
+    public void addAllTos(Collection<String> emails)
     {
+        if (isEmpty(emails))
+        {
+            return;
+        }
+
         if (tos == null)
         {
-            tos = new HashSet<>(INITIAL_CAPACITY);
+            tos = new HashSet<>(emails.size());
         }
 
-        tos.add(email);
-        return this;
+        tos.addAll(emails);
     }
 
-    public BaseDTO addCc(String email)
+    public void addAllCcs(Collection<String> emails)
     {
+        if (isEmpty(emails))
+        {
+            return;
+        }
+
         if (ccs == null)
         {
-            ccs = new HashSet<>(INITIAL_CAPACITY);
+            ccs = new HashSet<>(emails.size());
         }
 
-        ccs.add(email);
-        return this;
+        ccs.addAll(emails);
     }
 
-    public BaseDTO addBcc(String email)
+    public void addAllBccs(Collection<String> emails)
     {
+        if (isEmpty(emails))
+        {
+            return;
+        }
+
         if (bccs == null)
         {
-            bccs = new HashSet<>(INITIAL_CAPACITY);
+            bccs = new HashSet<>(emails.size());
         }
 
-        bccs.add(email);
-        return this;
+        bccs.addAll(emails);
     }
+
 
     public Locale locale()
     {
