@@ -12,9 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.Session;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Set;
+
+import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
  * Created by Grzegorz Wrażeń on 16-11-2013 at  19:10
@@ -95,7 +99,7 @@ public class VelocityEmail extends HtmlEmail
         }
     }
 
-    public  VelocityEmail tos(Set<String> tos)
+    public VelocityEmail tos(Set<String> tos)
     {
         if (CollectionUtils.isEmpty(tos))
         {
@@ -155,6 +159,29 @@ public class VelocityEmail extends HtmlEmail
         return this;
     }
 
+    public VelocityEmail attachFromResources(Set<String> attachments)
+    {
+        if (CollectionUtils.isEmpty(attachments))
+        {
+            return this;
+        }
+
+        attachments.forEach(attachment ->
+        {
+            URL url = fromResources(attachment);
+            try
+            {
+                this.attach(url, getFileName(url), EMPTY_STRING);
+            }
+            catch (EmailException e)
+            {
+                LOG.warn(e.getMessage());
+            }
+        });
+
+        return this;
+    }
+
     public VelocityEmail model(BaseDTO model)
     {
         this.context.put(DTO, model);
@@ -201,5 +228,16 @@ public class VelocityEmail extends HtmlEmail
     private Template getTemplate()
     {
         return VELOCITY_ENGINE.getTemplate(getTemplateName(), ENCODING);
+    }
+
+    private URL fromResources(String attachment)
+    {
+        return getClass().getClassLoader().getResource(attachment);
+    }
+
+    private String getFileName(URL url)
+    {
+        int lastIndex = url.getFile().lastIndexOf(File.separator);
+        return url.getFile().substring(++lastIndex);
     }
 }

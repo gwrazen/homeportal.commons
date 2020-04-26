@@ -23,13 +23,15 @@ public abstract class BaseDTO
     private Set<String> tos;
     private Set<String> ccs;
     private Set<String> bccs;
+    private Set<String> attachments;
 
-    protected BaseDTO(Language language, Collection<String> allTos, Collection<String> allCcs, Collection<String> allBccs)
+    protected BaseDTO(Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<String> attachments)
     {
         this.language = language;
-        addAllTos(allTos);
-        addAllCcs(allCcs);
-        addAllBccs(allBccs);
+        addAllTos(tos);
+        addAllCcs(ccs);
+        addAllBccs(bccs);
+        addAllAttachments(attachments);
     }
 
     public void addAllTos(Collection<String> emails)
@@ -77,6 +79,20 @@ public abstract class BaseDTO
         bccs.addAll(emails);
     }
 
+    public void addAllAttachments(Collection<String> attachments)
+    {
+        if (isEmpty(attachments))
+        {
+            return;
+        }
+
+        if (this.attachments == null)
+        {
+            this.attachments = new HashSet<>(attachments.size());
+        }
+
+        this.attachments.addAll(attachments);
+    }
 
     public Locale locale()
     {

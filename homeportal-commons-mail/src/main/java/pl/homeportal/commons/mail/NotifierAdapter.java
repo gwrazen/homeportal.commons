@@ -34,6 +34,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
                     .tos(dto.getTos())
                     .ccs(dto.getCcs())
                     .bccs(dto.getBccs())
+                    .attachFromResources(dto.getAttachments())
                     .model(dto);
 
             send(email);
