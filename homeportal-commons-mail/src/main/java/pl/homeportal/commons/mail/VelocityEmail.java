@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.Session;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
@@ -159,7 +159,7 @@ public class VelocityEmail extends HtmlEmail
         return this;
     }
 
-    public VelocityEmail attachFromResources(Set<String> attachments)
+    public VelocityEmail attachments(Set<BaseDTO.Attachment> attachments)
     {
         if (CollectionUtils.isEmpty(attachments))
         {
@@ -168,12 +168,12 @@ public class VelocityEmail extends HtmlEmail
 
         attachments.forEach(attachment ->
         {
-            URL url = fromResources(attachment);
             try
             {
-                this.attach(url, getFileName(url), EMPTY_STRING);
+                URL url = resolveUrl(attachment);
+                this.attach(url, attachment.getName(), EMPTY_STRING);
             }
-            catch (EmailException e)
+            catch (Exception e)
             {
                 LOG.warn(e.getMessage());
             }
@@ -230,14 +230,12 @@ public class VelocityEmail extends HtmlEmail
         return VELOCITY_ENGINE.getTemplate(getTemplateName(), ENCODING);
     }
 
-    private URL fromResources(String attachment)
+    private URL resolveUrl(BaseDTO.Attachment attachment) throws MalformedURLException
     {
-        return getClass().getClassLoader().getResource(attachment);
-    }
-
-    private String getFileName(URL url)
-    {
-        int index = url.getFile().lastIndexOf(File.separator);
-        return url.getFile().substring(++index);
+        if (attachment.isResources())
+        {
+            return getClass().getClassLoader().getResource(attachment.getPath());
+        }
+        return new URL(attachment.getPath());
     }
 }

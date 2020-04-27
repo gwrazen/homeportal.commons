@@ -23,9 +23,9 @@ public abstract class BaseDTO
     private Set<String> tos;
     private Set<String> ccs;
     private Set<String> bccs;
-    private Set<String> attachments;
+    private Set<Attachment> attachments;
 
-    protected BaseDTO(Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<String> attachments)
+    protected BaseDTO(Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<Attachment> attachments)
     {
         this.language = language;
         addAllTos(tos);
@@ -79,7 +79,7 @@ public abstract class BaseDTO
         bccs.addAll(emails);
     }
 
-    public void addAllAttachments(Collection<String> attachments)
+    public void addAllAttachments(Collection<Attachment> attachments)
     {
         if (isEmpty(attachments))
         {
@@ -97,5 +97,25 @@ public abstract class BaseDTO
     public Locale locale()
     {
         return language.locale();
+    }
+
+    @Getter
+    public static class Attachment
+    {
+        private String path;
+        private String name;
+        private boolean resources;
+
+        private Attachment(String path, String name, boolean resources)
+        {
+            this.path = path;
+            this.name = name;
+            this.resources = resources;
+        }
+
+        public static Attachment of(String path, String name, boolean resources)
+        {
+            return new Attachment(path, name, resources);
+        }
     }
 }
