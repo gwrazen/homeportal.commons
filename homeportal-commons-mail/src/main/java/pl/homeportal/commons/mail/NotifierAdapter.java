@@ -17,6 +17,9 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
 {
     private static final Logger LOG = LoggerFactory.getLogger(NotifierAdapter.class.getSimpleName());
 
+    // default sender name key
+    private static final String SENDER_NAME = "email.sender.name";
+
     protected Session session;
     protected MessageSource messageSource;
 
@@ -51,6 +54,12 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         return messageSource.getMessage(key, null, locale);
     }
 
+    @Override
+    public String getSenderName(Locale locale)
+    {
+        return getMessage(SENDER_NAME, locale);
+    }
+
     private void send(VelocityEmail email)
     {
         if (isEnabled())
@@ -59,7 +68,6 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
             LOG.info(format("Email sent. Template: %s, response: %s", email.getTemplateName(), response));
             return;
         }
-
         LOG.info(format("Notifier disabled for email type: %s", email.getTemplateName()));
     }
 }
