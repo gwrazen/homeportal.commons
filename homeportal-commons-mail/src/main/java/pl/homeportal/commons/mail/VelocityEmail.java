@@ -237,7 +237,7 @@ public class VelocityEmail extends HtmlEmail
 
     private String getFileName(URL url)
     {
-        int lastIndex = url.getFile().lastIndexOf(File.separator);
-        return url.getFile().substring(++lastIndex);
+        int index = url.getFile().lastIndexOf(File.separator);
+        return url.getFile().substring(++index);
     }
 }
