@@ -7,10 +7,11 @@ import java.util.Map;
  * 1 - Sale
  * 2 - Rent
  *
- * @author Ryba
+ * @author Grzegorz Wrażeń
  */
 public class Activity
 {
+    private static final int INITIAL_CAPACITY = 2;
 
     public static final String SALE = "1";
     public static final String RENT = "2";
@@ -24,10 +25,10 @@ public class Activity
     private static final String MESSAGE_SALE = "activity.sale";
     private static final String MESSAGE_RENT = "activity.rent";
 
-    private static final Map<String, String> ACTIVITIES_TO_STRINGS = new HashMap<>(2);
-    private static final Map<String, String> URIS_TO_ACTIVITIES = new HashMap<>(2);
-    private static final Map<String, String> ACTIVITIES_TO_URIS = new HashMap<>(2);
-    private static final Map<String, String> ACTIVITIES_TO_MESSAGES = new HashMap<>(2);
+    private static final Map<String, String> ACTIVITIES_TO_STRINGS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> URIS_TO_ACTIVITIES = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> ACTIVITIES_TO_URIS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> ACTIVITIES_TO_MESSAGES = new HashMap<>(INITIAL_CAPACITY);
 
     static
     {
@@ -63,5 +64,4 @@ public class Activity
     {
         return ACTIVITIES_TO_MESSAGES.get(activityID);
     }
-
 }

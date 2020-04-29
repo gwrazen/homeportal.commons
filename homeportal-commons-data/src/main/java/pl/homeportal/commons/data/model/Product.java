@@ -9,11 +9,14 @@ import java.util.Map;
  * 3 - Office
  * 4 - Apartment
  * 5 - Hall
+ * 6 - Object
  *
- * @author Ryba
+ * @author Grzegorz Wrażeń
  */
 public class Product
 {
+    private static final int INITIAL_CAPACITY = 6;
+
     public static final String HOUSE = "1";
     public static final String LAND = "2";
     public static final String OFFICE = "3";
@@ -57,13 +60,13 @@ public class Product
     public static final String OBJECT_MESSAGE = "product.objects";
 
 
-    private static final Map<String, String> PRODUCTS_TO_STRINGS_DETAILS = new HashMap<String, String>(6);
-    private static final Map<String, String> PRODUCTS_TO_STRINGS_LIST = new HashMap<String, String>(6);
-    private static final Map<String, String> PRODUCTS_TO_LIST_URIS = new HashMap<String, String>(6);
-    private static final Map<String, String> LIST_URIS_TO_PRODUCTS = new HashMap<String, String>(6);
-    private static final Map<String, String> PRODUCTS_TO_DETAILS_URIS = new HashMap<String, String>(6);
-    private static final Map<String, String> DETAILS_URIS_TO_PRODUCTS = new HashMap<String, String>(6);
-    private static final Map<String, String> PRODUCTS_TO_MESSAGES = new HashMap<String, String>(6);
+    private static final Map<String, String> PRODUCTS_TO_STRINGS_DETAILS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> PRODUCTS_TO_STRINGS_LIST = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> PRODUCTS_TO_LIST_URIS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> LIST_URIS_TO_PRODUCTS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> PRODUCTS_TO_DETAILS_URIS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> DETAILS_URIS_TO_PRODUCTS = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> PRODUCTS_TO_MESSAGES = new HashMap<>(INITIAL_CAPACITY);
 
     static
     {

@@ -1,5 +1,6 @@
 package pl.homeportal.commons.mail;
 
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -23,6 +24,9 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
     protected Session session;
     protected MessageSource messageSource;
 
+    @Setter
+    protected boolean fork = true;
+
     protected abstract EmailTemplate template();
 
     @Override
@@ -32,7 +36,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         {
             final VelocityEmail email = VelocityEmail.of(template())
                     .session(session)
-                    .subject(getSubject(dto.locale()))
+                    .subject(getSubject(dto.subjectArguments(), dto.locale()))
                     .from(getSenderEmail(), getSenderName(dto.locale()))
                     .tos(dto.getTos())
                     .ccs(dto.getCcs())
@@ -48,26 +52,45 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         }
     }
 
+//    @Override
+//    public String getMessage(String key, Locale locale)
+//    {
+//        return messageSource.getMessage(key, null, locale);
+//    }
+
     @Override
-    public String getMessage(String key, Locale locale)
+    public String getMessage(String key, Object [] arguments, Locale locale)
     {
-        return messageSource.getMessage(key, null, locale);
+        return messageSource.getMessage(key, arguments, locale);
     }
 
     @Override
     public String getSenderName(Locale locale)
     {
-        return getMessage(SENDER_NAME, locale);
+        return getMessage(SENDER_NAME, null, locale);
     }
 
     private void send(VelocityEmail email)
     {
-        if (isEnabled())
+        if (!isEnabled())
+        {
+            LOG.info(format("Notifier disabled for email type: %s", email.getTemplateName()));
+            return;
+        }
+
+        if (!fork)
         {
             String response = email.send();
             LOG.info(format("Email sent. Template: %s, response: %s", email.getTemplateName(), response));
             return;
         }
-        LOG.info(format("Notifier disabled for email type: %s", email.getTemplateName()));
+
+        new Thread(() ->
+        {
+            String response = email.send();
+            LOG.info(format("Email sent. Template: %s, response: %s", email.getTemplateName(), response));
+            return;
+
+        }).start();
     }
 }

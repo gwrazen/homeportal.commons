@@ -19,14 +19,16 @@ public abstract class BaseDTO
 {
     public static final int INITIAL_CAPACITY = 1;
 
+    private final String domain;
     private final Language language;
     private Set<String> tos;
     private Set<String> ccs;
     private Set<String> bccs;
     private Set<Attachment> attachments;
 
-    protected BaseDTO(Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<Attachment> attachments)
+    protected BaseDTO(String domain, Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<Attachment> attachments)
     {
+        this.domain = domain;
         this.language = language;
         addAllTos(tos);
         addAllCcs(ccs);
@@ -97,6 +99,11 @@ public abstract class BaseDTO
     public Locale locale()
     {
         return language.locale();
+    }
+
+    public Object [] subjectArguments()
+    {
+        return null;
     }
 
     @Getter

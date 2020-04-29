@@ -13,11 +13,13 @@ public interface Notifier<T>
 
     boolean isEnabled();
 
-    String getSubject(Locale locale);
+    String getSubject(Object [] arguments, Locale locale);
 
     String getSenderEmail();
 
     String getSenderName(Locale locale);
 
-    String getMessage(String key, Locale locale);
+//    String getMessage(String key, Locale locale);
+
+    String getMessage(String key, Object [] arguments, Locale locale);
 }
