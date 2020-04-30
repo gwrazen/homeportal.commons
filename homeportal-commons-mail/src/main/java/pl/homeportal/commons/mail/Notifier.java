@@ -9,7 +9,13 @@ import java.util.Locale;
 
 public interface Notifier<T>
 {
-    void notify(T dto);
+    /**
+     *
+     * Always run notification in fork mode on
+     */
+    void notify(BaseDTO dto);
+
+    void notify(T dto, boolean fork);
 
     boolean isEnabled();
 
