@@ -36,8 +36,8 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         {
             final VelocityEmail email = VelocityEmail.of(template())
                     .session(session)
-                    .subject(getSubject(dto.subjectArguments(), dto.locale()))
-                    .from(getSenderEmail(), getSenderName(dto.locale()))
+                    .subject(subject(dto))
+                    .from(senderEmail(), senderName(dto.locale()))
                     .tos(dto.getTos())
                     .ccs(dto.getCcs())
                     .bccs(dto.getBccs())
@@ -52,22 +52,21 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         }
     }
 
-//    @Override
-//    public String getMessage(String key, Locale locale)
-//    {
-//        return messageSource.getMessage(key, null, locale);
-//    }
+    private String subject(BaseDTO dto)
+    {
+        return message(dto.subjectKey(), dto.subjectArguments(), dto.locale());
+    }
 
     @Override
-    public String getMessage(String key, Object [] arguments, Locale locale)
+    public String message(String key, Object [] arguments, Locale locale)
     {
         return messageSource.getMessage(key, arguments, locale);
     }
 
     @Override
-    public String getSenderName(Locale locale)
+    public String senderName(Locale locale)
     {
-        return getMessage(SENDER_NAME, null, locale);
+        return message(SENDER_NAME, null, locale);
     }
 
     private void send(VelocityEmail email)

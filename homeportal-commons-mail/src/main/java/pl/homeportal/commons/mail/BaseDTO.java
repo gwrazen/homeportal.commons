@@ -36,6 +36,8 @@ public abstract class BaseDTO
         addAllAttachments(attachments);
     }
 
+    public abstract String subjectKey();
+
     public void addAllTos(Collection<String> emails)
     {
         if (isEmpty(emails))

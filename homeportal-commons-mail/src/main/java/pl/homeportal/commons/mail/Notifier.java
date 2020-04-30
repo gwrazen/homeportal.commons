@@ -13,13 +13,9 @@ public interface Notifier<T>
 
     boolean isEnabled();
 
-    String getSubject(Object [] arguments, Locale locale);
+    String senderEmail();
 
-    String getSenderEmail();
+    String senderName(Locale locale);
 
-    String getSenderName(Locale locale);
-
-//    String getMessage(String key, Locale locale);
-
-    String getMessage(String key, Object [] arguments, Locale locale);
+    String message(String key, Object [] arguments, Locale locale);
 }
