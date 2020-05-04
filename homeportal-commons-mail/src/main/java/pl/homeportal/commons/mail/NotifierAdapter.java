@@ -75,7 +75,6 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         {
             createAndSend(dto);
         }).start();
-
     }
 
     private void createAndSend(BaseDTO dto)
