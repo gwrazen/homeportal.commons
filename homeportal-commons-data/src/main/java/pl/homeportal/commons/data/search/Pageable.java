@@ -13,4 +13,6 @@ public interface Pageable
     String getSortField();
 
     boolean isReverseOrder();
+
+    void setPage(int page);
 }
