@@ -6,7 +6,7 @@
     <parent>
         <groupId>pl.homeportal</groupId>
         <artifactId>homeportal-commons</artifactId>
-        <version>1.0</version>
+        <version>5.0</version>
     </parent>
 
     <artifactId>homeportal-commons-mail</artifactId>
@@ -14,19 +14,12 @@
     <dependencies>
 
         <!-- INTERNALS -->
-
         <dependency>
             <groupId>pl.homeportal</groupId>
             <artifactId>homeportal-commons-java</artifactId>
-            <version>1.0</version>
+            <version>${homeportal.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>pl.homeportal</groupId>
-            <artifactId>homeportal-commons-utils</artifactId>
-            <version>1.0</version>
-        </dependency>
-        
         <!-- EXTERNALS -->
         <dependency>
             <groupId>org.apache.commons</groupId>

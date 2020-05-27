@@ -8,8 +8,7 @@ import static pl.homeportal.commons.text.Constants.REGEXP_SPACE;
 import static pl.homeportal.commons.text.Constants.SPACE;
 
 /**
- * fixme use constants
- * Created by gwrazen on 28/07/2015.
+ * Created by gwrazen on 28-07-2015.
  */
 public class StringUtils
 {

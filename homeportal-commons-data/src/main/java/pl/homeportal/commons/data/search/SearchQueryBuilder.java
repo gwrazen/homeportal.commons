@@ -3,7 +3,7 @@ package pl.homeportal.commons.data.search;
 /**
  * @author Grzegorz Wrażeń 2019-04-23
  */
-public abstract class SearchQueryBuilder<SR extends PageInfo>
+public abstract class SearchQueryBuilder<SR extends Pageable>
 {
     protected abstract SearchQuery build(SR sRequest);
 
