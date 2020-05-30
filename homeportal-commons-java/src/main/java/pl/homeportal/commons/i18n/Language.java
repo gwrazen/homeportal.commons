@@ -1,16 +1,11 @@
 package pl.homeportal.commons.i18n;
 
-import org.springframework.cglib.core.Local;
-
 import java.util.Locale;
 
 /**
- * Created with IntelliJ IDEA.
- * User: gwrazen
- * Date: 31/01/14
- * Time: 23:38
- * To change this template use File | Settings | File Templates.
+ * Created by Grzegorz Wrazen at 31-01-2014 at 23:38
  */
+
 public enum Language
 {
     POLISH("pl"),
@@ -33,7 +28,9 @@ public enum Language
         for (Language language : values())
         {
             if (language.getValue().equalsIgnoreCase(value))
+            {
                 return language;
+            }
         }
 
         return null;
