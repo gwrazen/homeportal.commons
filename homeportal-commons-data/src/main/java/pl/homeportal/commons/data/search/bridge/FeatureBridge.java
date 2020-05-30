@@ -4,6 +4,11 @@ import org.hibernate.search.bridge.builtin.StringBridge;
 import pl.homeportal.commons.data.model.feature.FeatureConstants;
 import pl.homeportal.commons.text.Constants;
 
+import static pl.homeportal.commons.data.model.feature.FeatureConstants.FEATURE_SEPARATOR;
+import static pl.homeportal.commons.text.Constants.BACKSLASH;
+import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
+import static pl.homeportal.commons.text.Constants.SPACE;
+
 public class FeatureBridge extends StringBridge {
 
     private static final String SPECIAL_CHARACTERS = "[^\\p{L}\\p{Nd}\\s]+";
@@ -23,7 +28,7 @@ public class FeatureBridge extends StringBridge {
             return null;
         }
 
-        if (original.replaceAll(SPECIAL_CHARACTERS, "").trim().length() == 0)
+        if (original.replaceAll(SPECIAL_CHARACTERS, EMPTY_STRING).trim().length() == 0)
         {
             return null;
         }
@@ -36,10 +41,10 @@ public class FeatureBridge extends StringBridge {
             {
                 feature = feature.substring(index + 1);
                 feature = feature.toLowerCase();
-                feature = feature.replaceAll(SPECIAL_CHARACTERS, Constants.EMPTY_STRING);
-                feature = feature.replaceAll(MORE_THAN_ONE_SPACE, Constants.SPACE);
+                feature = feature.replaceAll(SPECIAL_CHARACTERS, EMPTY_STRING);
+                feature = feature.replaceAll(MORE_THAN_ONE_SPACE, SPACE);
                 features.append(feature);
-                features.append(" ");
+                features.append(SPACE);
             }
         }
         return features.toString().trim();
@@ -47,6 +52,6 @@ public class FeatureBridge extends StringBridge {
 
     private String getSeparator()
     {
-        return Constants.BACKSLASH + FeatureConstants.FEATURE_SEPARATOR;
+        return BACKSLASH + FEATURE_SEPARATOR;
     }
 }
