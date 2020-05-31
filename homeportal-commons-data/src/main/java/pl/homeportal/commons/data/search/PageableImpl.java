@@ -46,10 +46,4 @@ public class PageableImpl implements Pageable
     {
         return reverse;
     }
-
-    @Override
-    public void setPage(int page)
-    {
-        this.page = page;
-    }
 }
