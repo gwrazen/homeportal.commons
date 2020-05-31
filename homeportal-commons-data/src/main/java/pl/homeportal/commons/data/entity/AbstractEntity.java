@@ -27,6 +27,11 @@ public class AbstractEntity<IDENTITY extends Number> implements Serializable
     @Column(name = "ID", nullable = false)
     protected IDENTITY id;
 
+    public String getIdAsString()
+    {
+        return String.valueOf(id.intValue());
+    }
+
     @Override
     public String toString()
     {
