@@ -23,6 +23,11 @@ public enum Language
         return value;
     }
 
+    public Language getByLocale(Locale locale)
+    {
+        return getByValue(locale.getLanguage());
+    }
+
     public static Language getByValue(String value)
     {
         for (Language language : values())
