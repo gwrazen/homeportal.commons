@@ -23,7 +23,7 @@ public enum Language
         return value;
     }
 
-    public Language getByLocale(Locale locale)
+    public static Language getByLocale(Locale locale)
     {
         return getByValue(locale.getLanguage());
     }
