@@ -21,7 +21,7 @@ import java.util.Set;
 import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
- * Created by Grzegorz Wrażeń on 16-11-2013 at  19:10
+ * Created by Grzegorz Wrazen on 16-11-2013 at 19:10
  */
 
 public class VelocityEmail extends HtmlEmail
