@@ -1,7 +1,5 @@
 package pl.homeportal.commons.reflection;
 
-import pl.homeportal.commons.exception.HomeportalSystemException;
-
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
@@ -27,7 +25,7 @@ public class ClassFieldReader
         }
         catch (IllegalAccessException e)
         {
-            throw new HomeportalSystemException(e);
+            throw new RuntimeException(e);
         }
     }
 }

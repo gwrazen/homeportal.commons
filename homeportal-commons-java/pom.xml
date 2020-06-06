@@ -13,7 +13,6 @@
     <artifactId>homeportal-commons-java</artifactId>
 
     <dependencies>
-
         <!-- INTERNAL -->
         <!-- EXTERNAL -->
         <dependency>

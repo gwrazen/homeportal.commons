@@ -32,6 +32,16 @@ public class AbstractEntity<IDENTITY extends Number> implements Serializable
         return String.valueOf(id.intValue());
     }
 
+    public boolean isPersisted()
+    {
+        return id != null ? true : false;
+    }
+
+    public boolean isTransient()
+    {
+        return id == null ? true : false;
+    }
+
     @Override
     public String toString()
     {
