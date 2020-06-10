@@ -1,10 +1,15 @@
 package pl.homeportal.commons.service;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.List;
+
+import static java.lang.String.format;
 
 /**
  * Created by Grzegorz Wrażeń on 06-06-2020 at 09:22
@@ -15,6 +20,7 @@ public class LoggingSupport
     // information
     public static final String INFORMATION_SAVE = "Entity s% saved successfully with data: %s";
     public static final String INFORMATION_UPDATE = "Entity s% updated successfully with data: %s";
+    public static final String INFORMATION_DELETE = "Entity s% deleted successfully with id: %s";
     public static final String INFORMATION_INCREMENT_IDENTITY = "Increment identity for entity %s successful with data: %s";
 
     // warning
@@ -24,75 +30,137 @@ public class LoggingSupport
     // error
     public static final String ERROR_SAVE = "Error during saving entity %s with data: %s";
     public static final String ERROR_UPDATE = "Error during updating entity %s with data: %s";
+    public static final String ERROR_DELETE = "Error during deleting entity %s with id: %s";
     public static final String ERROR_INCREMENT_IDENTITY = "Error during incrementing identity for entity %s with data: %s";
 
     // information
-    public static <T extends AbstractEntity> String informationSave(T entity)
+    public static void information(Logger logger, String messageTemplate, List<Object> arguments)
+    {
+        logger.info(messageTemplate, arguments.toArray());
+    }
+
+    public static <T extends AbstractEntity> void information(Logger logger, String messageTemplate, T entity)
+    {
+        logger.info(formatMessage(messageTemplate, entity));
+    }
+
+    public static <T extends AbstractEntity> void informationSaveOrUpdate(Logger logger, T entity)
     {
         if (entity.isTransient())
         {
-            return formatMessage(INFORMATION_SAVE, entity);
+            logger.info(formatMessage(INFORMATION_SAVE, entity));
+            return;
         }
-        return formatMessage(INFORMATION_UPDATE, entity);
+        logger.info(formatMessage(INFORMATION_UPDATE, entity));
+    }
+
+    public static <T extends AbstractEntity> void informationDelete(Logger logger, Class<T> aClass, Object id)
+    {
+        logger.info(formatMessage(INFORMATION_DELETE, aClass, id));
     }
 
     // warning
-    public static <T extends AbstractEntity> String warningSave(T entity)
+    public static void warning(Logger logger, String messageTemplate, List<Object> arguments)
     {
-        return formatMessage(WARNING_SAVE, entity);
+        logger.warn(messageTemplate, arguments.toArray());
     }
 
-    public static <T extends AbstractEntity> String warningRead(Class<T> aClass, Object id)
+    public static <T extends AbstractEntity> void warningSave(Logger logger, T entity)
     {
-        return formatMessage(WARNING_READ_NOT_FOUND, aClass, id);
+        logger.warn(formatMessage(WARNING_SAVE, entity));
+    }
+
+    public static <T extends AbstractEntity> void warningRead(Logger logger, Class<T> aClass, Object id)
+    {
+        logger.warn(formatMessage(WARNING_READ_NOT_FOUND, aClass, id));
     }
 
     // error
-    public static <T extends AbstractEntity> String errorSaveOrUpdate(T entity)
+    public static String error(Logger logger, String messageTemplate, List<Object> arguments)
+    {
+        String message = format(messageTemplate, arguments.toArray());
+        logger.error(message);
+        return message;
+    }
+
+    public static <T extends AbstractEntity> String error(Logger logger, String messageTemplate, T entity)
+    {
+        String message = formatMessage(messageTemplate, entity);
+        logger.error(message);
+        return message;
+    }
+
+    public static <T extends AbstractEntity> String errorSaveOrUpdate(Logger logger, T entity)
     {
         if (entity.isTransient())
         {
-            return formatMessage(ERROR_SAVE, entity);
+            String message = formatMessage(ERROR_SAVE, entity);
+            logger.error(message);
+            return message;
         }
-        return formatMessage(ERROR_UPDATE, entity);
+        String message = formatMessage(ERROR_UPDATE, entity);
+        logger.error(message);
+        return message;
+    }
+
+    public static <T extends AbstractEntity> String errorDelete(Logger logger, Class<T> aClass, Object id)
+    {
+        String message = formatMessage(ERROR_DELETE, aClass, id);
+        logger.error(message);
+        return message;
     }
 
     // log and serve exceptions
-    public static <T extends AbstractEntity> void logWithoutExceptionForSave(Logger logger, T entity, Exception e)
+    public static <T extends AbstractEntity> void logWithoutExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
     {
-        String message = errorSaveOrUpdate(entity);
-        logger.error(message, e);
+        errorSaveOrUpdate(logger, entity);
     }
 
-    public static <T extends AbstractEntity> RuntimeException logWithExceptionForSave(Logger logger, T entity, Exception e)
+    public static <T extends AbstractEntity> RuntimeException logWithExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
     {
-        String message = errorSaveOrUpdate(entity);
-        logger.error(message, e);
+        String message = errorSaveOrUpdate(logger, entity);
         return new HomeportalServiceException(message, e);
     }
 
-    public static <T extends AbstractEntity> RuntimeException logWithException(String messageTemplate, Logger logger, T entity, Exception e)
+    public static <T extends AbstractEntity> void logWithoutExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
+    {
+        errorDelete(logger, aClass, id);
+    }
+
+    public static <T extends AbstractEntity> RuntimeException logWithExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
+    {
+        String message = errorDelete(logger, aClass, id);
+        return new HomeportalServiceException(message, e);
+    }
+
+    public static <T extends AbstractEntity> RuntimeException logWithException(Logger logger, String messageTemplate, T entity, Exception e)
     {
         String message = formatMessage(messageTemplate, entity);
         logger.error(message, e);
         return new HomeportalServiceException(message, e);
     }
 
-    public static <T extends AbstractEntity> void logWithoutException(String messageTemplate, Logger logger, T entity, Exception e)
+    public static <T extends AbstractEntity> void logWithoutException(Logger logger, String messageTemplate, T entity, Exception e)
     {
         String message = formatMessage(messageTemplate, entity);
+        logger.error(message, e);
+    }
+
+    public static void logWithoutException(Logger logger, String messageTemplate, List<Object> arguments, Exception e)
+    {
+        String message = format(messageTemplate, arguments.toArray());
         logger.error(message, e);
     }
 
     // generic message methods
     public static <T extends AbstractEntity> String formatMessage(String messageTemplate, T entity)
     {
-        return String.format(messageTemplate, shortName(entity), entity);
+        return format(messageTemplate, shortName(entity), entity);
     }
 
     public static <T extends AbstractEntity> String formatMessage(String messageTemplate, Class<T> aClass, Object id)
     {
-        return String.format(messageTemplate, shortName(aClass), id);
+        return format(messageTemplate, shortName(aClass), id);
     }
 
     public static <T extends AbstractEntity> String shortName(@NotNull T entity)
@@ -103,5 +171,10 @@ public class LoggingSupport
     public static <T> String shortName(@NotNull Class<T> aClass)
     {
         return aClass.getSimpleName();
+    }
+
+    public static <T> Logger logger(Class<T> aClass)
+    {
+        return LoggerFactory.getLogger(shortName(aClass));
     }
 }
