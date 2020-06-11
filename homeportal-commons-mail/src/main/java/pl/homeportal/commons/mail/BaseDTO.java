@@ -25,8 +25,9 @@ public abstract class BaseDTO
     private Set<String> ccs;
     private Set<String> bccs;
     private Set<Attachment> attachments;
+    private Set<Attachment> embedded;
 
-    protected BaseDTO(String domain, Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<Attachment> attachments)
+    protected BaseDTO(String domain, Language language, Collection<String> tos, Collection<String> ccs, Collection<String> bccs, Collection<Attachment> attachments, Collection<Attachment> embedded)
     {
         this.domain = domain;
         this.language = language;
@@ -34,6 +35,7 @@ public abstract class BaseDTO
         addAllCcs(ccs);
         addAllBccs(bccs);
         addAllAttachments(attachments);
+        addAllEmbedded(embedded);
     }
 
     public abstract String subjectKey();
@@ -98,6 +100,21 @@ public abstract class BaseDTO
         this.attachments.addAll(attachments);
     }
 
+    public void addAllEmbedded(Collection<Attachment> attachments)
+    {
+        if (isEmpty(attachments))
+        {
+            return;
+        }
+
+        if (this.embedded == null)
+        {
+            this.embedded = new HashSet<>(attachments.size());
+        }
+
+        this.embedded.addAll(attachments);
+    }
+
     public Locale locale()
     {
         return language.locale();
@@ -114,6 +131,7 @@ public abstract class BaseDTO
         private String path;
         private String name;
         private boolean resources;
+        private boolean image;
 
         private Attachment(String path, String name, boolean resources)
         {
@@ -122,9 +140,17 @@ public abstract class BaseDTO
             this.resources = resources;
         }
 
-        public static Attachment of(String path, String name, boolean resources)
+        private Attachment(String path, String name, boolean resources, boolean image)
         {
-            return new Attachment(path, name, resources);
+            this.path = path;
+            this.name = name;
+            this.resources = resources;
+            this.image = image;
+        }
+
+        public static Attachment of(String path, String name, boolean resources, boolean image)
+        {
+            return new Attachment(path, name, resources, image);
         }
     }
 }

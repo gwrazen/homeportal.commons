@@ -1,7 +1,6 @@
 package pl.homeportal.commons.mail;
 
 import lombok.Getter;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.velocity.Template;
@@ -18,7 +17,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
+import static pl.homeportal.commons.text.Constants.UTF_8;
 
 /**
  * Created by Grzegorz Wrazen on 16-11-2013 at 19:10
@@ -28,10 +29,10 @@ public class VelocityEmail extends HtmlEmail
 {
     private static final Logger LOG = LoggerFactory.getLogger(VelocityEmail.class.getSimpleName());
 
-    private static final String ENCODING = "UTF-8";
+    private static final String CID = "cid";
+    private static final String DTO = "dto";
     private static final String INCORRECT_ADDRESS = "Incorrect address: %s";
     private static final VelocityEngine VELOCITY_ENGINE = new VelocityEngine();
-    private static final String DTO = "dto";
 
     @Getter
     private final EmailTemplate template;
@@ -50,7 +51,7 @@ public class VelocityEmail extends HtmlEmail
     {
         super();
         this.template = template;
-        this.setCharset(ENCODING);
+        this.setCharset(UTF_8);
         // todo: improve port passing
         this.setSmtpPort(465);
         this.context = new VelocityContext();
@@ -63,13 +64,13 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail session(Session session)
     {
-        this.setMailSession(session);
+        setMailSession(session);
         return this;
     }
 
     public VelocityEmail subject(String subject)
     {
-        this.setSubject(subject);
+        setSubject(subject);
         return this;
     }
 
@@ -77,7 +78,7 @@ public class VelocityEmail extends HtmlEmail
     {
         try
         {
-            this.setFrom(fromEmail);
+            setFrom(fromEmail);
             return this;
         }
         catch (EmailException e)
@@ -91,7 +92,7 @@ public class VelocityEmail extends HtmlEmail
     {
         try
         {
-            this.setFrom(fromEmail, displayName);
+            setFrom(fromEmail, displayName);
             return this;
         }
         catch (EmailException e)
@@ -103,7 +104,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail tos(Set<String> tos)
     {
-        if (CollectionUtils.isEmpty(tos))
+        if (isEmpty(tos))
         {
             return this;
         }
@@ -111,7 +112,7 @@ public class VelocityEmail extends HtmlEmail
         tos.forEach(address -> {
             try
             {
-                this.addTo(address);
+                addTo(address);
             }
             catch (EmailException e)
             {
@@ -123,7 +124,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail ccs(Set<String> tos)
     {
-        if (CollectionUtils.isEmpty(tos))
+        if (isEmpty(tos))
         {
             return this;
         }
@@ -131,7 +132,7 @@ public class VelocityEmail extends HtmlEmail
         tos.forEach(address -> {
             try
             {
-                this.addCc(address);
+                addCc(address);
             }
             catch (EmailException e)
             {
@@ -143,7 +144,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail bccs(Set<String> tos)
     {
-        if (CollectionUtils.isEmpty(tos))
+        if (isEmpty(tos))
         {
             return this;
         }
@@ -151,7 +152,7 @@ public class VelocityEmail extends HtmlEmail
         tos.forEach(address -> {
             try
             {
-                this.addBcc(address);
+                addBcc(address);
             }
             catch (EmailException e)
             {
@@ -163,7 +164,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail attachments(Set<BaseDTO.Attachment> attachments)
     {
-        if (CollectionUtils.isEmpty(attachments))
+        if (isEmpty(attachments))
         {
             return this;
         }
@@ -173,7 +174,31 @@ public class VelocityEmail extends HtmlEmail
             try
             {
                 URL url = resolveUrl(attachment);
-                this.attach(url, attachment.getName(), EMPTY_STRING);
+                attach(url, attachment.getName(), EMPTY_STRING);
+            }
+            catch (Exception e)
+            {
+                LOG.warn(e.getMessage());
+            }
+        });
+
+        return this;
+    }
+
+    public VelocityEmail embedded(Set<BaseDTO.Attachment> attachments)
+    {
+        if (isEmpty(attachments))
+        {
+            return this;
+        }
+
+        attachments.forEach(attachment ->
+        {
+            try
+            {
+                URL url = resolveUrl(attachment);
+                String cid = embed(url, attachment.getName());
+                context.put(CID, cid);
             }
             catch (Exception e)
             {
@@ -186,7 +211,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail model(BaseDTO model)
     {
-        this.context.put(DTO, model);
+        context.put(DTO, model);
         return this;
     }
 
@@ -229,7 +254,7 @@ public class VelocityEmail extends HtmlEmail
 
     private Template getTemplate()
     {
-        return VELOCITY_ENGINE.getTemplate(getTemplateName(), ENCODING);
+        return VELOCITY_ENGINE.getTemplate(getTemplateName(), UTF_8);
     }
 
     private URL resolveUrl(BaseDTO.Attachment attachment) throws MalformedURLException

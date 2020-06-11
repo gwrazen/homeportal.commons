@@ -96,6 +96,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
                 .ccs(dto.getCcs())
                 .bccs(dto.getBccs())
                 .attachments(dto.getAttachments())
+                .embedded(dto.getEmbedded())
                 .model(dto);
     }
 
