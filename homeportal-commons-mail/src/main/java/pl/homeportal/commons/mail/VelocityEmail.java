@@ -29,7 +29,6 @@ public class VelocityEmail extends HtmlEmail
 {
     private static final Logger LOG = LoggerFactory.getLogger(VelocityEmail.class.getSimpleName());
 
-    private static final String CID = "cid";
     private static final String DTO = "dto";
     private static final String INCORRECT_ADDRESS = "Incorrect address: %s";
     private static final VelocityEngine VELOCITY_ENGINE = new VelocityEngine();
@@ -198,7 +197,7 @@ public class VelocityEmail extends HtmlEmail
             {
                 URL url = resolveUrl(attachment);
                 String cid = embed(url, attachment.getName());
-                context.put(CID, cid);
+                context.put(attachment.getName(), cid);
             }
             catch (Exception e)
             {
