@@ -19,7 +19,6 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
 
     private static final String SENDER_NAME = "email.sender.name";
 
-
     protected Session session;
     protected MessageSource messageSource;
 
