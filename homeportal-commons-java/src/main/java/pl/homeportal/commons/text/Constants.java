@@ -2,6 +2,8 @@ package pl.homeportal.commons.text;
 
 public class Constants
 {
+
+    public static final String STAR = "*";
     public static final String DOT = ".";
     public static final String DASH = "-";
     public static final String SLASH = "/";
