@@ -2,7 +2,6 @@ package pl.homeportal.commons.text;
 
 public class Constants
 {
-
     public static final String STAR = "*";
     public static final String DOT = ".";
     public static final String DASH = "-";
@@ -12,6 +11,7 @@ public class Constants
     public static final String SPACE = " ";
     public static final String COLON = ":";
     public static final String CIRCUMFLEX = "^";
+    public static final String HASH = "#";
 
     public static final String REGEXP_CIRCUMFLEX = "\\^";
     public static final String REGEXP_SPACE = "\\s";
