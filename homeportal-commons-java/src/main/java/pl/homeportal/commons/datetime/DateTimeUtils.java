@@ -1,7 +1,11 @@
 package pl.homeportal.commons.datetime;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import static java.lang.String.valueOf;
+import static java.lang.System.currentTimeMillis;
 
 public class DateTimeUtils
 {
@@ -11,41 +15,46 @@ public class DateTimeUtils
 
     public static Date now()
     {
-        return new Date(System.currentTimeMillis());
+        return new Date(currentTimeMillis());
     }
 
     public static Date past()
     {
-        return new Date(System.currentTimeMillis() - MINUTE);
+        return new Date(currentTimeMillis() - MINUTE);
     }
 
     public static Date future()
     {
-        return new Date(System.currentTimeMillis() + MINUTE);
+        return new Date(currentTimeMillis() + MINUTE);
     }
 
     public static Date yesterday()
     {
-        return new Date(System.currentTimeMillis() - DAY);
+        return new Date(currentTimeMillis() - DAY);
     }
 
     public static Date today()
     {
-        return new Date(System.currentTimeMillis());
+        return new Date(currentTimeMillis());
     }
 
     public static Date tomorrow()
     {
-        return new Date(System.currentTimeMillis() + DAY);
+        return new Date(currentTimeMillis() + DAY);
     }
 
     public static Date todayMinusDays(int days)
     {
-        return new Date(System.currentTimeMillis() - (DAY * days));
+        return new Date(currentTimeMillis() - (DAY * days));
     }
 
     public static Date todayPlusDays(int days)
     {
-        return new Date(System.currentTimeMillis() + (DAY * days));
+        return new Date(currentTimeMillis() + (DAY * days));
+    }
+
+    public static String currentYear()
+    {
+        return valueOf(LocalDateTime.now().getYear());
     }
 }
