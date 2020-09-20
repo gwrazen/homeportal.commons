@@ -1,6 +1,5 @@
 package pl.homeportal.commons.collections;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
