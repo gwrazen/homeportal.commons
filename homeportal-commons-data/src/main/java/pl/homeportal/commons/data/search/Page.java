@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by Grzegorz Wrażeń on 27-05-2020
+ * Created by Grzegorz Wrazen on 27-05-2020
  */
 
 @Setter
-public class PageableImpl implements Pageable
+public class Page implements Pageable
 {
     @Getter(AccessLevel.NONE)
     private int page = 1;
