@@ -11,16 +11,10 @@ public class DateFormats
 
     public static final String TIME_WITH_SECOND  = "HH:mm:ss";
     public static final String TIME_WITH_MINUTE  = "HH:mm";
-    public static final String TIME_WITHOUT_HOUR = "mm:ss";
 
     public static final String DATE_WITH_SECOND = "dd-MM-yyyy HH:mm:ss";
     public static final String DATE_WITH_MINUTE = "dd-MM-yyyy HH:mm";
     public static final String DATE_WITH_DAY    = "dd-MM-yyyy";
-
-    public static SimpleDateFormat timeWithSecondWithoutHourPrecision()
-    {
-        return sdfTime(Precision.SECOND_WITHOUT_HOUR);
-    }
 
     public static SimpleDateFormat timeWithSecondPrecision()
     {
@@ -75,11 +69,6 @@ public class DateFormats
     {
         switch (precision)
         {
-            case SECOND_WITHOUT_HOUR:
-            {
-                return new SimpleDateFormat(TIME_WITHOUT_HOUR);
-            }
-
             case SECOND:
             {
                 return new SimpleDateFormat(TIME_WITH_SECOND);
