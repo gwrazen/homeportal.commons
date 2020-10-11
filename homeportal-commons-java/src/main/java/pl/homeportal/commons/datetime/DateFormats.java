@@ -6,7 +6,7 @@ public class DateFormats
 {
     public enum Precision
     {
-        SECOND_WITHOUT_HOUR, SECOND, MINUTE, DAY;
+        SECOND, MINUTE, DAY;
     }
 
     public static final String TIME_WITH_SECOND  = "HH:mm:ss";
