@@ -6,29 +6,48 @@ public class DateFormats
 {
     public enum Precision
     {
-        SECOND, MINUTE, DAY;
+        SECOND_WITHOUT_HOUR, SECOND, MINUTE, DAY;
     }
+
+    public static final String TIME_WITH_SECOND  = "HH:mm:ss";
+    public static final String TIME_WITH_MINUTE  = "HH:mm";
+    public static final String TIME_WITHOUT_HOUR = "mm:ss";
 
     public static final String DATE_WITH_SECOND = "dd-MM-yyyy HH:mm:ss";
     public static final String DATE_WITH_MINUTE = "dd-MM-yyyy HH:mm";
-    public static final String DATE_WITH_DAY = "dd-MM-yyyy";
+    public static final String DATE_WITH_DAY    = "dd-MM-yyyy";
 
-    public static SimpleDateFormat sdfWithSecondPrecision()
+    public static SimpleDateFormat timeWithSecondWithoutHourPrecision()
     {
-        return sdf(Precision.SECOND);
+        return sdfTime(Precision.SECOND_WITHOUT_HOUR);
     }
 
-    public static SimpleDateFormat sdfWithMinutePrecision()
+    public static SimpleDateFormat timeWithSecondPrecision()
     {
-        return sdf(Precision.MINUTE);
+        return sdfTime(Precision.SECOND);
     }
 
-    public static SimpleDateFormat sdfWithDayPrecision()
+    public static SimpleDateFormat timeWithMinutePrecision()
     {
-        return sdf(Precision.DAY);
+        return sdfTime(Precision.MINUTE);
     }
 
-    public static SimpleDateFormat sdf(Precision precision)
+    public static SimpleDateFormat datetimeWithSecondPrecision()
+    {
+        return sdfDatetime(Precision.SECOND);
+    }
+
+    public static SimpleDateFormat datetimeWithMinutePrecision()
+    {
+        return sdfDatetime(Precision.MINUTE);
+    }
+
+    public static SimpleDateFormat datetimeWithDayPrecision()
+    {
+        return sdfDatetime(Precision.DAY);
+    }
+
+    public static SimpleDateFormat sdfDatetime(Precision precision)
     {
         switch (precision)
         {
@@ -45,6 +64,30 @@ public class DateFormats
             case DAY:
             {
                 return new SimpleDateFormat(DATE_WITH_DAY);
+            }
+
+            default:
+                throw new IllegalArgumentException("Precision not found.");
+        }
+    }
+
+    public static SimpleDateFormat sdfTime(Precision precision)
+    {
+        switch (precision)
+        {
+            case SECOND_WITHOUT_HOUR:
+            {
+                return new SimpleDateFormat(TIME_WITHOUT_HOUR);
+            }
+
+            case SECOND:
+            {
+                return new SimpleDateFormat(TIME_WITH_SECOND);
+            }
+
+            case MINUTE:
+            {
+                return new SimpleDateFormat(TIME_WITH_MINUTE);
             }
 
             default:
