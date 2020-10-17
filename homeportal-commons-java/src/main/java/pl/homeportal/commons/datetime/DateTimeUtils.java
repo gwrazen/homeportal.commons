@@ -1,7 +1,9 @@
 package pl.homeportal.commons.datetime;
 
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static java.lang.String.valueOf;
@@ -56,5 +58,19 @@ public class DateTimeUtils
     public static String currentYear()
     {
         return valueOf(LocalDateTime.now().getYear());
+    }
+
+    public static Date toDate(@NotNull LocalDateTime dateTime)
+    {
+        return Date.from(dateTime
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+
+    public static LocalDateTime toLocalDateTime(@NotNull Date date)
+    {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 }

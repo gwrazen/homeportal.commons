@@ -1,7 +1,7 @@
 package pl.homeportal.commons.data.search;
 
 /**
- * @author Grzegorz Wrażeń 2019-04-23
+ * Created by Grzegorz Wrazen on 2019-04-23
  */
 public abstract class SearchQueryBuilder<SR extends Pageable>
 {
