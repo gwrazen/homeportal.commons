@@ -120,7 +120,7 @@ public abstract class BaseDTO
         return language.locale();
     }
 
-    public Object [] subjectArguments()
+    public Object[] subjectArguments()
     {
         return null;
     }
