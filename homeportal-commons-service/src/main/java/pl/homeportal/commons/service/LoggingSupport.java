@@ -18,9 +18,9 @@ import static java.lang.String.format;
 public class LoggingSupport
 {
     // information
-    public static final String INFORMATION_SAVE = "Entity s% saved successfully with data: %s";
-    public static final String INFORMATION_UPDATE = "Entity s% updated successfully with data: %s";
-    public static final String INFORMATION_DELETE = "Entity s% deleted successfully with id: %s";
+    public static final String INFORMATION_SAVE = "Entity %s saved successfully with data: %s";
+    public static final String INFORMATION_UPDATE = "Entity %s updated successfully with data: %s";
+    public static final String INFORMATION_DELETE = "Entity %s deleted successfully with id: %s";
     public static final String INFORMATION_INCREMENT_IDENTITY = "Increment identity for entity %s successful with data: %s";
 
     // warning
