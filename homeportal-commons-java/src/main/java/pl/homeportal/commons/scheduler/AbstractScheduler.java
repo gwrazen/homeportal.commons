@@ -15,6 +15,8 @@ public abstract class AbstractScheduler
     private static final String ENDED_MESSAGE = "%s scheduler enabled. Scheduler ended at %s.";
     private static final String DISABLED_MESSAGE = "%s scheduler disabled.";
 
+    public abstract boolean isEnabled();
+
     public abstract void job();
 
     protected String start(String schedulerName, Date date)
