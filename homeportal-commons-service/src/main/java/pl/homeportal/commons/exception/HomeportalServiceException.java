@@ -3,7 +3,7 @@ package pl.homeportal.commons.exception;
 import lombok.Value;
 
 /**
- * Created by Grzegorz Wrażeń on 04-03-2017
+ * Created by Grzegorz Wrazen on 04-03-2017
  */
 
 @Value
