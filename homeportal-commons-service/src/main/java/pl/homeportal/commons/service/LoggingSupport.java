@@ -45,7 +45,7 @@ public class LoggingSupport
     // information
     public static void information(Logger logger, String messageTemplate, List<Object> arguments)
     {
-        logger.info(messageTemplate, arguments.toArray());
+        logger.info(format(messageTemplate, arguments.toArray()));
     }
 
     public static <T extends AbstractEntity> void information(Logger logger, String messageTemplate, T entity)
