@@ -45,7 +45,8 @@ public class LoggingSupport
     // information
     public static void information(Logger logger, String messageTemplate, List<Object> arguments)
     {
-        logger.info(format(messageTemplate, arguments.toArray()));
+        String message = format(messageTemplate, arguments.toArray());
+        logger.info(message);
     }
 
     public static <T extends AbstractEntity> void information(Logger logger, String messageTemplate, T entity)
@@ -87,7 +88,8 @@ public class LoggingSupport
     // warning
     public static void warning(Logger logger, String messageTemplate, List<Object> arguments)
     {
-        logger.warn(messageTemplate, arguments.toArray());
+        String message = format(messageTemplate, arguments.toArray());
+        logger.warn(message);
     }
 
     public static <T extends AbstractEntity> void warningSave(Logger logger, T entity)
