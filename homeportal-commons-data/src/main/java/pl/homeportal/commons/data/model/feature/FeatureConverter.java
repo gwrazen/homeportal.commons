@@ -4,17 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import static pl.homeportal.commons.data.model.feature.FeatureConstants.FEATURE_SEPARATOR;
+import static pl.homeportal.commons.data.model.feature.FeatureConstants.NAME_SEPARATOR;
+import static pl.homeportal.commons.data.model.feature.FeatureConstants.VALUE_SEPARATOR;
+
 /**
- * @author gwrazen
  * |name:value^value^value||title:value^value^value|
+ * <p>
+ * Create by Grzegorz Wrażeń
  */
 public class FeatureConverter
 {
-    public Map<String, Object> convert(String features)
+    /**
+     * Converting String of features to Map of features e.g.
+     * |name:value^value^value||title:value^value^value|
+     */
+    public static Map<String, String> toFeatureMap(String features)
     {
-        Map<String, Object> featureMap = new HashMap<String, Object>();
-
-        StringTokenizer tokenizer = new StringTokenizer(features, FeatureConstants.FEATURE_SEPARATOR);
+        Map<String, String> featureMap = new HashMap<>();
+        StringTokenizer tokenizer = new StringTokenizer(features, FEATURE_SEPARATOR);
 
         while (tokenizer.hasMoreTokens())
         {
@@ -27,22 +35,20 @@ public class FeatureConverter
         return featureMap;
     }
 
-    private String[] extractValues(String fItem)
-    {
-        String[] values = fItem.substring(fItem.indexOf(FeatureConstants.NAME_SEPARATOR) + 1, fItem.length()).split(FeatureConstants.VALUE_SEPARATOR);
-        return values;
-    }
-
-    private String extractName(String fItem)
+    private static String extractName(String fItem)
     {
         try
         {
-            String name = fItem.substring(0, fItem.indexOf(FeatureConstants.NAME_SEPARATOR));
-            return name;
+            return fItem.substring(0, fItem.indexOf(NAME_SEPARATOR));
         }
         catch (Exception e)
         {
             return fItem;
         }
+    }
+
+    private static String[] extractValues(String fItem)
+    {
+        return fItem.substring(fItem.indexOf(NAME_SEPARATOR) + 1).split(VALUE_SEPARATOR);
     }
 }
