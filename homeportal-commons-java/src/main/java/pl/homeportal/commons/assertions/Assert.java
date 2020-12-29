@@ -1,7 +1,8 @@
 package pl.homeportal.commons.assertions;
 
+import java.util.Objects;
+
 import static java.lang.String.format;
-import static org.apache.commons.lang3.Validate.notNull;
 
 /**
  * Created by Grzegorz Wrazen on 23-11-2020
@@ -14,13 +15,10 @@ public class Assert
 
     public static <T> void assertNotNull(Class<T> type, T object)
     {
-        try
+        if (Objects.isNull(object))
         {
-            notNull(object, ASSERT_NOT_NULL_MESSAGE, type.getSimpleName());
-        }
-        catch (NullPointerException e)
-        {
-            throw new IllegalArgumentException(e.getMessage());
+            final String message = format(ASSERT_NOT_NULL_MESSAGE, type.getSimpleName());
+            throw new IllegalArgumentException(message);
         }
     }
 

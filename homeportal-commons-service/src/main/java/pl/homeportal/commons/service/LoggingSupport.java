@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -51,7 +51,7 @@ public class LoggingSupport
 
     public static <T extends AbstractEntity> void information(Logger logger, String messageTemplate, T entity)
     {
-        if (entity == null)
+        if (Objects.isNull(entity))
         {
             warning(logger, NULL_MESSAGE, asList(METHOD_INFORMATION));
             return;
