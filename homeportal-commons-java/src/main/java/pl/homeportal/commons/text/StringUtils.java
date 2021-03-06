@@ -27,6 +27,11 @@ public class StringUtils
 
     public static String stripAccentsAndClean(String string, String spaceReplacement)
     {
+        if (string == null)
+        {
+            return null;
+        }
+
         string = stripAccents(string);
         string = string.replaceAll(NOT_ALPHANUMERIC, SPACE);
         string = string.replaceAll(ONE_OR_MORE, SPACE);
