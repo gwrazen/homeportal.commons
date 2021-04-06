@@ -42,6 +42,8 @@ public class LoggingSupport
     private static final String METHOD_ERROR_SAVE_OR_UPDATE = "'errorSaveOrUpdate(...)'";
     private static final String METHOD_ERROR_DELETE = "'errorDelete(...)'";
 
+    private static final String NULL_ENTITY = "NULL ENTITY";
+
     // information
     public static void information(Logger logger, String messageTemplate, List<Object> arguments)
     {
@@ -61,7 +63,7 @@ public class LoggingSupport
 
     public static <T extends AbstractEntity> void informationSaveOrUpdate(Logger logger, T entity)
     {
-        if (entity == null)
+        if (Objects.isNull(entity))
         {
             warning(logger, NULL_MESSAGE, asList(METHOD_INFORMATION_SAVE_OR_UPDATE));
             return;
@@ -203,6 +205,10 @@ public class LoggingSupport
     // generic message methods
     public static <T extends AbstractEntity> String formatMessage(String messageTemplate, T entity)
     {
+        if (Objects.isNull(entity))
+        {
+            return format(messageTemplate, NULL_ENTITY, entity);
+        }
         return format(messageTemplate, shortName(entity), entity);
     }
 

@@ -12,7 +12,6 @@ public class Assert
     private static final String ASSERT_NOT_NULL_MESSAGE = "Object of a type: '%s' must not be null!";
     private static final String ASSERT_GREATER_THAN_MESSAGE = "Argument '%s' with value '%s' must be greater than '%s'!";
 
-
     public static <T> void assertNotNull(Class<T> type, T object)
     {
         if (Objects.isNull(object))

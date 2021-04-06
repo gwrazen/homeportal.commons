@@ -20,4 +20,6 @@ public class Constants
     public static final String MD5  = "MD5";
 
     public static final String HTTP = "http://";
+    public static final String ALL_REQUESTS = "/**";
+
 }
