@@ -1,4 +1,4 @@
-package pl.homeportal.commons.text.security;
+package pl.homeportal.commons.security;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package pl.homeportal.commons.encrypt;
+package pl.homeportal.commons.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
