@@ -13,9 +13,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * todo: add service for PNG
+ */
 public class ImageProcessor extends Thread
 {
-    private List<ImageProcessorTask> tasks = new ArrayList<ImageProcessorTask>();
+    private List<ImageProcessorTask> tasks = new ArrayList<>();
 
     public ImageProcessor()
     {
