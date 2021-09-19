@@ -115,6 +115,11 @@ public class LoggingSupport
     }
 
     // error
+    public static void error(Logger logger, String message, Exception exception)
+    {
+        logger.error(message, exception);
+    }
+
     public static void error(Logger logger, String messageTemplate, List<Object> arguments)
     {
         String message = format(messageTemplate, arguments.toArray());

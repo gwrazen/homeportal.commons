@@ -6,6 +6,7 @@ import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,11 @@ public class ImageProcessor extends Thread
     public void add(String fileName, InputStream sourceFile, File destinationDir)
     {
         tasks.add(new ImageProcessorTask(fileName, sourceFile, destinationDir));
+    }
+
+    public void add(String fileName, byte[] content, File destinationDir)
+    {
+        tasks.add(new ImageProcessorTask(fileName, new ByteArrayInputStream(content), destinationDir));
     }
 
     @Override
