@@ -13,9 +13,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * todo: add service for PNG
- */
 public class ImageProcessor extends Thread
 {
     private List<ImageProcessorTask> tasks = new ArrayList<>();
@@ -110,9 +107,9 @@ class ImageProcessorTask implements Runnable
 
             BufferedImage originalImage = ImageIO.read(sourceFile);
 
-            String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + JPG;
+            String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + extension;
             File small = new File(smallLink);
-            ImageResizer.resizeUnproportionally(originalImage, small, SMALL_WIDTH, SMALL_HEIGHT, JPG);
+            ImageResizer.resizeUnproportionally(originalImage, small, SMALL_WIDTH, SMALL_HEIGHT, extension);
             resizeImage(originalImage, MEDIUM, MEDIUM_WIDTH, MEDIUM_HEIGHT);
             resizeImage(originalImage, LARGE, LARGE_WIDTH, LARGE_HEIGHT);
             sourceFile.close();
