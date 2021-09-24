@@ -104,9 +104,7 @@ class ImageProcessorTask implements Runnable
         try
         {
             LOG.info("Processing image file name: " + name + DOT + extension);
-
             BufferedImage originalImage = ImageIO.read(sourceFile);
-
             String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + extension;
             File small = new File(smallLink);
             ImageResizer.resizeUnproportionally(originalImage, small, SMALL_WIDTH, SMALL_HEIGHT, extension);
