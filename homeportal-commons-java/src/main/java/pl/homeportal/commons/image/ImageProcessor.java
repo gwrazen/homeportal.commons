@@ -108,8 +108,8 @@ class ImageProcessorTask implements Runnable
             String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + extension;
             File small = new File(smallLink);
             ImageResizer.resizeUnproportionally(originalImage, small, SMALL_WIDTH, SMALL_HEIGHT, extension);
-            resizeImage(originalImage, MEDIUM, MEDIUM_WIDTH, MEDIUM_HEIGHT);
-            resizeImage(originalImage, LARGE, LARGE_WIDTH, LARGE_HEIGHT);
+            resizeImage(originalImage, MEDIUM, MEDIUM_WIDTH, MEDIUM_HEIGHT, extension);
+            resizeImage(originalImage, LARGE, LARGE_WIDTH, LARGE_HEIGHT, extension);
             sourceFile.close();
         }
         catch (Exception e)
@@ -125,9 +125,9 @@ class ImageProcessorTask implements Runnable
         return finished;
     }
 
-    private void resizeImage(BufferedImage originalImage, String medium2, int mediumWidth, int mediumHeight) throws IOException
+    private void resizeImage(BufferedImage originalImage, String medium2, int mediumWidth, int mediumHeight, String extension) throws IOException
     {
-        String mediumLink = destinationDir.getAbsolutePath() + SLASH + name + medium2 + DOT + JPG;
+        String mediumLink = destinationDir.getAbsolutePath() + SLASH + name + medium2 + DOT + extension;
         File medium = new File(mediumLink);
         BufferedImage mediumImage = Scalr.resize(originalImage, Scalr.Method.SPEED, mediumWidth, mediumHeight);
         ImageIO.write(mediumImage, JPG, medium);
