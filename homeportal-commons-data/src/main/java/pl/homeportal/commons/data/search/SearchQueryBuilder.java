@@ -1,5 +1,7 @@
 package pl.homeportal.commons.data.search;
 
+import org.springframework.data.domain.Pageable;
+
 /**
  * Created by Grzegorz Wrazen on 2019-04-23
  */

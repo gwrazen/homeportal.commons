@@ -3,13 +3,15 @@ package pl.homeportal.commons.data.search;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 /**
  * Created by Grzegorz Wrazen on 27-05-2020
  */
 
 @Setter
-public class Page implements Pageable
+public class Page extends PageRequest
 {
     @Getter(AccessLevel.NONE)
     private int page = 1;
@@ -23,6 +25,26 @@ public class Page implements Pageable
     @Getter(AccessLevel.NONE)
     private boolean reverse = true;
 
+    public Page()
+    {
+        super(0, 20);
+    }
+
+    public Page(int page, int size)
+    {
+        super(page, size);
+    }
+
+    public Page(int page, int size, Sort.Direction direction, String... properties)
+    {
+        super(page, size, direction, properties);
+    }
+
+    public Page(int page, int size, Sort sort)
+    {
+        super(page, size, sort);
+    }
+
     @Override
     public int getPageNumber()
     {
@@ -35,15 +57,13 @@ public class Page implements Pageable
         return maxqty;
     }
 
-    @Override
     public String getSortField()
     {
         return sort;
     }
 
-    @Override
     public boolean isReverseOrder()
     {
-        return reverse;
+        return getSort().getOrderFor(sort).isDescending();
     }
 }
