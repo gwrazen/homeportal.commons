@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 @Setter
 public class Page extends PageRequest
 {
+    private static final String DEFAULT_SORT = "added";
+
     @Getter(AccessLevel.NONE)
     private int page = 1;
 
@@ -20,14 +22,14 @@ public class Page extends PageRequest
     private int maxqty = 20;
 
     @Getter(AccessLevel.NONE)
-    private String sort = "added";
+    private String sort = DEFAULT_SORT;
 
     @Getter(AccessLevel.NONE)
     private boolean reverse = true;
 
     public Page()
     {
-        super(0, 20);
+        super(0, 20, Sort.by(Sort.Order.desc(DEFAULT_SORT)));
     }
 
     public Page(int page, int size)
@@ -64,6 +66,6 @@ public class Page extends PageRequest
 
     public boolean isReverseOrder()
     {
-        return getSort().getOrderFor(sort).isDescending();
+        return reverse;
     }
 }

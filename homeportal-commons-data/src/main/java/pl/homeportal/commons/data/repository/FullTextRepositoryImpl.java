@@ -13,6 +13,7 @@ import org.hibernate.search.jpa.Search;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.entity.AbstractEntity;
@@ -175,6 +176,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     }
 
     @Override
+    @Transactional
     public void indexOne(T entity)
     {
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
