@@ -1,4 +1,4 @@
-package pl.homeportal.commons.data.search;
+package pl.homeportal.commons.data.pageable;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,16 +10,17 @@ import org.springframework.data.domain.Sort;
  * Created by Grzegorz Wrazen on 27-05-2020
  */
 
-@Setter
 public class Page extends PageRequest
 {
     private static final String DEFAULT_SORT = "added";
+    private static final int DEFAULT_PAGE = 1;
+    private static final int DEFAULT_SIZE = 20;
 
-    @Getter(AccessLevel.NONE)
-    private int page = 1;
+    @Setter
+    private int page = DEFAULT_PAGE;
 
-    @Getter(AccessLevel.NONE)
-    private int maxqty = 20;
+    @Setter
+    private int size = DEFAULT_SIZE;
 
     @Getter(AccessLevel.NONE)
     private String sort = DEFAULT_SORT;
@@ -29,22 +30,39 @@ public class Page extends PageRequest
 
     public Page()
     {
-        super(0, 20, Sort.by(Sort.Order.desc(DEFAULT_SORT)));
+        super(DEFAULT_PAGE, DEFAULT_SIZE, Sort.by(Sort.Order.desc(DEFAULT_SORT)));
     }
 
     public Page(int page, int size)
     {
         super(page, size);
+        this.page = page;
+        this.size = size;
     }
 
     public Page(int page, int size, Sort.Direction direction, String... properties)
     {
         super(page, size, direction, properties);
+        this.page = page;
+        this.size = size;
     }
 
     public Page(int page, int size, Sort sort)
     {
         super(page, size, sort);
+        this.page = page;
+        this.size = size;
+        this.sort = sort.toString();
+    }
+
+    public String getSortField()
+    {
+        return sort;
+    }
+
+    public boolean isReverseOrder()
+    {
+        return reverse;
     }
 
     @Override
@@ -56,16 +74,6 @@ public class Page extends PageRequest
     @Override
     public int getPageSize()
     {
-        return maxqty;
-    }
-
-    public String getSortField()
-    {
-        return sort;
-    }
-
-    public boolean isReverseOrder()
-    {
-        return reverse;
+        return size;
     }
 }

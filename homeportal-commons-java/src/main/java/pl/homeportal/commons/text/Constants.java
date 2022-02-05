@@ -14,6 +14,9 @@ public class Constants
     public static final String CIRCUMFLEX = "^";
     public static final String HASH = "#";
     public static final String AT = "@";
+    public static final String QUESTION_MARK = "?";
+    public static final String EQUALS_MARK = "=";
+    public static final String AMPERSAND = "&";
 
     public static final String REGEXP_CIRCUMFLEX = "\\^";
     public static final String REGEXP_SPACE = "\\s";
