@@ -19,5 +19,4 @@ public class PageItem
     {
         return reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-
 }

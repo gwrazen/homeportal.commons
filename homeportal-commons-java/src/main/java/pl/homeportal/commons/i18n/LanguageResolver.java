@@ -17,6 +17,11 @@ public class LanguageResolver
 {
     public static Language resolveLanguage(HttpServletRequest request)
     {
+        if (request == null)
+        {
+            return Language.POLISH;
+        }
+
         LocaleResolver localeResolver = (LocaleResolver) request.getAttribute(LOCALE_RESOLVER_ATTRIBUTE);
         if (localeResolver != null)
         {
@@ -29,6 +34,11 @@ public class LanguageResolver
 
     public static Locale resolveLocale(HttpServletRequest request)
     {
+        if (request == null)
+        {
+            return Locale.getDefault();
+        }
+
         LocaleResolver localeResolver = (LocaleResolver) request.getAttribute(LOCALE_RESOLVER_ATTRIBUTE);
         if (localeResolver != null)
         {
@@ -40,6 +50,10 @@ public class LanguageResolver
 
     public static Locale locale()
     {
+        if (RequestContextHolder.getRequestAttributes() == null)
+        {
+            return Locale.getDefault();
+        }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return LanguageResolver.resolveLocale(request);
     }

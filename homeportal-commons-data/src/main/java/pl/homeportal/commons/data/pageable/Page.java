@@ -17,7 +17,7 @@ public class Page extends PageRequest
     private static final int DEFAULT_SIZE = 20;
 
     @Setter
-    private int page = DEFAULT_PAGE;
+    private int page = DEFAULT_PAGE; 
 
     @Setter
     private int size = DEFAULT_SIZE;
