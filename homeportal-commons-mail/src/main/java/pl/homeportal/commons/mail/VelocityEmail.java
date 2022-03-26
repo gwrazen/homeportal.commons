@@ -51,8 +51,6 @@ public class VelocityEmail extends HtmlEmail
         super();
         this.template = template;
         this.setCharset(UTF_8);
-        // todo: improve port passing
-        this.setSmtpPort(465);
         this.context = new VelocityContext();
     }
 
