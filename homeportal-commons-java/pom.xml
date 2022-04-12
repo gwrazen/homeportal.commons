@@ -90,6 +90,11 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!-- TESTS -->
         <dependency>
             <groupId>junit</groupId>
