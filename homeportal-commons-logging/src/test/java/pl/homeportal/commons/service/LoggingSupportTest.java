@@ -2,9 +2,10 @@ package pl.homeportal.commons.service;
 
 import org.junit.Test;
 import org.slf4j.Logger;
+import pl.homeportal.commons.logging.LoggingSupport;
 
 import static java.util.Arrays.asList;
-import static pl.homeportal.commons.service.LoggingSupport.logger;
+import static pl.homeportal.commons.logging.LoggingSupport.logger;
 
 public class LoggingSupportTest
 {

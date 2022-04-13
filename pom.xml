@@ -13,7 +13,7 @@
         <module>homeportal-commons-java</module>
         <module>homeportal-commons-data</module>
         <module>homeportal-commons-mail</module>
-        <module>homeportal-commons-service</module>
+        <module>homeportal-commons-logging</module>
     </modules>
 
     <properties>

@@ -9,7 +9,7 @@
         <version>5.0</version>
     </parent>
 
-    <artifactId>homeportal-commons-service</artifactId>
+    <artifactId>homeportal-commons-logging</artifactId>
 
     <dependencies>
         <!-- INTERNALS -->

@@ -1,4 +1,4 @@
-package pl.homeportal.commons.service;
+package pl.homeportal.commons.logging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -235,5 +235,10 @@ public class LoggingSupport
     public static <T> Logger logger(Class<T> aClass)
     {
         return LoggerFactory.getLogger(shortName(aClass));
+    }
+
+    public static Logger logger(String loggerName)
+    {
+        return LoggerFactory.getLogger(loggerName);
     }
 }
