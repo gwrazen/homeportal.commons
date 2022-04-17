@@ -93,6 +93,11 @@ public class LoggingSupport
     }
 
     // warning
+    public static void warning(Logger logger, String message)
+    {
+        logger.warn(message);
+    }
+
     public static void warning(Logger logger, String messageTemplate, List<Object> arguments)
     {
         String message = format(messageTemplate, arguments.toArray());
