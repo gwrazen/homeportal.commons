@@ -45,6 +45,11 @@ public class LoggingSupport
     private static final String NULL_ENTITY = "NULL ENTITY";
 
     // information
+    public static void information(Logger logger, String message)
+    {
+        logger.info(message);
+    }
+
     public static void information(Logger logger, String messageTemplate, List<Object> arguments)
     {
         String message = format(messageTemplate, arguments.toArray());
