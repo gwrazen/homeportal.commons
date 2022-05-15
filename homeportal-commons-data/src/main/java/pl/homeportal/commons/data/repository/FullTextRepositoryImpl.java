@@ -32,8 +32,8 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
 {
     public static final String SEARCH_QUERY_CANNOT_BE_NULL = "SearchQuery cannot be null!";
 
-    private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 20;
-    private static final int THREADS_TO_LOAD_OBJECTS = 100;
+    private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 100;
+    private static final int THREADS_TO_LOAD_OBJECTS = 10;
     private static final String ID = "id";
 
     @PersistenceContext
@@ -140,20 +140,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     @Override
     public void indexAll(Class<T> t)
     {
-        try
-        {
-            getFullTextEntityManager()
-                    .createIndexer(t)
-                    .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
-                    .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS)
-                    .cacheMode(CacheMode.NORMAL)
-                    .optimizeOnFinish(true)
-                    .startAndWait();
-        }
-        catch (InterruptedException e)
-        {
-            throw new RuntimeException("Indexing interrupted", e);
-        }
+        indexAll(BATCH_SIZE_TO_LOAD_OBJECTS, THREADS_TO_LOAD_OBJECTS, t);
     }
 
     @Override
@@ -165,7 +152,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
                     .createIndexer(t)
                     .batchSizeToLoadObjects(batchSize)
                     .threadsToLoadObjects(threads)
-                    .cacheMode(CacheMode.NORMAL)
+                    .cacheMode(CacheMode.IGNORE)
                     .optimizeOnFinish(true)
                     .startAndWait();
         }
