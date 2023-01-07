@@ -31,6 +31,7 @@ import static pl.homeportal.commons.text.Constants.SPACE;
 public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTextRepository<T>
 {
     public static final String SEARCH_QUERY_CANNOT_BE_NULL = "SearchQuery cannot be null!";
+    public static final String DOCUMENTS_COUNT = "(id:[0 TO 999999999])";
 
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 100;
     private static final int THREADS_TO_LOAD_OBJECTS = 10;
@@ -86,12 +87,26 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     }
 
     @Override
+    public long countByIndex(Class<T> t)
+    {
+        try
+        {
+            return createQuery(DOCUMENTS_COUNT, null, t).getResultSize();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
     public int countBySearchQuery(SearchQuery sQuery, Class<T> t)
     {
         Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
         if (sQuery.isQueryEmpty())
         {
-            return new Long(count(t)).intValue();
+            return new Long(countByIndex(t)).intValue();
         }
 
         return createQuery(sQuery.getQueryString(), null, t).getResultSize();

@@ -27,6 +27,8 @@ public interface FullTextRepository<T>
 
     long count(Class<T> t);
 
+    long countByIndex(Class<T> t);
+
     int countBySearchQuery(SearchQuery query, Class<T> t);
 
     List<T> findAll(Pageable pageable, Class<T> t);
