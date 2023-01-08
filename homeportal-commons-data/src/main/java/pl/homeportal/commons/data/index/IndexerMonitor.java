@@ -1,5 +1,6 @@
 package pl.homeportal.commons.data.index;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,16 +14,20 @@ public class IndexerMonitor
 
     private AtomicBoolean running = new AtomicBoolean(FALSE);
 
+    @Getter
+    private String lockOwner;
+
     public boolean isRunning()
     {
         return running.get();
     }
 
-    public void acquireLock()
+    public void acquireLock(String lockOwner)
     {
         synchronized (MONITOR)
         {
-            running.set(Boolean.TRUE);
+            this.running.set(Boolean.TRUE);
+            this.lockOwner = lockOwner;
         }
     }
 
@@ -30,7 +35,8 @@ public class IndexerMonitor
     {
         synchronized (MONITOR)
         {
-            running.set(FALSE);
+            this.running.set(FALSE);
+            this.lockOwner = null;
         }
     }
 }
