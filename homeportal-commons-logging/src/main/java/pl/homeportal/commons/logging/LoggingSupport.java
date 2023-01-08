@@ -50,6 +50,11 @@ public class LoggingSupport
         logger.info(message);
     }
 
+    public static void information(Logger logger, String message, String argument)
+    {
+        information(logger, message, asList(argument));
+    }
+
     public static void information(Logger logger, String messageTemplate, List<Object> arguments)
     {
         String message = format(messageTemplate, arguments.toArray());
@@ -98,6 +103,11 @@ public class LoggingSupport
         logger.warn(message);
     }
 
+    public static void warning(Logger logger, String message, String argument)
+    {
+        warning(logger, message, asList(argument));
+    }
+
     public static void warning(Logger logger, String messageTemplate, List<Object> arguments)
     {
         String message = format(messageTemplate, arguments.toArray());
@@ -125,6 +135,16 @@ public class LoggingSupport
     }
 
     // error
+    public static void error(Logger logger, String message)
+    {
+        logger.error(message);
+    }
+
+    public static void error(Logger logger, String message, String argument)
+    {
+        error(logger, message, asList(argument));
+    }
+
     public static void error(Logger logger, String message, Exception exception)
     {
         logger.error(message, exception);
