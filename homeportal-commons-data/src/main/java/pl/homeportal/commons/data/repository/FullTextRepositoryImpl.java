@@ -83,7 +83,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     @Override
     public long count(Class<T> t)
     {
-        return (Long) entityManager.createQuery("select count(t) from " + t.getSimpleName() + " t").getSingleResult();
+        return (Long) entityManager.createQuery("select count(t) from " + t.getSimpleName() + " t where t.id > 0").getSingleResult();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         Assert.notNull(sQuery, SEARCH_QUERY_CANNOT_BE_NULL);
         if (sQuery.isQueryEmpty())
         {
-            return new Long(countByIndex(t)).intValue();
+            return new Long(count(t)).intValue();
         }
 
         return createQuery(sQuery.getQueryString(), null, t).getResultSize();
