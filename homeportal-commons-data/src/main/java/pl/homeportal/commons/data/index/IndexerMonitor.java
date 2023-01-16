@@ -10,12 +10,13 @@ import static java.lang.Boolean.FALSE;
 @Component
 public class IndexerMonitor
 {
-    public static final Object MONITOR = new Object();
+    private static final Object MONITOR = new Object();
+    private static final String NONE = "none";
 
     private AtomicBoolean running = new AtomicBoolean(FALSE);
 
     @Getter
-    private String lockOwner;
+    private String lockOwner = NONE;
 
     public boolean isRunning()
     {
@@ -36,7 +37,7 @@ public class IndexerMonitor
         synchronized (MONITOR)
         {
             this.running.set(FALSE);
-            this.lockOwner = null;
+            this.lockOwner = NONE;
         }
     }
 }
