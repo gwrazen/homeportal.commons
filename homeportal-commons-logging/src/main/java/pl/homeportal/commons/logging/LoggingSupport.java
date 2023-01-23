@@ -50,7 +50,7 @@ public class LoggingSupport
         logger.info(message);
     }
 
-    public static void information(Logger logger, String message, String argument)
+    public static void information(Logger logger, String message, Object argument)
     {
         information(logger, message, asList(argument));
     }
@@ -147,6 +147,18 @@ public class LoggingSupport
 
     public static void error(Logger logger, String message, Exception exception)
     {
+        logger.error(message, exception);
+    }
+
+    public static void error(Logger logger, String messageTemplate, Object argument, Exception exception)
+    {
+        String message = format(messageTemplate, argument);
+        logger.error(message, exception);
+    }
+
+    public static void error(Logger logger, String messageTemplate, List<Object> arguments, Exception exception)
+    {
+        String message = format(messageTemplate, arguments.toArray());
         logger.error(message, exception);
     }
 
