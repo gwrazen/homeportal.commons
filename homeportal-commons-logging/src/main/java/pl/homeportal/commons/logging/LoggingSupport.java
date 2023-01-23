@@ -50,14 +50,9 @@ public class LoggingSupport
         logger.info(message);
     }
 
-    public static void information(Logger logger, String message, Object argument)
+    public static void information(Logger logger, String messageTemplate, Object... arguments)
     {
-        information(logger, message, asList(argument));
-    }
-
-    public static void information(Logger logger, String messageTemplate, List<Object> arguments)
-    {
-        String message = format(messageTemplate, arguments.toArray());
+        String message = format(messageTemplate, arguments);
         logger.info(message);
     }
 
@@ -108,9 +103,9 @@ public class LoggingSupport
         warning(logger, message, asList(argument));
     }
 
-    public static void warning(Logger logger, String messageTemplate, List<Object> arguments)
+    public static void warning(Logger logger, String messageTemplate, Object... arguments)
     {
-        String message = format(messageTemplate, arguments.toArray());
+        String message = format(messageTemplate, arguments);
         logger.warn(message);
     }
 
@@ -156,15 +151,15 @@ public class LoggingSupport
         logger.error(message, exception);
     }
 
-    public static void error(Logger logger, String messageTemplate, List<Object> arguments, Exception exception)
+    public static void error(Logger logger, Exception exception, String messageTemplate, Object... arguments)
     {
-        String message = format(messageTemplate, arguments.toArray());
+        final String message = format(messageTemplate, arguments);
         logger.error(message, exception);
     }
 
-    public static void error(Logger logger, String messageTemplate, List<Object> arguments)
+    public static void error(Logger logger, String messageTemplate, Object... arguments)
     {
-        String message = format(messageTemplate, arguments.toArray());
+        final String message = format(messageTemplate, arguments);
         logger.error(message);
     }
 
@@ -243,9 +238,9 @@ public class LoggingSupport
         logger.error(message, e);
     }
 
-    public static void logWithoutException(Logger logger, String messageTemplate, List<Object> arguments, Exception e)
+    public static void logWithoutException(Logger logger, Exception e, String messageTemplate, Object... arguments)
     {
-        String message = format(messageTemplate, arguments.toArray());
+        final String message = format(messageTemplate, arguments);
         logger.error(message, e);
     }
 
