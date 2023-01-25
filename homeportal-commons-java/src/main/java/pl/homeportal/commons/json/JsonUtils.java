@@ -17,9 +17,9 @@ public class JsonUtils
         return Files.asCharSource(new File(url.getFile()), Charsets.UTF_8).read();
     }
 
-    public static <T> T readFromJsonResource(String resourceName, Class<T> valueType)
+    public static <T> T readFromJsonResource(Class aClass, String resourceName, Class<T> valueType)
     {
-        return readFromJsonResource(Resources.getResource(resourceName), valueType);
+        return readFromJsonResource(Resources.getResource(aClass, resourceName), valueType);
     }
 
     public static <T> T readFromJsonResource(URL url, Class<T> valueType)
