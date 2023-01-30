@@ -1,5 +1,7 @@
 package pl.homeportal.commons.assertions;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -27,6 +29,18 @@ public class Assert
         {
             final String message = format(ASSERT_GREATER_THAN_MESSAGE, argumentName, value, factor);
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    public static void assertNumber(String value)
+    {
+        try
+        {
+            NumberFormat.getInstance().parse(value);
+        }
+        catch (ParseException e)
+        {
+            throw new IllegalArgumentException(e);
         }
     }
 }
