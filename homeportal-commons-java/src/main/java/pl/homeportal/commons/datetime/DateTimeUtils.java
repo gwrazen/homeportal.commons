@@ -13,7 +13,9 @@ public class DateTimeUtils
 {
     private static final long MINUTE = 60000;
     private static final long HOUR = MINUTE * 60;
-    private static final long DAY = HOUR * 26;
+    private static final long DAY = HOUR * 24;
+    private static final long MONTH = DAY * 31;
+    private static final long YEAR = MONTH * 12;
 
     public static Date now()
     {
@@ -55,6 +57,26 @@ public class DateTimeUtils
         return new Date(currentTimeMillis() + (DAY * days));
     }
 
+    public static Date todayMinusMonths(int months)
+    {
+        return new Date(currentTimeMillis() - (MONTH * months));
+    }
+
+    public static Date todayPlusMonths(int months)
+    {
+        return new Date(currentTimeMillis() + (MONTH * months));
+    }
+
+    public static Date todayMinusYears(int years)
+    {
+        return new Date(currentTimeMillis() - (YEAR * years));
+    }
+
+    public static Date todayPlusYears(int years)
+    {
+        return new Date(currentTimeMillis() + (YEAR * years));
+    }
+
     public static String currentYear()
     {
         return valueOf(LocalDateTime.now().getYear());
@@ -63,8 +85,8 @@ public class DateTimeUtils
     public static Date toDate(@NotNull LocalDateTime dateTime)
     {
         return Date.from(dateTime
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
+                   .atZone(ZoneId.systemDefault())
+                   .toInstant());
     }
 
     public static LocalDateTime toLocalDateTime(@NotNull Date date)
