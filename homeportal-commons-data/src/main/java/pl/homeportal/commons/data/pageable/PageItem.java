@@ -10,9 +10,14 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 @Setter
 public class PageItem
 {
-    private String label;
+    private int label;
     private String link;
-    private String current;
+    private boolean current;
+
+    public void current()
+    {
+        this.current = true;
+    }
 
     @Override
     public String toString()

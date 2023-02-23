@@ -4,7 +4,6 @@
 package pl.homeportal.commons.data.pageable;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 
 import java.lang.reflect.Field;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.AMPERSAND;
 import static pl.homeportal.commons.text.Constants.EQUALS_MARK;
@@ -23,17 +22,58 @@ import static pl.homeportal.commons.text.Constants.QUESTION_MARK;
 import static pl.homeportal.commons.text.Constants.UTF_8;
 
 @Getter
-@Setter
 public class PageItemList
 {
-    private static final int RANGE = 10;
-    private static final int LIMIT = RANGE / 2;
+    private static final int DEFAULT_PAGES_QTY = 3;
+    private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private PageItem back;
-    private PageItem next;
     private List<PageItem> pageItems;
 
-    public void addPageItem(PageItem pageItem)
+    public static PageItemList of(Page form, int allResultsQty)
+    {
+        return of(form, allResultsQty, DEFAULT_PAGES_QTY, DEFAULT_PAGE_SIZE, emptySet());
+    }
+
+    public static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
+    {
+        int last = calculateLastPage(allResultsQty, pageSize);
+        int current = form.getPageNumber();
+        int start = calculateStartPage(current, pagesQty);
+        int end = calculateEndPage(start, pagesQty, last);
+
+        PageItemList pageItemList = new PageItemList();
+        for (int i = start; i <= end; i++)
+        {
+            PageItem pageItem = new PageItem();
+            if (i == current)
+            {
+                pageItem.current();
+            }
+
+            pageItem.setLabel(i);
+            form.setPage(i);
+            String link = pageableToUri(form, excludes);
+            pageItem.setLink(link);
+            pageItemList.addPageItem(pageItem);
+        }
+        form.setPage(current);
+
+        return pageItemList;
+    }
+
+    private static int calculateStartPage(int currentPage, int pagesQty)
+    {
+        int start = currentPage - 1;
+        return start > 0 ? start : 1;
+    }
+
+    private static int calculateEndPage(int startPage, int pagesQty, int last)
+    {
+        int end = startPage + pagesQty - 1;
+        return end > last ? last : end;
+    }
+
+    private void addPageItem(PageItem pageItem)
     {
         if (pageItems == null)
         {
@@ -42,51 +82,9 @@ public class PageItemList
         this.pageItems.add(pageItem);
     }
 
-    public static PageItemList of(Page form, int allQuantity, int size, Set<String> excludes)
+    private static int calculateLastPage(int allResultsQty, int pageSize)
     {
-        int lastPage = getLastPageIndex(allQuantity, size);
-        int currentPage = form.getPageNumber();
-        int startPage = currentPage - LIMIT - 1;
-        int endPage = currentPage + LIMIT - 1;
-
-        if (startPage < 1)
-        {
-            startPage = 1;
-        }
-
-        if (endPage > lastPage)
-        {
-            endPage = lastPage;
-        }
-
-        if (endPage < 2)
-        {
-            endPage = 0;
-        }
-
-        PageItemList pageItemList = new PageItemList();
-        for (int i = startPage; i <= endPage; i++)
-        {
-            PageItem pageItem = new PageItem();
-            if (i == currentPage)
-            {
-                pageItem.setCurrent(TRUE.toString());
-            }
-
-            pageItem.setLabel(String.valueOf(i));
-            form.setPage(i);
-            String link = pageableToUri(form, excludes);
-            pageItem.setLink(link);
-            pageItemList.addPageItem(pageItem);
-        }
-        form.setPage(currentPage);
-
-        return pageItemList;
-    }
-
-    private static int getLastPageIndex(int allQuantity, int size)
-    {
-        return (int) Math.ceil(allQuantity / Double.valueOf(size));
+        return (int) Math.ceil(allResultsQty / Double.valueOf(pageSize));
     }
 
     public static String pageableToUri(Pageable form, Set<String> excludes)
