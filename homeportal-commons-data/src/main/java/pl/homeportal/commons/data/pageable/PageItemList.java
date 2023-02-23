@@ -61,32 +61,6 @@ public class PageItemList
         return pageItemList;
     }
 
-    private static int calculateStartPage(int currentPage, int pagesQty)
-    {
-        int start = currentPage - 1;
-        return start > 0 ? start : 1;
-    }
-
-    private static int calculateEndPage(int startPage, int pagesQty, int last)
-    {
-        int end = startPage + pagesQty - 1;
-        return end > last ? last : end;
-    }
-
-    private void addPageItem(PageItem pageItem)
-    {
-        if (pageItems == null)
-        {
-            pageItems = new ArrayList<>();
-        }
-        this.pageItems.add(pageItem);
-    }
-
-    private static int calculateLastPage(int allResultsQty, int pageSize)
-    {
-        return (int) Math.ceil(allResultsQty / Double.valueOf(pageSize));
-    }
-
     public static String pageableToUri(Pageable form, Set<String> excludes)
     {
         try
@@ -131,6 +105,32 @@ public class PageItemList
         {
             return null;
         }
+    }
+
+    private static int calculateStartPage(int currentPage, int pagesQty)
+    {
+        int start = currentPage - 1;
+        return start > 0 ? start : 1;
+    }
+
+    private static int calculateEndPage(int startPage, int pagesQty, int last)
+    {
+        int end = startPage + pagesQty - 1;
+        return end > last ? last : end;
+    }
+
+    private void addPageItem(PageItem pageItem)
+    {
+        if (pageItems == null)
+        {
+            pageItems = new ArrayList<>();
+        }
+        this.pageItems.add(pageItem);
+    }
+
+    private static int calculateLastPage(int allResultsQty, int pageSize)
+    {
+        return (int) Math.ceil(allResultsQty / Double.valueOf(pageSize));
     }
 
     private static List<Field> getDeclaredFields(Pageable form)
