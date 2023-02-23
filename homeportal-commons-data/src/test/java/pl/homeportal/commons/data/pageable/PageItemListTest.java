@@ -20,7 +20,7 @@ public class PageItemListTest
      *  set: [1],2,3
      */
     @Test
-    public void testRangeOnePageOne()
+    public void testPageOne()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(1), allResultsQty, pagesQty, pageSize, emptySet());
@@ -43,7 +43,7 @@ public class PageItemListTest
      * set: 1,[2],3
      */
     @Test
-    public void testRangeOnePageTwo()
+    public void testPageTwo()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(2), allResultsQty, pagesQty, pageSize, emptySet());
@@ -66,7 +66,7 @@ public class PageItemListTest
      *  set: 2,[3],4
      */
     @Test
-    public void testRangeOnePageThree()
+    public void testPageThree()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(3), allResultsQty, pagesQty, pageSize, emptySet());
@@ -89,7 +89,7 @@ public class PageItemListTest
      *  set: 3,[4],5
      */
     @Test
-    public void testRangeOnePageFour()
+    public void testPageFour()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(4), allResultsQty, pagesQty, pageSize, emptySet());
@@ -112,7 +112,7 @@ public class PageItemListTest
      *  set: 4,[5],6
      */
     @Test
-    public void testRangeOnePageFive()
+    public void testPageFive()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(5), allResultsQty, pagesQty, pageSize, emptySet());
@@ -135,7 +135,7 @@ public class PageItemListTest
      *  set: 5,[6]
      */
     @Test
-    public void testRangeOnePageSix()
+    public void testPageSix()
     {
         // given
         PageItemList pageItemList = PageItemList.of(getPage(6), allResultsQty, pagesQty, pageSize, emptySet());
