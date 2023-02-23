@@ -131,6 +131,27 @@ public class PageItemListTest
         assertThat(pages.get(2).getLabel(), equalTo(6));
     }
 
+    /**
+     *  set: 5,[6]
+     */
+    @Test
+    public void testRangeOnePageSix()
+    {
+        // given
+        PageItemList pageItemList = PageItemList.of(getPage(6), allResultsQty, pagesQty, pageSize, emptySet());
+
+        // when
+        List<PageItem> pages = pageItemList.getPageItems();
+
+        // then
+        assertThat(pages.size(), equalTo(2));
+        assertThat(pages.get(0).isCurrent(), equalTo(false));
+        assertThat(pages.get(1).isCurrent(), equalTo(true));
+
+        assertThat(pages.get(0).getLabel(), equalTo(5));
+        assertThat(pages.get(1).getLabel(), equalTo(6));
+    }
+
     private InnerPage getPage(int index)
     {
         InnerPage page = InnerPage.of();
