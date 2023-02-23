@@ -34,12 +34,17 @@ public class PageItemList
         return of(form, allResultsQty, DEFAULT_PAGES_QTY, DEFAULT_PAGE_SIZE, emptySet());
     }
 
-    public static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
+    private static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize)
+    {
+        return of(form, allResultsQty, pagesQty,pageSize, emptySet());
+    }
+
+    private static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
     {
         int last = calculateLastPage(allResultsQty, pageSize);
         int current = form.getPageNumber();
-        int start = calculateStartPage(current);
-        int end = calculateEndPage(start, pagesQty, last);
+        int start = calculateStart(current);
+        int end = calculateEnd(start, pagesQty, last);
 
         PageItemList pageItemList = new PageItemList();
         for (int i = start; i <= end; i++)
@@ -107,13 +112,13 @@ public class PageItemList
         }
     }
 
-    private static int calculateStartPage(int current)
+    private static int calculateStart(int current)
     {
         int start = current - 1;
         return start > 0 ? start : 1;
     }
 
-    private static int calculateEndPage(int start, int pagesQty, int last)
+    private static int calculateEnd(int start, int pagesQty, int last)
     {
         int end = start + pagesQty - 1;
         return end > last ? last : end;
