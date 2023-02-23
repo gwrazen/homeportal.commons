@@ -5,25 +5,21 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PageItemListTest
 {
-
     private final int allResultsQty = 51;
-    private final int pagesQty = 3;
-    private final int pageSize = 10;
 
     /**
-     *  set: [1],2,3
+     * set: [1],2,3
      */
     @Test
     public void testPageOne()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(1), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(1), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -46,7 +42,7 @@ public class PageItemListTest
     public void testPageTwo()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(2), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(2), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -63,13 +59,13 @@ public class PageItemListTest
     }
 
     /**
-     *  set: 2,[3],4
+     * set: 2,[3],4
      */
     @Test
     public void testPageThree()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(3), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(3), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -86,13 +82,13 @@ public class PageItemListTest
     }
 
     /**
-     *  set: 3,[4],5
+     * set: 3,[4],5
      */
     @Test
     public void testPageFour()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(4), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(4), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -109,13 +105,13 @@ public class PageItemListTest
     }
 
     /**
-     *  set: 4,[5],6
+     * set: 4,[5],6
      */
     @Test
     public void testPageFive()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(5), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(5), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -132,13 +128,13 @@ public class PageItemListTest
     }
 
     /**
-     *  set: 5,[6]
+     * set: 5,[6]
      */
     @Test
     public void testPageSix()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(6), allResultsQty, pagesQty, pageSize, emptySet());
+        PageItemList pageItemList = PageItemList.of(getPage(6), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();

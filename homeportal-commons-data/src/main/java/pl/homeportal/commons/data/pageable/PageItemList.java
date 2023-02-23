@@ -38,7 +38,7 @@ public class PageItemList
     {
         int last = calculateLastPage(allResultsQty, pageSize);
         int current = form.getPageNumber();
-        int start = calculateStartPage(current, pagesQty);
+        int start = calculateStartPage(current);
         int end = calculateEndPage(start, pagesQty, last);
 
         PageItemList pageItemList = new PageItemList();
@@ -107,15 +107,15 @@ public class PageItemList
         }
     }
 
-    private static int calculateStartPage(int currentPage, int pagesQty)
+    private static int calculateStartPage(int current)
     {
-        int start = currentPage - 1;
+        int start = current - 1;
         return start > 0 ? start : 1;
     }
 
-    private static int calculateEndPage(int startPage, int pagesQty, int last)
+    private static int calculateEndPage(int start, int pagesQty, int last)
     {
-        int end = startPage + pagesQty - 1;
+        int end = start + pagesQty - 1;
         return end > last ? last : end;
     }
 
