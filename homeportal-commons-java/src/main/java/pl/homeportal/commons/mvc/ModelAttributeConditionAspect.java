@@ -14,13 +14,13 @@ import static pl.homeportal.commons.mvc.ControllerUtils.isResourceUriSuffix;
 
 @Aspect
 @Component
-public class ModelAttributeUriConditionAspect
+public class ModelAttributeConditionAspect
 {
-    @Around("@annotation(pl.homeportal.commons.mvc.ModelAttributeUriCondition)")
+    @Around("@annotation(pl.homeportal.commons.mvc.ModelAttributeCondition)")
     public Object decideExecution(ProceedingJoinPoint joinPoint) throws Throwable
     {
         MethodSignature signature = MethodSignature.class.cast(joinPoint.getSignature());
-        ModelAttributeUriCondition annotation = signature.getMethod().getAnnotation(ModelAttributeUriCondition.class);
+        ModelAttributeCondition annotation = signature.getMethod().getAnnotation(ModelAttributeCondition.class);
         final String uri = currentUri();
 
         if (isResourceUriSuffix())
