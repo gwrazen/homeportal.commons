@@ -1,4 +1,4 @@
-package pl.homeportal.commons.mvc;
+package pl.homeportal.commons.mvc.model;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static pl.homeportal.commons.mvc.ControllerUtils.currentUri;
-import static pl.homeportal.commons.mvc.ControllerUtils.isResourceUriSuffix;
+import static pl.homeportal.commons.mvc.controller.ControllerUtils.currentUri;
+import static pl.homeportal.commons.mvc.controller.ControllerUtils.isResourceUriSuffix;
 
 @Aspect
 @Component
 public class ModelAttributeConditionAspect
 {
-    @Around("@annotation(pl.homeportal.commons.mvc.ModelAttributeCondition)")
+    @Around("@annotation(pl.homeportal.commons.mvc.model.ModelAttributeCondition)")
     public Object decideExecution(ProceedingJoinPoint joinPoint) throws Throwable
     {
         MethodSignature signature = MethodSignature.class.cast(joinPoint.getSignature());

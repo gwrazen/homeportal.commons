@@ -1,4 +1,4 @@
-package pl.homeportal.commons.mvc;
+package pl.homeportal.commons.mvc.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
