@@ -42,6 +42,8 @@
         <javax.servlet.api>2.5</javax.servlet.api>
         <aspectj.version>1.9.2</aspectj.version>
         <jackson.version>2.9.8</jackson.version>
+        <javax.el.api.version>3.0.0</javax.el.api.version>
+        <javax.el.version>2.2.4</javax.el.version>
     </properties>
 
     <dependencyManagement>
@@ -178,6 +180,18 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.context.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el.version}</version>
             </dependency>
 
             <!-- TEST -->
