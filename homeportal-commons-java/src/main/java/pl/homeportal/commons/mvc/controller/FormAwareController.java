@@ -18,5 +18,5 @@ public interface FormAwareController
 
     ModelAndView formBackingObject(ModelMap model);
 
-    void saveFlashAttributes(Object form, BindingResult result, RedirectAttributes redirectAttributes);
+    default void saveFlashAttributes(Object form, BindingResult result, RedirectAttributes redirectAttributes){};
 }
