@@ -11,7 +11,18 @@ import lombok.Setter;
 @Setter
 public class AbstractForm
 {
+    private Integer id;
     private String created;
     private String modified;
     private boolean saved;
+
+    public boolean isAddition()
+    {
+        return id == null ? true : false;
+    }
+
+    public boolean isEdition()
+    {
+        return !isAddition();
+    }
 }
