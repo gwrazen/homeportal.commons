@@ -17,6 +17,6 @@ public class PageUtils
             direction = Sort.Direction.DESC;
         }
 
-        return new PageRequest(pageNumber, pageSize, direction, sort);
+        return PageRequest.of(pageNumber, pageSize, direction, sort);
     }
 }
