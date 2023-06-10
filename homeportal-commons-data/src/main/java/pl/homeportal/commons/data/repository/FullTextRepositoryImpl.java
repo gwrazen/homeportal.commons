@@ -242,7 +242,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             }
             orders.add(Sort.Order.asc(sortField.getField()));
         }
-        return new PageRequest(sQuery.getPageNumber(), sQuery.getPageSize(), Sort.by(orders));
+        return PageRequest.of(sQuery.getPageNumber(), sQuery.getPageSize(), Sort.by(orders));
     }
 
     private String getSort(Sort sort)

@@ -35,17 +35,17 @@ public class Page extends PageRequest
 
     public Page(int page, int size)
     {
-        super(page, size);
+        super(page, size, Sort.unsorted());
         this.page = page;
         this.size = size;
     }
 
-    public Page(int page, int size, Sort.Direction direction, String... properties)
-    {
-        super(page, size, direction, properties);
-        this.page = page;
-        this.size = size;
-    }
+//    public Page(int page, int size, Sort.Direction direction, String... properties)
+//    {
+//        super(page, size, direction, properties);
+//        this.page = page;
+//        this.size = size;
+//    }
 
     public Page(int page, int size, Sort sort)
     {
