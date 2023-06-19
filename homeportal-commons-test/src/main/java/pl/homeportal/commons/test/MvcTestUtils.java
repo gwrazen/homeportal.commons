@@ -13,33 +13,43 @@ import java.util.List;
 
 public class MvcTestUtils
 {
-    public static BindingResult bindingResult(String key, ResultActions resultActions)
+    public static BindingResult bindingResult(String key, ResultActions result)
     {
-        return BindingResult.class.cast(resultActions.andReturn().getFlashMap().get(key));
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key));
     }
 
-    public static List<ObjectError> bindingErrors(String key, ResultActions resultActions)
+    public static List<ObjectError> errors(String key, ResultActions result)
     {
-        return BindingResult.class.cast(resultActions.andReturn().getFlashMap().get(key)).getAllErrors();
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getAllErrors();
     }
 
-    public static List<FieldError> bindingFieldErrors(String key, ResultActions resultActions)
+    public static List<FieldError> fieldErrors(String key, ResultActions result)
     {
-        return BindingResult.class.cast(resultActions.andReturn().getFlashMap().get(key)).getFieldErrors();
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getFieldErrors();
     }
 
-    public static int errorCount(String key, ResultActions resultActions)
+    public static List<ObjectError> globalErrors(String key, ResultActions result)
     {
-        return BindingResult.class.cast(resultActions.andReturn().getFlashMap().get(key)).getErrorCount();
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getGlobalErrors();
     }
 
-    public static int fieldErrorCount(String key, ResultActions resultActions)
+    public static int countErrors(String key, ResultActions result)
     {
-        return BindingResult.class.cast(resultActions.andReturn().getFlashMap().get(key)).getFieldErrorCount();
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getErrorCount();
     }
 
-    public static <T> T fromModel(String key, ResultActions resultActions, Class<T> clazz)
+    public static int countGlobalErrors(String key, ResultActions result)
     {
-        return clazz.cast(resultActions.andReturn().getModelAndView().getModel().get(key));
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getGlobalErrorCount();
+    }
+
+    public static int countFieldErrors(String key, ResultActions result)
+    {
+        return BindingResult.class.cast(result.andReturn().getFlashMap().get(key)).getFieldErrorCount();
+    }
+
+    public static <T> T fromModel(String key, ResultActions result, Class<T> clazz)
+    {
+        return clazz.cast(result.andReturn().getModelAndView().getModel().get(key));
     }
 }
