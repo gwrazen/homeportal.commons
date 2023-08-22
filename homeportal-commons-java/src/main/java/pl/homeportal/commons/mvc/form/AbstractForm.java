@@ -1,5 +1,6 @@
 package pl.homeportal.commons.mvc.form;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,8 @@ public class AbstractForm
     private Integer id;
     private String created;
     private String modified;
+
+    @Setter(AccessLevel.NONE)
     private boolean saved;
 
     public boolean isAddition()
@@ -24,5 +27,10 @@ public class AbstractForm
     public boolean isEdition()
     {
         return !isAddition();
+    }
+
+    public void save()
+    {
+        this.saved = true;
     }
 }
