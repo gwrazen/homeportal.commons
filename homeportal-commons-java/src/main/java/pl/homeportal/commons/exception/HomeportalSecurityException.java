@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
  */
 
 @Getter
-@RequiredArgsConstructor(staticName = "of")
+@RequiredArgsConstructor
 public class HomeportalSecurityException extends RuntimeException
 {
     private final String user;
@@ -16,7 +16,8 @@ public class HomeportalSecurityException extends RuntimeException
     private final String action;
     private final String resource;
 
-    public String message()
+    @Override
+    public String getMessage()
     {
         return new StringBuilder()
                 .append("User: '")
