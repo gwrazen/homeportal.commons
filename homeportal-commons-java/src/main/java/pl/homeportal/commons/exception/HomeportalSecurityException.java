@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class HomeportalSecurityException extends RuntimeException
 {
     private final String user;
+    private final String role;
     private final String action;
     private final String resource;
 
@@ -20,6 +21,8 @@ public class HomeportalSecurityException extends RuntimeException
         return new StringBuilder()
                 .append("User: '")
                 .append(user)
+                .append("' with role: '")
+                .append(role)
                 .append("' is trying to execute: '")
                 .append(action)
                 .append("' on resource: '")
