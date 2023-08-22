@@ -20,13 +20,13 @@ public class HomeportalSecurityException extends RuntimeException
     public String getMessage()
     {
         return new StringBuilder()
-                .append("User: '")
+                .append("User '")
                 .append(user)
-                .append("' with role: '")
+                .append("' with role '")
                 .append(role)
-                .append("' is trying to execute: '")
+                .append("' is trying to execute '")
                 .append(action)
-                .append("' on resource: '")
+                .append("' on resource '")
                 .append(resource)
                 .append("'")
                 .toString();
