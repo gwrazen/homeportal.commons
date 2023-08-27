@@ -16,6 +16,7 @@ import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 public class HomeportalValidationException extends RuntimeException
 {
+    private static final String ERROR_CODE = "[ERR-HP-VAL]: ";
     private static final String CONSTRAINT_VIOLATIONS_HEADER = "Constraint violations:";
 
     @Getter
@@ -42,11 +43,12 @@ public class HomeportalValidationException extends RuntimeException
     {
         if (isNull(violations))
         {
-            return super.getMessage();
+            return ERROR_CODE.concat(super.getMessage());
         }
 
         final StringBuffer message = new StringBuffer();
         message.append(lineSeparator());
+        message.append(ERROR_CODE);
         message.append(CONSTRAINT_VIOLATIONS_HEADER);
         message.append(lineSeparator());
         violations.forEach(v -> addMessage(message, v));

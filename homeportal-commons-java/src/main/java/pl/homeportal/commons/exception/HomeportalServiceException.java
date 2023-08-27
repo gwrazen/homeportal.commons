@@ -8,6 +8,7 @@ import java.util.Collection;
 import static java.lang.String.format;
 import static java.lang.System.lineSeparator;
 import static java.util.Objects.isNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
@@ -16,10 +17,11 @@ import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 public class HomeportalServiceException extends RuntimeException
 {
-    private static final String CONSTRAINT_VIOLATIONS_HEADER = "Constraint violations:";
-
-    @Getter
-    private Collection<Violation> violations = null;
+    private static final String ERROR_CODE = "[ERR-HP-SRV]: ";
+    public HomeportalServiceException()
+    {
+        super();
+    }
 
     public HomeportalServiceException(String message)
     {
@@ -31,58 +33,9 @@ public class HomeportalServiceException extends RuntimeException
         super(message, cause);
     }
 
-    public HomeportalServiceException(Collection<Violation> violations)
-    {
-        super();
-        this.violations = violations;
-    }
-
     @Override
     public String getMessage()
     {
-        if (isNull(violations))
-        {
-            return super.getMessage();
-        }
-
-        final StringBuffer message = new StringBuffer();
-        message.append(lineSeparator());
-        message.append(CONSTRAINT_VIOLATIONS_HEADER);
-        message.append(lineSeparator());
-        violations.forEach(v -> addMessage(message, v));
-//        removeLastLine(message);
-
-        return message.toString();
-    }
-
-    private StringBuffer addMessage(StringBuffer message, Violation v)
-    {
-        message.append(v.message());
-        message.append(lineSeparator());
-
-        return message;
-    }
-
-    private void removeLastLine(StringBuffer message)
-    {
-        int start = message.length() - 1;
-        int end = message.length();
-        message.replace(start, end, EMPTY_STRING);
-    }
-
-    @Getter
-    @AllArgsConstructor(staticName = "of")
-    public static class Violation
-    {
-        private static final String VIOLATION_MESSAGE = "Violation for field: '%s' with value: '%s', message: '%s'";
-
-        private String field;
-        private Object value;
-        private String message;
-
-        public String message()
-        {
-            return format(VIOLATION_MESSAGE, field, value, message);
-        }
+        return ERROR_CODE.concat(super.getMessage());
     }
 }

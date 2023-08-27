@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeportalSecurityException extends RuntimeException
 {
+    private static final String ERROR_CODE = "[ERR-HP-SEC]: ";
+
     private final String user;
     private final String role;
     private final String action;
@@ -20,6 +22,7 @@ public class HomeportalSecurityException extends RuntimeException
     public String getMessage()
     {
         return new StringBuilder()
+                .append(ERROR_CODE)
                 .append("User '")
                 .append(user)
                 .append("' with role '")
