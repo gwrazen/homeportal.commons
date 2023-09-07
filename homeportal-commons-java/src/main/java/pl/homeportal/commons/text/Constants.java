@@ -26,4 +26,8 @@ public class Constants
 
     public static final String HTTP = "http://";
     public static final String ALL_REQUESTS = "/**";
+
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
+
 }
