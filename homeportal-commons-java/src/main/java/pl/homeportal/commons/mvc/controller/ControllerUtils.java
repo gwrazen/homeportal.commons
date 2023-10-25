@@ -61,9 +61,11 @@ public class ControllerUtils
         return new ModelAndView(view, model.asMap());
     }
 
-    public static ModelAndView redirectView(String view)
+    public static ModelAndView redirectUri(String uri)
     {
-        return new ModelAndView(new RedirectView(view, TRUE));
+        RedirectView view = new RedirectView(uri, TRUE);
+        view.setExposeModelAttributes(false);
+        return new ModelAndView(view);
     }
 
     public static boolean isResourceUriSuffix()

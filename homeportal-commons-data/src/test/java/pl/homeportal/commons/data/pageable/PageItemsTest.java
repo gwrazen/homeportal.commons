@@ -21,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * 4,[5],6
  *
  */
-public class PageItemListTest
+public class PageItemsTest
 {
     private final int allResultsQty = 51;
 
@@ -33,7 +33,7 @@ public class PageItemListTest
     {
         // given
         final int current = 1;
-        PageItemList pageItemList = PageItemList.of(getPage(current), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(current), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -57,7 +57,7 @@ public class PageItemListTest
     {
         // given
         final int current = 2;
-        PageItemList pageItemList = PageItemList.of(getPage(current), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(current), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -80,7 +80,7 @@ public class PageItemListTest
     public void testPageThree()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(3), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(3), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -103,7 +103,7 @@ public class PageItemListTest
     public void testPageFour()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(4), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(4), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -127,7 +127,7 @@ public class PageItemListTest
     {
         // given
         final int current = 5;
-        PageItemList pageItemList = PageItemList.of(getPage(current), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(current), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();
@@ -150,7 +150,7 @@ public class PageItemListTest
     public void testPageSix()
     {
         // given
-        PageItemList pageItemList = PageItemList.of(getPage(6), allResultsQty);
+        PageItems pageItemList = PageItems.of(getPage(6), allResultsQty);
 
         // when
         List<PageItem> pages = pageItemList.getPageItems();

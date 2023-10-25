@@ -22,31 +22,31 @@ import static pl.homeportal.commons.text.Constants.QUESTION_MARK;
 import static pl.homeportal.commons.text.Constants.UTF_8;
 
 @Getter
-public class PageItemList
+public class PageItems
 {
     private static final int DEFAULT_PAGES_QTY = 3;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     private List<PageItem> pageItems;
 
-    public static PageItemList of(Page form, int allResultsQty)
+    public static PageItems of(Page form, int allResultsQty)
     {
         return of(form, allResultsQty, DEFAULT_PAGES_QTY, DEFAULT_PAGE_SIZE, emptySet());
     }
 
-    private static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize)
+    private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize)
     {
         return of(form, allResultsQty, pagesQty,pageSize, emptySet());
     }
 
-    private static PageItemList of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
+    private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
     {
         int last = calculateLastPage(allResultsQty, pageSize);
         int current = form.getPageNumber();
         int start = calculateStart(current);
         int end = calculateEnd(start, pagesQty, last);
 
-        PageItemList pageItemList = new PageItemList();
+        PageItems pageItems = new PageItems();
         for (int i = start; i <= end; i++)
         {
             PageItem pageItem = new PageItem();
@@ -59,11 +59,11 @@ public class PageItemList
             form.setPage(i);
             String link = pageableToUri(form, excludes);
             pageItem.setLink(link);
-            pageItemList.addPageItem(pageItem);
+            pageItems.addPageItem(pageItem);
         }
         form.setPage(current);
 
-        return pageItemList;
+        return pageItems;
     }
 
     public static String pageableToUri(Pageable form, Set<String> excludes)

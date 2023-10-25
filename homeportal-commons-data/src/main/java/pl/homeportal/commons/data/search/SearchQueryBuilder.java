@@ -13,7 +13,7 @@ public abstract class SearchQueryBuilder<SR extends Pageable>
 
     protected void setPageable(SR sRequest, SearchQuery sQuery)
     {
-        sQuery.setPageNumber(sRequest.getPageNumber());
+        sQuery.setPageNumber(sRequest.getPageNumber() - 1);
         sQuery.setPageSize(sRequest.getPageSize());
     }
 }
