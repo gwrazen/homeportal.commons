@@ -22,15 +22,17 @@ public class Page extends PageRequest
     @Setter
     private int size = DEFAULT_SIZE;
 
+    @Setter
     @Getter(AccessLevel.NONE)
     private String sort = DEFAULT_SORT;
 
+    @Setter
     @Getter(AccessLevel.NONE)
     private boolean reverse = true;
 
     public Page()
     {
-        super(DEFAULT_PAGE, DEFAULT_SIZE, Sort.by(Sort.Order.desc(DEFAULT_SORT)));
+        super(DEFAULT_PAGE, DEFAULT_SIZE, Sort.by(DEFAULT_SORT).descending());
     }
 
     public Page(int page, int size)
@@ -40,19 +42,13 @@ public class Page extends PageRequest
         this.size = size;
     }
 
-//    public Page(int page, int size, Sort.Direction direction, String... properties)
-//    {
-//        super(page, size, direction, properties);
-//        this.page = page;
-//        this.size = size;
-//    }
-
     public Page(int page, int size, Sort sort)
     {
         super(page, size, sort);
         this.page = page;
         this.size = size;
-        this.sort = sort.toString();
+        this.sort = sort.get().findFirst().get().getProperty();
+        this.reverse = sort.get().findFirst().get().isDescending();
     }
 
     public String getSortField()
@@ -75,5 +71,11 @@ public class Page extends PageRequest
     public int getPageSize()
     {
         return size;
+    }
+
+    @Override
+    public Sort getSort()
+    {
+        return reverse == true ? Sort.by(sort).descending() : Sort.by(sort).ascending();
     }
 }

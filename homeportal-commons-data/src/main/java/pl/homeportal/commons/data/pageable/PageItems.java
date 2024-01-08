@@ -31,7 +31,7 @@ public class PageItems
 
     public static PageItems of(Page form, int allResultsQty)
     {
-        return of(form, allResultsQty, DEFAULT_PAGES_QTY, DEFAULT_PAGE_SIZE, emptySet());
+        return of(form, allResultsQty, DEFAULT_PAGES_QTY, form.getPageSize(), emptySet());
     }
 
     private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize)

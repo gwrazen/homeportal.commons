@@ -201,6 +201,7 @@ public class PageItemsTest
     {
         InnerPage page = InnerPage.of();
         page.setPage(index);
+        page.setSize(10);
         return page;
     }
 
