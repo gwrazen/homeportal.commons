@@ -29,7 +29,7 @@ public class StringUtils
         }
 
         String string = input.replaceAll(REGEXP_SPACE, spaceReplacement);
-        string = Normalizer.normalize(string, Normalizer.Form.NFD);
+        string = stripAccents(string);
         string = string.replaceAll(NOT_ALPHANUMERIC, EMPTY_STRING);
 
         return string.toLowerCase();

@@ -11,8 +11,8 @@ public class StringUtilsTest
     public void normalize()
     {
         // given
-        final String text = "Śląskieńźżó -   S.A.//";
-        final String expected = "slaskienzzosa";
+        final String text = "Śląskieńźżół -   S.A.//ężź";
+        final String expected = "slaskienzzolsaezz";
 
         // when
         String actual = StringUtils.normalize(text);
