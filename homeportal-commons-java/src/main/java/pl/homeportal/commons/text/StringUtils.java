@@ -18,24 +18,19 @@ public class StringUtils
 
     public static String normalize(String input)
     {
-        String string = input.replaceAll(REGEXP_SPACE, EMPTY_STRING);
-        string = Normalizer.normalize(string, Normalizer.Form.NFD);
-        string = string.replaceAll(NOT_ASCII, EMPTY_STRING);
-
-        return string.toLowerCase();
+        return normalize(input, EMPTY_STRING);
     }
 
-    public static String stripAccentsAndClean(String string, String spaceReplacement)
+    public static String normalize(String input, String spaceReplacement)
     {
-        if (string == null)
+        if (input == null)
         {
             return null;
         }
 
-        string = stripAccents(string);
-        string = string.replaceAll(NOT_ALPHANUMERIC, SPACE);
-        string = string.replaceAll(ONE_OR_MORE, SPACE);
-        string = string.replaceAll(REGEXP_SPACE, spaceReplacement);
+        String string = input.replaceAll(REGEXP_SPACE, spaceReplacement);
+        string = Normalizer.normalize(string, Normalizer.Form.NFD);
+        string = string.replaceAll(NOT_ALPHANUMERIC, EMPTY_STRING);
 
         return string.toLowerCase();
     }
