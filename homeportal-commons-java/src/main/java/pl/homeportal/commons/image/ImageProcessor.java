@@ -75,13 +75,11 @@ class ImageProcessorTask implements Runnable
     private static final int LARGE_WIDTH = 1024;
     private static final int LARGE_HEIGHT = 768;
 
-    private static final String JPG = "jpg";
     private static final String SMALL = "_s";
     private static final String MEDIUM = "_m";
     private static final String LARGE = "_l";
     private static final String DOT = ".";
     private static final String SLASH = "/";
-
 
     private InputStream sourceFile;
     private File destinationDir;
@@ -125,12 +123,12 @@ class ImageProcessorTask implements Runnable
         return finished;
     }
 
-    private void resizeImage(BufferedImage originalImage, String medium2, int mediumWidth, int mediumHeight, String extension) throws IOException
+    private void resizeImage(BufferedImage originalImage, String sizeSuffix, int width, int height, String extension) throws IOException
     {
-        String mediumLink = destinationDir.getAbsolutePath() + SLASH + name + medium2 + DOT + extension;
-        File medium = new File(mediumLink);
-        BufferedImage mediumImage = Scalr.resize(originalImage, Scalr.Method.SPEED, mediumWidth, mediumHeight);
-        ImageIO.write(mediumImage, JPG, medium);
+        String link = destinationDir.getAbsolutePath() + SLASH + name + sizeSuffix + DOT + extension;
+        File file = new File(link);
+        BufferedImage mediumImage = Scalr.resize(originalImage, Scalr.Method.SPEED, width, height);
+        ImageIO.write(mediumImage, extension, file);
         mediumImage.getGraphics().dispose();
     }
 

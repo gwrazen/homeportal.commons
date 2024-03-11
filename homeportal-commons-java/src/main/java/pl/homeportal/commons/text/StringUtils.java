@@ -28,10 +28,11 @@ public class StringUtils
             return null;
         }
 
-        String string = input.replaceAll(REGEXP_SPACE, spaceReplacement);
-        string = stripAccents(string);
-        string = string.replaceAll(NOT_ALPHANUMERIC, EMPTY_STRING);
+        input = stripAccents(input);
+        input = input.replaceAll(NOT_ALPHANUMERIC, SPACE);
+        input = input.replaceAll(ONE_OR_MORE, SPACE);
+        input = input.replaceAll(REGEXP_SPACE, spaceReplacement);
 
-        return string.toLowerCase();
+        return input.toLowerCase();
     }
 }
