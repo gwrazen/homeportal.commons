@@ -29,6 +29,10 @@ public class ControllerUtils
         RESOURCE_SUFFIXES.add(".jpeg");
         RESOURCE_SUFFIXES.add(".jpg");
         RESOURCE_SUFFIXES.add(".png");
+        RESOURCE_SUFFIXES.add(".jpeg/");
+        RESOURCE_SUFFIXES.add(".jpg/");
+        RESOURCE_SUFFIXES.add(".png/");
+        RESOURCE_SUFFIXES.add("/error");
     }
 
     public static String getParameter(String key)
