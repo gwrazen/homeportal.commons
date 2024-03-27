@@ -13,10 +13,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public interface FormAwareController
 {
+    String BINDING_RESULTS_FORM = "org.springframework.validation.BindingResult.form";
+    String FORM = "form";
+
     @InitBinder
     void initBinder(WebDataBinder binder);
 
     ModelAndView formBackingObject(ModelMap model);
 
-    default void saveFlashAttributes(Object form, BindingResult result, RedirectAttributes redirectAttributes){};
+    default void saveFlashAttributes(Object form, BindingResult result, RedirectAttributes redirectAttributes)
+    {
+        redirectAttributes.addFlashAttribute(BINDING_RESULTS_FORM, result);
+        redirectAttributes.addFlashAttribute(FORM, form);
+    }
 }
