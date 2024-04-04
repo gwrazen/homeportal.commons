@@ -123,11 +123,19 @@ public class SearchQuery implements SortFieldAware
 
     public void addSortField(QueryParameter parameter)
     {
+        if (parameter == null)
+        {
+            return;
+        }
         sortFields.addLast(new SortField(parameter.getValue(), SortField.Type.STRING));
     }
 
     public void addSortField(QueryParameter parameter, boolean reverse)
     {
+        if (parameter == null)
+        {
+            return;
+        }
         sortFields.addLast(new SortField(parameter.getValue(), SortField.Type.STRING, reverse));
     }
 
