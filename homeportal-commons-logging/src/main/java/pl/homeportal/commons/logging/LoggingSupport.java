@@ -93,15 +93,10 @@ public class LoggingSupport
     }
 
     // warning
-    public static void warning(Logger logger, String message)
-    {
-        logger.warn(message);
-    }
-
-    public static void warning(Logger logger, String message, String argument)
-    {
-        warning(logger, message, asList(argument));
-    }
+//    public static void warning(Logger logger, String message)
+//    {
+//        logger.warn(message);
+//    }
 
     public static void warning(Logger logger, String messageTemplate, Object... arguments)
     {
@@ -133,11 +128,6 @@ public class LoggingSupport
     public static void error(Logger logger, String message)
     {
         logger.error(message);
-    }
-
-    public static void error(Logger logger, String message, String argument)
-    {
-        error(logger, message, asList(argument));
     }
 
     public static void error(Logger logger, String message, Exception exception)

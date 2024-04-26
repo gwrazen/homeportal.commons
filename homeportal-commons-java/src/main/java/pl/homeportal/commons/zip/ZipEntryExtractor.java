@@ -1,18 +1,24 @@
 package pl.homeportal.commons.zip;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.io.IOUtils;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
+//import java.util.zip.ZipFile;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import static org.apache.commons.mail.ByteArrayDataSource.BUFFER_SIZE;
 import static pl.homeportal.commons.text.Constants.UTF_8;
 
 /**
@@ -33,29 +39,9 @@ public class ZipEntryExtractor
     public static InputStream extract(String name, String archivePath) throws Exception
     {
         ZipFile archive = new ZipFile(archivePath);
-        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(archivePath), Charset.forName(UTF_8));
-        byte[] bytes;
+        ZipEntry entry = archive.getEntry(name);
 
-        try
-        {
-            ZipEntry entry = archive.getEntry(name);
-            if (isTextFile(name))
-            {
-                bytes = IOUtils.toByteArray(new InputStreamReader(archive.getInputStream(entry)), UTF_8);
-            }
-            else
-            {
-                bytes = IOUtils.toByteArray(archive.getInputStream(entry));
-            }
-        }
-        finally
-        {
-            archive.close();
-            zipInputStream.closeEntry();
-            zipInputStream.close();
-        }
-
-        return new ByteArrayInputStream(bytes);
+        return archive.getInputStream(entry);
     }
 
     public static boolean isAvailable(String archivePath)

@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
+import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
  * Created by Grzegorz Wrażeń on 04-03-2023 at 09:52
@@ -42,11 +43,19 @@ public class ControllerUtils
 
     public static HttpServletRequest currentRequest()
     {
+        if (RequestContextHolder.getRequestAttributes() == null)
+        {
+            return null;
+        }
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
     public static String currentUri()
     {
+        if (currentRequest() == null)
+        {
+            return EMPTY_STRING;
+        }
         return currentRequest().getRequestURI();
     }
 

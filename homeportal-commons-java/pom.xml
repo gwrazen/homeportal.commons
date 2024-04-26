@@ -105,6 +105,15 @@
             <artifactId>javax.el</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+        </dependency>
         <!-- TESTS -->
         <dependency>
             <groupId>junit</groupId>
