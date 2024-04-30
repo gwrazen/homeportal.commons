@@ -1,24 +1,14 @@
 package pl.homeportal.commons.zip;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
-import org.apache.commons.io.IOUtils;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
-//import java.util.zip.ZipFile;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import static org.apache.commons.mail.ByteArrayDataSource.BUFFER_SIZE;
 import static pl.homeportal.commons.text.Constants.UTF_8;
 
 /**
