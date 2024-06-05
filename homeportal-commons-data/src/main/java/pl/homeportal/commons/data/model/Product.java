@@ -52,12 +52,19 @@ public class Product
     public static final String HALL_DETAILS_URI = "hala-magazyn";
     public static final String OBJECT_DETAILS_URI = "obiekt";
 
-    public static final String HOUSE_MESSAGE = "product.houses";
-    public static final String LAND_MESSAGE = "product.lands";
-    public static final String OFFICE_MESSAGE = "product.offices";
-    public static final String APARTMENT_MESSAGE = "product.apartments";
-    public static final String HALL_MESSAGE = "product.halls";
-    public static final String OBJECT_MESSAGE = "product.objects";
+    public static final String APARTMENTS_MSG_KEY = "product.apartments";
+    public static final String HOUSES_MSG_KEY = "product.houses";
+    public static final String LANDS_MSG_KEY = "product.lands";
+    public static final String OFFICES_MSG_KEY = "product.offices";
+    public static final String HALLS_MSG_KEY = "product.halls";
+    public static final String OBJECTS_MSG_KEY = "product.objects";
+
+    public static final String APARTMENT_MSG_KEY = "product.apartment";
+    public static final String HOUSE_MSG_KEY = "product.house";
+    public static final String LAND_MSG_KEY = "product.land";
+    public static final String OFFICE_MSG_KEY = "product.office";
+    public static final String HALL_MSG_KEY = "product.hall";
+    public static final String OBJECT_MSG_KEY = "product.object";
 
 
     private static final Map<String, String> PRODUCTS_TO_STRINGS_DETAILS = new HashMap<>(INITIAL_CAPACITY);
@@ -67,6 +74,7 @@ public class Product
     private static final Map<String, String> PRODUCTS_TO_DETAILS_URIS = new HashMap<>(INITIAL_CAPACITY);
     private static final Map<String, String> DETAILS_URIS_TO_PRODUCTS = new HashMap<>(INITIAL_CAPACITY);
     private static final Map<String, String> PRODUCTS_TO_MESSAGES = new HashMap<>(INITIAL_CAPACITY);
+    private static final Map<String, String> PRODUCT_TO_MESSAGES = new HashMap<>(INITIAL_CAPACITY);
 
     static
     {
@@ -112,12 +120,19 @@ public class Product
         DETAILS_URIS_TO_PRODUCTS.put(HALL_DETAILS_URI, HALL);
         DETAILS_URIS_TO_PRODUCTS.put(OBJECT_DETAILS_URI, OBJECT);
 
-        PRODUCTS_TO_MESSAGES.put(HOUSE, HOUSE_MESSAGE);
-        PRODUCTS_TO_MESSAGES.put(LAND, LAND_MESSAGE);
-        PRODUCTS_TO_MESSAGES.put(OFFICE, OFFICE_MESSAGE);
-        PRODUCTS_TO_MESSAGES.put(APARTMENT, APARTMENT_MESSAGE);
-        PRODUCTS_TO_MESSAGES.put(HALL, HALL_MESSAGE);
-        PRODUCTS_TO_MESSAGES.put(OBJECT, OBJECT_MESSAGE);
+        PRODUCTS_TO_MESSAGES.put(HOUSE, HOUSES_MSG_KEY);
+        PRODUCTS_TO_MESSAGES.put(LAND, LANDS_MSG_KEY);
+        PRODUCTS_TO_MESSAGES.put(OFFICE, OFFICES_MSG_KEY);
+        PRODUCTS_TO_MESSAGES.put(APARTMENT, APARTMENTS_MSG_KEY);
+        PRODUCTS_TO_MESSAGES.put(HALL, HALLS_MSG_KEY);
+        PRODUCTS_TO_MESSAGES.put(OBJECT, OBJECTS_MSG_KEY);
+
+        PRODUCT_TO_MESSAGES.put(APARTMENT, APARTMENT_MSG_KEY);
+        PRODUCT_TO_MESSAGES.put(HOUSE, HOUSE_MSG_KEY);
+        PRODUCT_TO_MESSAGES.put(LAND, LAND_MSG_KEY);
+        PRODUCT_TO_MESSAGES.put(OFFICE, OFFICE_MSG_KEY);
+        PRODUCT_TO_MESSAGES.put(HALL, HALL_MSG_KEY);
+        PRODUCT_TO_MESSAGES.put(OBJECT, OBJECT_MSG_KEY);
     }
 
     public static String asStringForDetails(String productID)
@@ -145,8 +160,12 @@ public class Product
         return PRODUCTS_TO_DETAILS_URIS.get(productID);
     }
 
-    public static String getTitleByProduct(String productID)
+    public static String getTranslationKeyByProducts(String productID)
     {
         return PRODUCTS_TO_MESSAGES.get(productID);
+    }
+    public static String getTranslationKeyByProduct(String productID)
+    {
+        return PRODUCT_TO_MESSAGES.get(productID);
     }
 }

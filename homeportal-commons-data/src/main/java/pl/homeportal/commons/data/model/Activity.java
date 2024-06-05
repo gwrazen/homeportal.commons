@@ -60,7 +60,7 @@ public class Activity
         return ACTIVITIES_TO_URIS.get(activityID);
     }
 
-    public static String getTitleByActivity(String activityID)
+    public static String getTranslationKeyByActivity(String activityID)
     {
         return ACTIVITIES_TO_MESSAGES.get(activityID);
     }
