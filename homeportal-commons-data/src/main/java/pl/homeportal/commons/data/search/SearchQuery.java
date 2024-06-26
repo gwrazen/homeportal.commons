@@ -38,6 +38,14 @@ public class SearchQuery implements SortFieldAware
         parameters.add(query.toString());
     }
 
+    public void addNotParameter(QueryParameter parameter, String value)
+    {
+        final StringBuilder query = new StringBuilder();
+        query.append("(NOT " + parameter.getValue() + ":" + normalize(value) + ")");
+
+        parameters.add(query.toString());
+    }
+
     public void addOrParameter(QueryParameter type, String first, String second)
     {
         StringBuilder query = new StringBuilder();
