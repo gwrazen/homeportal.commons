@@ -9,7 +9,8 @@ import java.util.Locale;
 public enum Language
 {
     POLISH("pl"),
-    ENGLISH("en");
+    ENGLISH("en"),
+    UKRAINIAN("ua");
 
     private String value;
 
