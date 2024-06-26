@@ -41,7 +41,7 @@ public class SearchQuery implements SortFieldAware
     public void addNotParameter(QueryParameter parameter, String value)
     {
         final StringBuilder query = new StringBuilder();
-        query.append("(NOT " + parameter.getValue() + ":" + normalize(value) + ")");
+        query.append("(*:* AND NOT " + parameter.getValue() + ":" + normalize(value) + ")");
 
         parameters.add(query.toString());
     }
