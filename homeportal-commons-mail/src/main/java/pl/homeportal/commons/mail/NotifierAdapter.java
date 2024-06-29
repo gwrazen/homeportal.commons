@@ -1,15 +1,16 @@
 package pl.homeportal.commons.mail;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import javax.mail.Session;
 import java.util.Locale;
 
 import static java.lang.String.format;
+import static pl.homeportal.commons.logging.LoggingSupport.error;
+import static pl.homeportal.commons.logging.LoggingSupport.information;
+import static pl.homeportal.commons.logging.LoggingSupport.logger;
 import static pl.homeportal.commons.mail.NotifierAdapter.Messages.NOTIFICATION_DISABLED_MSG;
-import static pl.homeportal.commons.mail.NotifierAdapter.Messages.NOTIFICATION_SENDING_ERR;
 import static pl.homeportal.commons.mail.NotifierAdapter.Messages.NOTIFICATION_SENT_MSG;
 import static pl.homeportal.commons.mail.NotifierAdapter.Messages.SENDER_NAME;
 
@@ -19,7 +20,7 @@ import static pl.homeportal.commons.mail.NotifierAdapter.Messages.SENDER_NAME;
 
 public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<BaseDTO>
 {
-    private static final Logger LOG = LoggerFactory.getLogger(NotifierAdapter.class.getSimpleName());
+    private static final Logger LOG = logger(NotifierAdapter.class);
 
     protected Session session;
     protected MessageSource messageSource;
@@ -37,8 +38,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         }
         catch (Exception e)
         {
-            final String message = format(NOTIFICATION_SENDING_ERR, template());
-            LOG.error(message, e);
+            error(LOG, e, format(Error.NOTIFICATION_SENDING_ERR, template()));
         }
     }
 
@@ -65,8 +65,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
     {
         if (!isEnabled())
         {
-            final String message = format(NOTIFICATION_DISABLED_MSG, template());
-            LOG.info(message);
+            information(LOG, format(NOTIFICATION_DISABLED_MSG, template()));
             return;
         }
 
@@ -84,10 +83,16 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
 
     private void createAndSend(BaseDTO dto)
     {
-        final VelocityEmail email = createVelocityEmail(dto);
-        final String response = email.send();
-        final String message = format(NOTIFICATION_SENT_MSG, template(), response);
-        LOG.info(message);
+        try
+        {
+            final VelocityEmail email = createVelocityEmail(dto);
+            final String response = email.send();
+            information(LOG, format(NOTIFICATION_SENT_MSG, template(), response));
+        }
+        catch (Exception e)
+        {
+            error(LOG, e, Error.CREATE_AND_SEND_ERR);
+        }
     }
 
     private VelocityEmail createVelocityEmail(BaseDTO dto)
@@ -115,6 +120,12 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         public static final String NOTIFICATION_SENT_MSG = "Email sent. Template: %s, response: %s";
         public static final String NOTIFICATION_DISABLED_MSG = "Notifications disabled for email type: %s";
 
+    }
+
+    static class Error
+    {
         public static final String NOTIFICATION_SENDING_ERR = "Error during notification sending for template: %s";
+        public static final String CREATE_AND_SEND_ERR = "Error during createAndSend";
+
     }
 }

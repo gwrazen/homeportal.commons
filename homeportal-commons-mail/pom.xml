@@ -20,6 +20,12 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>pl.homeportal</groupId>
+            <artifactId>homeportal-commons-logging</artifactId>
+            <version>5.0</version>
+        </dependency>
+
         <!-- EXTERNALS -->
         <dependency>
             <groupId>org.apache.commons</groupId>
