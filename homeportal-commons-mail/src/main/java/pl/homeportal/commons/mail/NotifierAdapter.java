@@ -50,6 +50,12 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
     }
 
     @Override
+    public String message(String key, Locale locale)
+    {
+        return messageSource.getMessage(key, null, locale);
+    }
+
+    @Override
     public String message(String key, Object[] arguments, Locale locale)
     {
         return messageSource.getMessage(key, arguments, locale);
@@ -76,9 +82,9 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         }
 
         new Thread(() ->
-        {
-            createAndSend(dto);
-        }).start();
+                   {
+                       createAndSend(dto);
+                   }).start();
     }
 
     private void createAndSend(BaseDTO dto)
@@ -107,6 +113,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
                 .attachments(dto.getAttachments())
                 .embedded(dto.getEmbedded())
                 .model(dto);
+
     }
 
     private String subject(BaseDTO dto)

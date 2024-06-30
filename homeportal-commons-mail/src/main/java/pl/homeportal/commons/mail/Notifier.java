@@ -23,5 +23,7 @@ public interface Notifier<T>
 
     String senderName(Locale locale);
 
+    String message(String key, Locale locale);
+
     String message(String key, Object [] arguments, Locale locale);
 }
