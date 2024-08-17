@@ -32,7 +32,7 @@ public class Files
                     if (file.isFile())
                     {
                         file.delete();
-                        log.info(DELETED_FILE, file.getName());
+                        log.info(String.format(DELETED_FILE, file.getName()));
                         continue;
                     }
                     deleteDirectory(file);
@@ -42,7 +42,7 @@ public class Files
         }
         catch (Exception e)
         {
-            log.error(ERROR_DELETING_FILE, directory.getAbsolutePath());
+            log.error(String.format(ERROR_DELETING_FILE, directory.getAbsolutePath()));
             return false;
         }
     }
@@ -64,7 +64,7 @@ public class Files
                     if (filePattern.matcher(file.getName()).matches())
                     {
                         file.delete();
-                        log.info(DELETED_FILE, file.getName());
+                        log.info(String.format(DELETED_FILE, file.getName()));
                         continue;
                     }
                     if (file.isDirectory())
@@ -76,7 +76,7 @@ public class Files
         }
         catch (Exception e)
         {
-            log.error(ERROR_DELETING_FILE, directory.getAbsolutePath(), e);
+            log.error(String.format(ERROR_DELETING_FILE, directory.getAbsolutePath()), e);
         }
     }
 }
