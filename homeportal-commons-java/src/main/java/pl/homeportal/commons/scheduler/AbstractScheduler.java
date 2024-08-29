@@ -1,7 +1,5 @@
 package pl.homeportal.commons.scheduler;
 
-import java.util.Date;
-
 import static java.lang.String.format;
 import static pl.homeportal.commons.datetime.DateFormats.timeWithSecondPrecision;
 import static pl.homeportal.commons.datetime.DateTimeUtils.now;
