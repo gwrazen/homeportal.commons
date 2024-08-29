@@ -4,6 +4,7 @@ import java.util.Date;
 
 import static java.lang.String.format;
 import static pl.homeportal.commons.datetime.DateFormats.timeWithSecondPrecision;
+import static pl.homeportal.commons.datetime.DateTimeUtils.now;
 
 /**
  * Created by Grzegorz Wrazen on 09-10-2020
@@ -15,22 +16,24 @@ public abstract class AbstractScheduler
     private static final String ENDED_MESSAGE = "%s scheduler enabled. Scheduler ended at %s.";
     private static final String DISABLED_MESSAGE = "%s scheduler disabled.";
 
+    protected String jobName;
+
     public abstract boolean isEnabled();
 
     public abstract void job();
 
-    protected String start(String schedulerName, Date date)
+    protected String start()
     {
-        return format(STARTED_MESSAGE, schedulerName, timeWithSecondPrecision().format(date));
+        return format(STARTED_MESSAGE, jobName, timeWithSecondPrecision().format(now()));
     }
 
-    protected String end(String schedulerName, Date date)
+    protected String end()
     {
-        return format(ENDED_MESSAGE, schedulerName, timeWithSecondPrecision().format(date));
+        return format(ENDED_MESSAGE, jobName, timeWithSecondPrecision().format(now()));
     }
 
-    protected String disabled(String schedulerName)
+    protected String disabled()
     {
-        return format(DISABLED_MESSAGE, schedulerName);
+        return format(DISABLED_MESSAGE, jobName);
     }
 }

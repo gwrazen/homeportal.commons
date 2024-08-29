@@ -59,7 +59,7 @@ public class DateTimeUtils
 
     public static Date todayMinusMonths(int months)
     {
-        return new Date(currentTimeMillis() - (MONTH * months));
+        return toDate(LocalDateTime.now().minusMonths(months));
     }
 
     public static Date todayPlusMonths(int months)
