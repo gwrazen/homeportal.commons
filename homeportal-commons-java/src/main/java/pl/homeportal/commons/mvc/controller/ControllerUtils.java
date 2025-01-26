@@ -1,5 +1,6 @@
 package pl.homeportal.commons.mvc.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -77,6 +78,7 @@ public class ControllerUtils
     public static ModelAndView redirectUri(String uri)
     {
         RedirectView view = new RedirectView(uri, TRUE);
+        view.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
         view.setExposeModelAttributes(false);
         return new ModelAndView(view);
     }
