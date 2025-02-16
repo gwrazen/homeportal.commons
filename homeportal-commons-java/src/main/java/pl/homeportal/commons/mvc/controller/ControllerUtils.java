@@ -78,7 +78,14 @@ public class ControllerUtils
     public static ModelAndView redirectUri(String uri)
     {
         RedirectView view = new RedirectView(uri, TRUE);
-        view.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+        view.setExposeModelAttributes(false);
+        return new ModelAndView(view);
+    }
+
+    public static ModelAndView redirectUri(String uri, HttpStatus status)
+    {
+        RedirectView view = new RedirectView(uri, TRUE);
+        view.setStatusCode(status);
         view.setExposeModelAttributes(false);
         return new ModelAndView(view);
     }

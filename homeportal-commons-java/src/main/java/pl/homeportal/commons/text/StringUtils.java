@@ -28,6 +28,7 @@ public class StringUtils
             return null;
         }
 
+        input = input.trim();
         input = stripAccents(input);
         input = input.replaceAll(NOT_ALPHANUMERIC, SPACE);
         input = input.replaceAll(ONE_OR_MORE, SPACE);
