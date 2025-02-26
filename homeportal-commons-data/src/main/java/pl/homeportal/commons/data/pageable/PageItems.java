@@ -11,9 +11,11 @@ import java.lang.reflect.Modifier;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.AMPERSAND;
@@ -36,7 +38,7 @@ public class PageItems
 
     private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize)
     {
-        return of(form, allResultsQty, pagesQty,pageSize, emptySet());
+        return of(form, allResultsQty, pagesQty, pageSize, emptySet());
     }
 
     private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
@@ -68,6 +70,11 @@ public class PageItems
 
     public static String pageableToUri(Pageable form, Set<String> excludes)
     {
+        return pageableToUri(form, excludes, emptyMap());
+    }
+
+    public static String pageableToUri(Pageable form, Set<String> excludes, Map<String, String> defaults)
+    {
         try
         {
             StringBuilder sBuilder = new StringBuilder(QUESTION_MARK);
@@ -79,7 +86,7 @@ public class PageItems
                 String fName = field.getName();
                 Object value = field.get(form);
 
-                if (!isFieldAcceptable(field, value, excludes))
+                if (!isFieldAcceptable(field, value, excludes, defaults))
                 {
                     continue;
                 }
@@ -103,6 +110,11 @@ public class PageItems
                 ++index;
             }
 
+            final String uri = sBuilder.toString();
+            if (uri.endsWith(QUESTION_MARK))
+            {
+                return uri.substring(0, uri.length() - QUESTION_MARK.length());
+            }
             return sBuilder.toString();
 
         }
@@ -149,7 +161,7 @@ public class PageItems
         return fields;
     }
 
-    private static boolean isFieldAcceptable(Field field, Object value, Set<String> excludes)
+    private static boolean isFieldAcceptable(Field field, Object value, Set<String> excludes, Map<String, String> defaults)
     {
         if (Modifier.isStatic(field.getModifiers()))
         {
@@ -157,6 +169,11 @@ public class PageItems
         }
 
         if (excludes.contains(field.getName()))
+        {
+            return false;
+        }
+
+        if (defaults.containsKey(field.getName()) && defaults.get(field.getName()).equals(value.toString()))
         {
             return false;
         }
