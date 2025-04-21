@@ -2,6 +2,7 @@ package pl.homeportal.commons.datetime;
 
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -34,17 +35,17 @@ public class DateTimeUtils
 
     public static Date yesterday()
     {
-        return new Date(currentTimeMillis() - DAY);
+        return toDate(LocalDate.now().minusDays(1));
     }
 
     public static Date today()
     {
-        return new Date(currentTimeMillis());
+        return toDate(LocalDate.now());
     }
 
     public static Date tomorrow()
     {
-        return new Date(currentTimeMillis() + DAY);
+        return toDate(LocalDate.now().plusDays(1));
     }
 
     public static Date todayMinusDays(int days)
@@ -89,10 +90,24 @@ public class DateTimeUtils
                    .toInstant());
     }
 
+    public static Date toDate(@NotNull LocalDate date)
+    {
+        return Date.from(date
+                   .atStartOfDay(ZoneId.systemDefault())
+                   .toInstant());
+    }
+
     public static LocalDateTime toLocalDateTime(@NotNull Date date)
     {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
+    }
+
+    public static LocalDate toLocalDate(@NotNull Date date)
+    {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 }
