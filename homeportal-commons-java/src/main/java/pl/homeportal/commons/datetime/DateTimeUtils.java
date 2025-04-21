@@ -55,12 +55,12 @@ public class DateTimeUtils
 
     public static Date todayMinusDays(int days)
     {
-        return new Date(currentTimeMillis() - (DAY * days));
+        return toDate(LocalDate.now().minusDays(days));
     }
 
     public static Date todayPlusDays(int days)
     {
-        return new Date(currentTimeMillis() + (DAY * days));
+        return toDate(LocalDate.now().plusDays(days));
     }
 
     public static Date todayMinusMonths(int months)
