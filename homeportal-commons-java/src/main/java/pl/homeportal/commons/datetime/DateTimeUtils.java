@@ -48,6 +48,11 @@ public class DateTimeUtils
         return toDate(LocalDate.now().plusDays(1));
     }
 
+    public static Date dayAfterTomorrow()
+    {
+        return toDate(LocalDate.now().plusDays(2));
+    }
+
     public static Date todayMinusDays(int days)
     {
         return new Date(currentTimeMillis() - (DAY * days));
