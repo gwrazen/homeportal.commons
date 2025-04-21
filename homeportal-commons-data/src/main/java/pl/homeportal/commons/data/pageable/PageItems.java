@@ -17,6 +17,7 @@ import java.util.Set;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.AMPERSAND;
 import static pl.homeportal.commons.text.Constants.EQUALS_MARK;
@@ -36,12 +37,22 @@ public class PageItems
         return of(form, allResultsQty, DEFAULT_PAGES_QTY, form.getPageSize(), emptySet());
     }
 
+    public static PageItems of(Page form, int allResultsQty, Set<String> excludes, Map<String, String> defaults)
+    {
+        return of(form, allResultsQty, DEFAULT_PAGES_QTY, form.getPageSize(), excludes, defaults);
+    }
+
     private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize)
     {
         return of(form, allResultsQty, pagesQty, pageSize, emptySet());
     }
 
     private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes)
+    {
+        return of(form, allResultsQty, pagesQty, pageSize, excludes, emptyMap());
+    }
+
+    private static PageItems of(Page form, int allResultsQty, int pagesQty, int pageSize, Set<String> excludes, Map<String, String> defaults)
     {
         int last = calculateLastPage(allResultsQty, pageSize);
         int current = form.getPageNumber();
@@ -59,8 +70,15 @@ public class PageItems
 
             pageItem.setLabel(i);
             form.setPage(i);
-            String link = pageableToUri(form, excludes);
-            pageItem.setLink(link);
+            String link = pageableToUri(form, excludes, defaults);
+            if (isBlank(link))
+            {
+                pageItem.setLink(".");
+            }
+            else
+            {
+                pageItem.setLink(link);
+            }
             pageItems.addPageItem(pageItem);
         }
         form.setPage(current);
