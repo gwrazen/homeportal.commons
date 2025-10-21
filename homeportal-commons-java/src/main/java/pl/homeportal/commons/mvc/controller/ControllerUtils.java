@@ -92,7 +92,7 @@ public class ControllerUtils
 
     public static boolean isResourceUriSuffix()
     {
-        final String uri = currentRequest().getRequestURI();
+        final String uri = currentUri().toLowerCase();
         for (String suffix : RESOURCE_SUFFIXES)
         {
             if (uri.endsWith(suffix))
