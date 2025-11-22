@@ -33,4 +33,17 @@ public class Market
         }
         return null;
     }
+
+    public static String asString(String marketAsId)
+    {
+        if (PRIMARY.equalsIgnoreCase(marketAsId))
+        {
+            return PRIMARY_STRING;
+        }
+        if (SECONDARY.equalsIgnoreCase(marketAsId))
+        {
+            return SECONDARY_STRING;
+        }
+        return null;
+    }
 }
