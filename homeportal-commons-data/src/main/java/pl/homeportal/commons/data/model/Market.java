@@ -21,7 +21,7 @@ public class Market
         return SECONDARY_STRING.equalsIgnoreCase(marketAsString);
     }
 
-    public String asId(String marketAsString)
+    public static String asId(String marketAsString)
     {
         if (isPrimary(marketAsString))
         {
