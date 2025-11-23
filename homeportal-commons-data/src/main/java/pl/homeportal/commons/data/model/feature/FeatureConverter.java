@@ -37,6 +37,11 @@ public class FeatureConverter
 
     public static String toFeatures(Map<String, String> featureMap)
     {
+        if(featureMap == null ||  featureMap.isEmpty())
+        {
+            return null;
+        }
+
         final StringBuilder features = new StringBuilder();
         for (Map.Entry<String, String> entry : featureMap.entrySet())
         {
