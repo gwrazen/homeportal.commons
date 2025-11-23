@@ -35,6 +35,20 @@ public class FeatureConverter
         return featureMap;
     }
 
+    public static String toFeatures(Map<String, String> featureMap)
+    {
+        final StringBuilder features = new StringBuilder();
+        for (Map.Entry<String, String> entry : featureMap.entrySet())
+        {
+            features.append(FEATURE_SEPARATOR);
+            features.append(entry.getKey());
+            features.append(NAME_SEPARATOR);
+            features.append(entry.getValue());
+            features.append(FEATURE_SEPARATOR);
+        }
+        return features.toString();
+    }
+
     private static String extractName(String fItem)
     {
         try
