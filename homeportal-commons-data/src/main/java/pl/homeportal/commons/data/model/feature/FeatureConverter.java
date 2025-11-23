@@ -1,9 +1,11 @@
 package pl.homeportal.commons.data.model.feature;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static pl.homeportal.commons.data.model.feature.FeatureConstants.FEATURE_SEPARATOR;
 import static pl.homeportal.commons.data.model.feature.FeatureConstants.NAME_SEPARATOR;
 import static pl.homeportal.commons.data.model.feature.FeatureConstants.VALUE_SEPARATOR;
@@ -21,6 +23,11 @@ public class FeatureConverter
      */
     public static Map<String, String> toFeatureMap(String features)
     {
+        if (isBlank(features))
+        {
+            return Collections.emptyMap();
+        }
+
         Map<String, String> featureMap = new HashMap<>();
         StringTokenizer tokenizer = new StringTokenizer(features, FEATURE_SEPARATOR);
 
@@ -37,7 +44,7 @@ public class FeatureConverter
 
     public static String toFeatures(Map<String, String> featureMap)
     {
-        if(featureMap == null ||  featureMap.isEmpty())
+        if (featureMap == null || featureMap.isEmpty())
         {
             return null;
         }
