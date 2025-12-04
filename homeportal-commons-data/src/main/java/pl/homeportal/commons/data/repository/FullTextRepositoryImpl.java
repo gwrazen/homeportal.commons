@@ -120,7 +120,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     @Override
     public List<T> findAll(Pageable pageable, Class<T> t)
     {
-        String stringQuery = new StringBuffer()
+        final String stringQuery = new StringBuffer()
                 .append("select t from ")
                 .append(t.getSimpleName())
                 .append(" t ")
@@ -130,7 +130,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
 
         javax.persistence.Query query = entityManager.createQuery(stringQuery);
         query.setMaxResults(pageable.getPageSize());
-        query.setFirstResult(pageable.getPageNumber());
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 
         return query.getResultList();
     }
