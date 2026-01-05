@@ -35,5 +35,5 @@ public interface FullTextRepository<T>
 
     List<T> findAllBySearchQuery(SearchQuery searchQuery, Class<T> t);
 
-    FullTextQuery createQuery(String queryString, SortField[] sortFields, Class<T> t);
+    FullTextQuery createQuery(String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t);
 }

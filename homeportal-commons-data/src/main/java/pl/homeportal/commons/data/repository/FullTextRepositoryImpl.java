@@ -92,7 +92,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         try
         {
-            return createQuery(DOCUMENTS_COUNT, null, t).getResultSize();
+            return createQuery(DOCUMENTS_COUNT, null, false, t).getResultSize();
         }
         catch (Exception e)
         {
@@ -110,7 +110,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             return new Long(count(t)).intValue();
         }
 
-        return createQuery(sQuery.getQueryString(), null, t).getResultSize();
+        return createQuery(sQuery.getQueryString(), null, sQuery.isKeywordAnalyser(), t).getResultSize();
     }
 
     public List<T> findAll(Class<T> t)
@@ -145,7 +145,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             return findAll(createPageable(sQuery), t);
         }
 
-        FullTextQuery query = createQuery(sQuery.getQueryString(), getDefaultSortFields(sQuery), t);
+        FullTextQuery query = createQuery(sQuery.getQueryString(), getDefaultSortFields(sQuery), sQuery.isKeywordAnalyser(), t);
         query.setMaxResults(sQuery.getPageSize());
         query.setFirstResult(sQuery.getPageNumber() * sQuery.getPageSize());
         List<T> list = query.getResultList();
@@ -200,11 +200,11 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     }
 
     @Override
-    public FullTextQuery createQuery(String queryString, SortField[] sortFields, Class<T> t)
+    public FullTextQuery createQuery(String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t)
     {
         try
         {
-            QueryParser parser = new QueryParser(ID, getAnalyzer(false));
+            QueryParser parser = new QueryParser(ID, getAnalyzer(keywordAnalyser));
             parser.setLowercaseExpandedTerms(true);
             Query luceneQuery = parser.parse(queryString);
             FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
@@ -226,10 +226,13 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         return Search.getFullTextEntityManager(entityManager);
     }
 
-    private Analyzer getAnalyzer(boolean keywordAna)
+    private Analyzer getAnalyzer(boolean keywordAnalyzer)
     {
-//        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
-        return new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+        if (keywordAnalyzer)
+        {
+            return new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+        }
+        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
     }
 
     private Pageable createPageable(SearchQuery sQuery)
