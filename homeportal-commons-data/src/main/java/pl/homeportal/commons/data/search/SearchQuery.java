@@ -30,6 +30,10 @@ public class SearchQuery implements SortFieldAware
     @Getter
     private int pageSize = 20;
 
+    @Setter
+    @Getter
+    private boolean keywordAnalyser;
+
     public void addParameter(QueryParameter parameter, String value)
     {
         StringBuilder query = new StringBuilder();

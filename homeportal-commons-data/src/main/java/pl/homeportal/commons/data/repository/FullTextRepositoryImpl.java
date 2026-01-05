@@ -1,6 +1,7 @@
 package pl.homeportal.commons.data.repository;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -203,7 +204,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         try
         {
-            QueryParser parser = new QueryParser(ID, getAnalyzer());
+            QueryParser parser = new QueryParser(ID, getAnalyzer(false));
             parser.setLowercaseExpandedTerms(true);
             Query luceneQuery = parser.parse(queryString);
             FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
@@ -225,9 +226,10 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         return Search.getFullTextEntityManager(entityManager);
     }
 
-    private Analyzer getAnalyzer()
+    private Analyzer getAnalyzer(boolean keywordAna)
     {
-        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
+//        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
+        return new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
     }
 
     private Pageable createPageable(SearchQuery sQuery)
