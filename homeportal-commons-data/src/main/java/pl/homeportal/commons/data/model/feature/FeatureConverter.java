@@ -23,12 +23,12 @@ public class FeatureConverter
      */
     public static Map<String, String> toFeatureMap(String features)
     {
+        final Map<String, String> featureMap = new HashMap<>(0);
         if (isBlank(features))
         {
-            return Collections.emptyMap();
+            return featureMap;
         }
 
-        Map<String, String> featureMap = new HashMap<>();
         StringTokenizer tokenizer = new StringTokenizer(features, FEATURE_SEPARATOR);
 
         while (tokenizer.hasMoreTokens())
