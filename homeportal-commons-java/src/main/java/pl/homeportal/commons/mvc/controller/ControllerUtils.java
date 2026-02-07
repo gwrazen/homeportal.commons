@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Boolean.TRUE;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
@@ -58,6 +59,18 @@ public class ControllerUtils
             return EMPTY_STRING;
         }
         return currentRequest().getRequestURL().toString();
+    }
+
+    public static String currentFullUrl()
+    {
+        if (currentRequest() == null)
+        {
+            return EMPTY_STRING;
+        }
+        final String url = currentRequest().getRequestURL().toString();
+        final String query = currentRequest().getQueryString();
+
+        return url + (isBlank(query) ?  EMPTY_STRING : "?" + query);
     }
 
     public static String currentUri()
