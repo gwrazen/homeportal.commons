@@ -51,6 +51,15 @@ public class ControllerUtils
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
+    public static String currentUrl()
+    {
+        if (currentRequest() == null)
+        {
+            return EMPTY_STRING;
+        }
+        return currentRequest().getRequestURL().toString();
+    }
+
     public static String currentUri()
     {
         if (currentRequest() == null)
@@ -58,6 +67,15 @@ public class ControllerUtils
             return EMPTY_STRING;
         }
         return currentRequest().getRequestURI();
+    }
+
+    public static String currentQuery()
+    {
+        if (currentRequest() == null)
+        {
+            return EMPTY_STRING;
+        }
+        return currentRequest().getQueryString();
     }
 
     public static ModelAndView modelAndView(String view)
