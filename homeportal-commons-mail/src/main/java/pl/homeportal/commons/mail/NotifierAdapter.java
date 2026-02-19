@@ -39,6 +39,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         catch (Exception e)
         {
             error(LOG, e, format(Error.NOTIFICATION_SENDING_ERR, template()));
+            throw e;
         }
     }
 
@@ -81,8 +82,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
             return;
         }
 
-        new Thread(() ->
-                   {
+        new Thread(() -> {
                        createAndSend(dto);
                    }).start();
     }
