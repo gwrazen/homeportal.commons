@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 public class SimpleTimeCache<T>
 {
     private final TimeUnit unit;
@@ -49,8 +49,12 @@ public class SimpleTimeCache<T>
         }
     }
 
-    private boolean isExpired()
+    public boolean isExpired()
     {
+        if (begin == null)
+        {
+            return true;
+        }
         final LocalDateTime now = LocalDateTime.now();
         switch (unit)
         {
