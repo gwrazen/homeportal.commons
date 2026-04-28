@@ -10,7 +10,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @RequiredArgsConstructor
 public class SimpleTimeCache<T>
 {
-
     private final TimeUnit unit;
     private final int value;
     private final boolean controlTime;
