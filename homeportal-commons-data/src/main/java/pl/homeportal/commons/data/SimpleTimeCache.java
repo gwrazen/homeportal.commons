@@ -6,10 +6,13 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.logging.Logger;
 
 @RequiredArgsConstructor(staticName = "of")
 public class SimpleTimeCache<T>
 {
+    private static final Logger LOG = Logger.getLogger(SimpleTimeCache.class.getName());
+
     private final TimeUnit unit;
     private final int value;
     private final boolean controlTime;
@@ -41,6 +44,7 @@ public class SimpleTimeCache<T>
             {
                 this.data = data;
                 this.begin = LocalDateTime.now();
+                LOG.info("Cache reloaded with data: " + this.data);
             }
         }
         finally
