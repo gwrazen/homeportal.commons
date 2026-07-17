@@ -48,6 +48,14 @@
         <spring.test.version>5.2.9.RELEASE</spring.test.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub homeportal.pl Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/gwrazen/homeportal.commons</url>
+        </repository>
+    </distributionManagement>
+
     <dependencyManagement>
         <dependencies>
 
