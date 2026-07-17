@@ -26,11 +26,6 @@
         </dependency>
 
         <dependency>
-            <groupId>imagej</groupId>
-            <artifactId>imagej</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.imgscalr</groupId>
             <artifactId>imgscalr-lib</artifactId>
         </dependency>
