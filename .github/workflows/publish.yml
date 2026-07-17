@@ -1,0 +1,35 @@
+name: Publish to GitHub Packages
+
+# Publikacja jest ręczna (workflow_dispatch), bo wersja commons (np. 5.0) jest
+# release'em bez -SNAPSHOT: GitHub Packages NIE pozwala nadpisać raz opublikowanej
+# wersji. Przy zmianie commons najpierw podbij <version> w pomach, potem odpal ten
+# workflow. Deploy publikuje wszystkie moduły (java/data/mail/logging/test).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          # Generuje ~/.m2/settings.xml z serverem "github" (== id w distributionManagement).
+          server-id: github
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: Deploy
+        run: mvn -B -DskipTests deploy
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
