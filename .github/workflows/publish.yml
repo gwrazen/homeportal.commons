@@ -17,11 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      # Commons to kod Javy 8 (source/target 1.8) z Lombokiem 1.16.14. Ten Lombok
+      # NIE działa na JDK 16+ (strong encapsulation zamyka com.sun.tools.javac.*),
+      # więc commons MUSI się budować JDK 8. Zbudowany jar 1.8 konsumuje potem HAC
+      # na JDK 17 bez problemu — to tylko kwestia kompilatora, nie runtime'u odbiorcy.
+      - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '8'
           cache: maven
           # Generuje ~/.m2/settings.xml z serverem "github" (== id w distributionManagement).
           server-id: github
