@@ -51,6 +51,13 @@ public enum FeatureType
     HOUSE_CELLAR("HOUSE_CELLAR", true, String.class),
     HOUSE_ELEVATION_TYPE("HOUSE_ELEVATION_TYPE", true, String.class),
     HOUSE_BUILD_MATERIAL("HOUSE_BUILD_MATERIAL", true, String.class),
+    // Dodane 2026-07-30: spider otodom emituje te typy od wskrzeszenia (2026-07-28), a enuma ich
+    // nie znal. HOUSE_FENCE mialo 109 ofert w oknie po wskrzeszeniu, HOUSE_BUILD_TECHNOLOGY jedna.
+    // DetailsController.translateFeatures wola FeatureType.valueOf(...) BEZ try/catch, wiec typ
+    // nieznany enumowi rzuca IllegalArgumentException przy renderowaniu strony oferty.
+    // Odpowiednik dla dzialek (LAND_FENCE) istnial od dawna — brakowalo tylko wariantu domowego.
+    HOUSE_FENCE("HOUSE_FENCE", true, String.class),
+    HOUSE_BUILD_TECHNOLOGY("HOUSE_BUILD_TECHNOLOGY", true, String.class),
 
     // LAND
     LAND_TENURE("LAND_TENURE", true, String.class),
@@ -64,6 +71,8 @@ public enum FeatureType
     OFFICE_ADVERTISEMENT_PLACE("OFFICE_ADVERTISEMENT_PLACE", true, String.class),
     OFFICE_PLACEMENT("OFFICE_PLACEMENT", true, String.class),
     OFFICE_EXHIBITION("OFFICE_EXHIBITION", true, String.class),
+    // Dodane 2026-07-30 z tego samego powodu co HOUSE_FENCE (patrz wyzej) — otodom emituje.
+    OFFICE_BUILD_TECHNOLOGY("OFFICE_BUILD_TECHNOLOGY", true, String.class),
 
     // HALL
     HALL("HALL", true, String.class),
