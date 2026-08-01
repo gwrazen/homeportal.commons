@@ -29,11 +29,13 @@
         <velocity.version>1.7</velocity.version>
         <imgscalr.version>4.2</imgscalr.version>
         <commons.email.version>1.2</commons.email.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
         <lombok.version>1.16.14</lombok.version>
         <hibernate.core.version>5.0.10.Final</hibernate.core.version>
         <hibernate.entitymanager.version>5.0.10.Final</hibernate.entitymanager.version>
         <hibernate.search.orm.version>5.5.4.Final</hibernate.search.orm.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
+        <jakarta.validation.api.version>2.0.2</jakarta.validation.api.version>
         <lucene.queryparser.version>5.3.1</lucene.queryparser.version>
         <!-- Wersje wszystkich artefaktow spring-* pochodza z BOM-ow ponizej. Nie pinuj
              ich pojedynczo — rozjazd miedzy spring-core a spring-context konczy sie
@@ -123,10 +125,22 @@
                 <version>${commons.email.version}</version>
             </dependency>
 
+            <!-- Uzywany wprost przez -mail; dotad przychodzil tylko tranzytywnie
+                 przez commons-email, wiec konsument bioracy sam -mail dostawal
+                 NoClassDefFoundError. -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${javax.mail.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+                <!-- Procesor adnotacji dziala tylko przy kompilacji; provided trzyma
+                     go poza runtime classpath konsumenta. -->
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -151,6 +165,18 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-search-engine</artifactId>
+                <version>${hibernate.search.orm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation.api.version}</version>
             </dependency>
 
             <dependency>

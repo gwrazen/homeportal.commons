@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 /**
  * Created by Grzegorz Wrazen on 24-02-2020
@@ -42,7 +41,7 @@ public abstract class BaseDTO
 
     public void addAllTos(Collection<String> emails)
     {
-        if (isEmpty(emails))
+        if (emails == null || emails.isEmpty())
         {
             return;
         }
@@ -57,7 +56,7 @@ public abstract class BaseDTO
 
     public void addAllCcs(Collection<String> emails)
     {
-        if (isEmpty(emails))
+        if (emails == null || emails.isEmpty())
         {
             return;
         }
@@ -72,7 +71,7 @@ public abstract class BaseDTO
 
     public void addAllBccs(Collection<String> emails)
     {
-        if (isEmpty(emails))
+        if (emails == null || emails.isEmpty())
         {
             return;
         }
@@ -87,7 +86,7 @@ public abstract class BaseDTO
 
     public void addAllAttachments(Collection<Attachment> attachments)
     {
-        if (isEmpty(attachments))
+        if (attachments == null || attachments.isEmpty())
         {
             return;
         }
@@ -102,7 +101,7 @@ public abstract class BaseDTO
 
     public void addAllEmbedded(Collection<Attachment> attachments)
     {
-        if (isEmpty(attachments))
+        if (attachments == null || attachments.isEmpty())
         {
             return;
         }

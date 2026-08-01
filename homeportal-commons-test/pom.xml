@@ -21,21 +21,23 @@
             <artifactId>spring-context</artifactId>
         </dependency>
 
+        <!-- MvcTestUtils uzywa FlashMap i ModelAndView z spring-webmvc oraz
+             MvcResult z spring-test. Oba jako provided: to modul z narzedziami
+             testowymi, wiec nie ma prawa dokladac nic do produkcyjnego classpathu
+             konsumenta. -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- TESTS -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
 
     </dependencies>
 </project>

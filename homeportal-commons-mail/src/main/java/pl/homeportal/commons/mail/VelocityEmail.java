@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 import static pl.homeportal.commons.text.Constants.UTF_8;
 
@@ -103,7 +102,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail tos(Set<String> tos)
     {
-        if (isEmpty(tos))
+        if (tos == null || tos.isEmpty())
         {
             return this;
         }
@@ -123,7 +122,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail ccs(Set<String> tos)
     {
-        if (isEmpty(tos))
+        if (tos == null || tos.isEmpty())
         {
             return this;
         }
@@ -143,7 +142,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail bccs(Set<String> tos)
     {
-        if (isEmpty(tos))
+        if (tos == null || tos.isEmpty())
         {
             return this;
         }
@@ -163,7 +162,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail attachments(Set<BaseDTO.Attachment> attachments)
     {
-        if (isEmpty(attachments))
+        if (attachments == null || attachments.isEmpty())
         {
             return this;
         }
@@ -186,7 +185,7 @@ public class VelocityEmail extends HtmlEmail
 
     public VelocityEmail embedded(Set<BaseDTO.Attachment> attachments)
     {
-        if (isEmpty(attachments))
+        if (attachments == null || attachments.isEmpty())
         {
             return this;
         }

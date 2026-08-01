@@ -26,15 +26,22 @@ wydanej wersji, więc **każda zmiana wymaga podbicia `<version>` przed publikac
 
 ## Układ modułów i kolejność zależności
 
-Do agregatora należy tylko tych pięć modułów (deklaracja w root `pom.xml`); buduj i edytuj w tej kolejności:
+Do agregatora należy tych sześć modułów (deklaracja w root `pom.xml`); buduj i edytuj w tej kolejności:
 
 1. **homeportal-commons-java** — fundament, bez zależności wewnętrznych. Narzędzia w `pl.homeportal.commons.*`:
    text, datetime, file, image, zip, json, security, validation, reflection, i18n, exceptions, scheduler,
    helpery MVC, aspekty AOP.
-2. **homeportal-commons-data** — zależy od `-java`. Persystencja JPA/Hibernate Search + model domenowy nieruchomości.
-3. **homeportal-commons-logging** — zależy od `-java` i `-data`. Ustandaryzowane helpery logowania encji.
-4. **homeportal-commons-mail** — zależy od `-java` i `-logging`. Maile szablonowane Velocity.
-5. **homeportal-commons-test** — helpery testowe Spring MVC.
+2. **homeportal-commons-domain** — model domenowy **bez ORM, Lucene i Springa**: `Product`, `Market`,
+   `Activity`, system cech (`Feature`, `FeatureType`, `FeatureConverter`, `FeatureTypeProvider`),
+   interfejsy znacznikowe typów nieruchomości i kontrakt `Identifiable`. Jedyna zależność: commons-lang3.
+   Konsument potrzebujący samych typów domenowych (np. `hac` na stosie jakarta) bierze ten moduł zamiast `-data`.
+   **Nie dokładaj tu zależności** — to jedyny powód istnienia modułu.
+3. **homeportal-commons-data** — zależy od `-java` i `-domain`. Persystencja JPA/Hibernate Search,
+   warstwa full-text search, paginacja.
+4. **homeportal-commons-logging** — zależy od `-java` i `-domain` (celowo nie od `-data`). Ustandaryzowane
+   helpery logowania encji.
+5. **homeportal-commons-mail** — zależy od `-java` i `-logging`. Maile szablonowane Velocity.
+6. **homeportal-commons-test** — helpery testowe Spring MVC.
 
 > Katalogi `homeportal-commons-geo-api` i `homeportal-commons-location-api` **nie** są w root `<modules>`
 > i mają innego parenta (`pl.homeportal-platform`). `mvn install` ich nie buduje — pomijaj je, chyba że
@@ -42,6 +49,10 @@ Do agregatora należy tylko tych pięć modułów (deklaracja w root `pom.xml`);
 
 ## Konwencje
 
+- **Nie usuwaj zależności na podstawie samego skanu importów.** Część z nich jest potrzebna wyłącznie
+  w runtime i nie ma ani jednego `import`: `javax.el-api` + `glassfish javax.el` (interpolacja komunikatów
+  Hibernate Validatora), `hibernate-entitymanager` (provider JPA), H2 w testach (ładowany przez
+  `persistence.xml`). `mvn dependency:analyze` zgłasza je jako nieużywane — to fałszywy alarm.
 - **Wersje zależności są scentralizowane.** Wszystkie wersje żyją w root `pom.xml` w `<dependencyManagement>`.
   POM-y modułów deklarują zależności *bez* `<version>`. Wersje artefaktów `spring-*` i `spring-data-*`
   pochodzą z zaimportowanych BOM-ów — nie pinuj ich pojedynczo.
@@ -59,6 +70,12 @@ a proxy AspectJ włączone:
 - `@ModelAttributeCondition` → `ModelAttributeConditionAspect` warunkowo pomija metody `@ModelAttribute`
   w zależności od URI bieżącego żądania.
 
+**Full-text search (`-data`).** Kodowanie wartości ma **jedno źródło prawdy**: pakiet `search/encoding`
+(`ValueEncoders.TEXT / FEATURE / NUMERIC / DATE`). Bridge'y Hibernate Search są cienkimi adapterami na te
+encodery, a `SearchQuery` używa encodera zadeklarowanego przy `QueryParameter.encoder()`. Dzięki temu
+strona indeksu i strona zapytania nie mogą się rozjechać — czego pilnuje `EncodingContractTest`.
+Dodając nowy parametr wyszukiwania, zadeklaruj encoder odpowiadający bridge'owi użytemu na polu encji.
+
 **Persystencja (`-data`).**
 - `AbstractEntity<IDENTITY extends Number>` — bazowy `@MappedSuperclass` dla wszystkich encji
   (generowane `@Id`, plus `isPersisted`/`isTransient`).
@@ -66,18 +83,19 @@ a proxy AspectJ włączone:
   **Hibernate Search + Lucene**. `SearchQuery` + `SearchQueryBuilder` + `QueryParameter` budują zapytania;
   pakiet `search/bridge` zawiera `FieldBridge`'e (`FeatureBridge`, `NumericBridge`, `DateBridge`,
   `PropertyTypeBridge`) mapujące wartości domenowe do indeksu Lucene.
-- Pakiet `pageable` (`Page`, `PageItems`, `PageItem`) — własna abstrakcja paginacji nad `Pageable` ze Spring Data.
-- Model domenowy (`model/`) skupia się na `Product`, `Market` i systemie cech (`Feature`, `FeatureType`,
-  `FeatureConverter`), z interfejsami znacznikowymi typów nieruchomości w `model/interfaces`
-  (`IHouse`, `IApartment`, `ILand`, `IOffice`, `IHall`, `IRent`, `ISale`, ...).
+- Pakiet `pageable` (`Page`, `PageItems`, `PageItem`) — własna abstrakcja paginacji. `Page` **implementuje**
+  `Pageable` i jest **1-based** (nazwy jego pól to nazwy parametrów HTTP w publicznym API hop-a);
+  konwersja na 0-based żyje wyłącznie w `Page.toPageable()`.
+- Model domenowy (`model/`) mieszka w module `-domain`, ale zachowuje pakiety `pl.homeportal.commons.data.model.*`
+  — importy konsumentów są niezmienione.
 
 **Logowanie (`-logging`).** `LoggingSupport` to statyczny helper z ustandaryzowanymi szablonami komunikatów
 (`INFORMATION_SAVE`, `ERROR_DELETE`, ...) do spójnego logowania operacji CRUD na encjach przez SLF4J.
 Przy logowaniu operacji na encjach używaj tych helperów zamiast doraźnych stringów.
 
 **Mail (`-mail`).** `Notifier`/`NotifierAdapter` wysyłają `VelocityEmail` renderowane z `EmailTemplate`
-przez Apache Velocity + commons-email; `BaseDTO` jest bazą modelu szablonu. `SessionMockProvider`
-pozwala testować bez prawdziwej sesji pocztowej.
+przez Apache Velocity + commons-email; `BaseDTO` jest bazą modelu szablonu. Nieudana wysyłka rzuca
+`HomeportalServiceException` — nie jest logowana jako sukces.
 
 ## Workflow 10x
 
