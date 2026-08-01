@@ -6,7 +6,7 @@
 
     <groupId>pl.homeportal</groupId>
     <artifactId>homeportal-commons</artifactId>
-    <version>5.0</version>
+    <version>6.0</version>
     <packaging>pom</packaging>
 
     <modules>

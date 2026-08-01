@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-`homeportal-commons` is a multi-module Maven library (`pl.homeportal:homeportal-commons:5.0`, packaging `pom`) of shared utilities for the Homeportal real-estate platform. It is a **library**, not a runnable application — there is no `main`. Code is built, installed to the local repo, and consumed by downstream Homeportal projects. Java 8 (`source`/`target` 1.8).
+`homeportal-commons` is a multi-module Maven library (`pl.homeportal:homeportal-commons:6.0`, packaging `pom`) of shared utilities for the Homeportal real-estate platform. It is a **library**, not a runnable application — there is no `main`. Code is built, installed to the local repo, and consumed by downstream Homeportal projects. Java 8 (`source`/`target` 1.8).
 
 ## Build & Test
 
