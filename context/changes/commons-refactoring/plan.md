@@ -547,11 +547,11 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [x] 2.1 Wszystkie testy przechodza: `mvn clean install`
-- [x] 2.2 Kazda poprawka ma test czerwony bez niej
-- [x] 2.3 Brak `printStackTrace` poza `FullTextRepositoryImpl`
-- [x] 2.4 Test `ClassFieldReader` z polem `null`
-- [x] 2.5 Test `stripInvalidXmlCharacters` zachowuje pierwszy znak
+- [x] 2.1 Wszystkie testy przechodza: `mvn clean install` — 930ca8d
+- [x] 2.2 Kazda poprawka ma test czerwony bez niej — 930ca8d
+- [x] 2.3 Brak `printStackTrace` poza `FullTextRepositoryImpl` — 930ca8d
+- [x] 2.4 Test `ClassFieldReader` z polem `null` — 930ca8d
+- [x] 2.5 Test `stripInvalidXmlCharacters` zachowuje pierwszy znak — 930ca8d
 
 #### Manual
 
