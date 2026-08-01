@@ -598,13 +598,13 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [ ] 5.1 Build przechodzi: `mvn clean install`
-- [ ] 5.2 Brak typow Lucene/HS w `FullTextRepository`
-- [ ] 5.3 Test: `getPageItems()` dla zera wynikow zwraca pusta liste
-- [ ] 5.4 Test: `Page` roznione numerem strony nie sa rowne
-- [ ] 5.5 Test: sortowanie malejace emituje jeden order
-- [ ] 5.6 Test: `IndexerMonitor` odrzuca drugie pozyskanie locka
-- [ ] 5.7 Test integracyjny FTS (H2 + Lucene RAM)
+- [x] 5.1 Build przechodzi: `mvn clean install`
+- [x] 5.2 Brak typow Lucene/HS w `FullTextRepository` (zostaly wylacznie wzmianki w javadocu; `SearchQuery` uzywa `QueryParser.escape` wewnetrznie, poza sygnaturami)
+- [x] 5.3 Test: `getPageItems()` dla zera wynikow zwraca pusta liste
+- [x] 5.4 Test: `Page` roznione numerem strony nie sa rowne
+- [x] 5.5 Test: sortowanie malejace emituje jeden order
+- [x] 5.6 Test: `IndexerMonitor` odrzuca drugie pozyskanie locka
+- [x] 5.7 Test integracyjny FTS (H2 + Lucene RAM)
 
 #### Manual
 

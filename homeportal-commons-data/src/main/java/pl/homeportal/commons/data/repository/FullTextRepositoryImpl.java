@@ -14,9 +14,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.SearchQuery;
+import pl.homeportal.commons.data.search.SortSpec;
+import pl.homeportal.commons.exception.HomeportalServiceException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,8 +31,11 @@ import java.util.List;
 import static pl.homeportal.commons.text.Constants.SPACE;
 
 
+@Transactional
 public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTextRepository<T>
 {
+    private static final Logger LOG = LoggerFactory.getLogger(FullTextRepositoryImpl.class);
+
     public static final String SEARCH_QUERY_CANNOT_BE_NULL = "SearchQuery cannot be null!";
     public static final String DOCUMENTS_COUNT = "(id:[0 TO 999999999])";
 
@@ -43,43 +50,39 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     private EntityManager entityManager;
 
     @Override
-    public <S extends T> S save(S t)
+    public <S extends T> S indexedSave(S t)
     {
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
-        t = fullTextEntityManager.merge(t);
-        fullTextEntityManager.index(t);
-        fullTextEntityManager.flushToIndexes();
+        final S managed = t.isTransient() ? persist(fullTextEntityManager, t) : fullTextEntityManager.merge(t);
+        fullTextEntityManager.index(managed);
 
-        return t;
+        return managed;
     }
 
     @Override
-    public void delete(T t)
+    public void indexedDelete(T t)
     {
-        FullTextEntityManager entityManager = getFullTextEntityManager();
-        entityManager.remove(t);
-        entityManager.purge(t.getClass(), t.getId());
-        entityManager.flushToIndexes();
+        FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        // Encja odlaczona (wczytana w innej transakcji) wymaga merge — samo remove
+        // rzucalo dla niej IllegalArgumentException.
+        final T managed = fullTextEntityManager.contains(t) ? t : fullTextEntityManager.merge(t);
+        fullTextEntityManager.remove(managed);
+        fullTextEntityManager.purge(managed.getClass(), managed.getId());
     }
 
     @Override
     public void deleteAll(Class<T> t)
     {
-        FullTextEntityManager entityManager = getFullTextEntityManager();
-        for (T one : findAll(t))
-        {
-            entityManager.remove(one);
-        }
-        entityManager.purgeAll(t);
-        entityManager.flushToIndexes();
+        // Bulk delete zamiast ladowania calej tabeli do pamieci i usuwania wiersz
+        // po wierszu — poprzednia wersja konczyla sie OutOfMemoryError na duzych tabelach.
+        entityManager.createQuery("delete from " + t.getSimpleName()).executeUpdate();
+        getFullTextEntityManager().purgeAll(t);
     }
 
     @Override
     public void purge(T t)
     {
-        FullTextEntityManager entityManager = getFullTextEntityManager();
-        entityManager.purge(t.getClass(), t.getId());
-        entityManager.flushToIndexes();
+        getFullTextEntityManager().purge(t.getClass(), t.getId());
     }
 
     @Override
@@ -97,8 +100,9 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            return -1;
+            // Sentinel -1 nie byl sprawdzany przez zadnego wolajacego — trafial
+            // wprost do komunikatu JMX jako liczba dokumentow.
+            throw new HomeportalServiceException("Could not count indexed documents for: " + t.getSimpleName(), e);
         }
     }
 
@@ -146,7 +150,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             return findAll(createPageable(sQuery), t);
         }
 
-        FullTextQuery query = createQuery(sQuery.getQueryString(), getDefaultSortFields(sQuery), sQuery.isKeywordAnalyser(), t);
+        FullTextQuery query = createQuery(sQuery.getQueryString(), toLuceneSortFields(sQuery), sQuery.isKeywordAnalyser(), t);
         query.setMaxResults(sQuery.getPageSize());
         query.setFirstResult(sQuery.getPageNumber() * sQuery.getPageSize());
         List<T> list = query.getResultList();
@@ -175,7 +179,9 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         }
         catch (InterruptedException e)
         {
-            throw new RuntimeException("Indexing interrupted", e);
+            // Bez przywrocenia flagi sygnal zamkniecia kontekstu ginal.
+            Thread.currentThread().interrupt();
+            throw new HomeportalServiceException("Indexing interrupted", e);
         }
     }
 
@@ -195,13 +201,21 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         getFullTextEntityManager().getSearchFactory().optimize();
     }
 
-    public SortField[] getDefaultSortFields(SortFieldAware query)
+    private SortField[] toLuceneSortFields(SortFieldAware query)
     {
-        return query.getSortFields().toArray(new SortField[query.getSortFields().size()]);
+        final List<SortSpec> specs = query.getSortSpecs();
+        final SortField[] sortFields = new SortField[specs.size()];
+        for (int index = 0; index < specs.size(); index++)
+        {
+            final SortSpec spec = specs.get(index);
+            sortFields[index] = new SortField(spec.getField(), SortField.Type.STRING, spec.isReverse());
+        }
+
+        return sortFields;
     }
 
-    @Override
-    public FullTextQuery createQuery(String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t)
+    /** Szczegol implementacji — typy Lucene i Hibernate Search nie wychodza poza ta klase. */
+    FullTextQuery createQuery(String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t)
     {
         try
         {
@@ -218,8 +232,16 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("Probably parsing lucene query exception", e);
+            throw new HomeportalServiceException("Could not execute full-text query: " + queryString, e);
         }
+    }
+
+    private <S extends T> S persist(FullTextEntityManager fullTextEntityManager, S t)
+    {
+        // merge dla encji transientnej zwracal kopie, a przekazany obiekt zostawal
+        // bez identyfikatora — wolajacy ignorujacy wynik trzymal wiec obiekt bez id.
+        fullTextEntityManager.persist(t);
+        return t;
     }
 
     private FullTextEntityManager getFullTextEntityManager()
@@ -250,24 +272,33 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     private Pageable createPageable(SearchQuery sQuery)
     {
         final List<Sort.Order> orders = new ArrayList<>();
-        LinkedList<SortField> sortFields = sQuery.getSortFields();
-        for (SortField sortField : sortFields)
+        for (SortSpec spec : sQuery.getSortSpecs())
         {
-            if (sortField.getReverse())
-            {
-                orders.add(Sort.Order.desc(sortField.getField()));
-            }
-            orders.add(Sort.Order.asc(sortField.getField()));
+            // Brak else sprawial, ze pole z reverse emitowalo DESC, a zaraz po nim ASC
+            // — czyli "order by X DESC, X ASC" dla kazdego odwroconego sortowania.
+            orders.add(spec.isReverse() ? Sort.Order.desc(spec.getField()) : Sort.Order.asc(spec.getField()));
         }
-        return PageRequest.of(sQuery.getPageNumber(), sQuery.getPageSize(), Sort.by(orders));
+
+        return PageRequest.of(sQuery.getPageNumber(), sQuery.getPageSize(),
+                              orders.isEmpty() ? Sort.unsorted() : Sort.by(orders));
     }
 
+    /**
+     * Wczesniej metoda zwracala **pierwszy** order i konczyla petle, wiec sortowanie
+     * po wiecej niz jednym polu bylo po cichu obcinane.
+     */
     private String getSort(Sort sort)
     {
+        final StringBuilder clause = new StringBuilder();
         for (Sort.Order order : sort)
         {
-            return order.getProperty() + SPACE + order.getDirection().name();
+            if (clause.length() > 0)
+            {
+                clause.append(", ");
+            }
+            clause.append(order.getProperty()).append(SPACE).append(order.getDirection().name());
         }
-        return " id asc";
+
+        return clause.length() == 0 ? "id asc" : clause.toString();
     }
 }

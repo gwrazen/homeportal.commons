@@ -248,6 +248,55 @@ granicy zakresu. `isSortEmpty()` zwraca teraz to, co obiecuje nazwa (byla odwroc
 
 ---
 
+---
+
+## Faza 5 — API repozytorium i paginacja
+
+### `repository/FullTextRepository` (17 repozytoriow dziedziczacych)
+
+| Zmiana | Wplyw na konsumenta |
+|---|---|
+| `save(S)` → `indexedSave(S)` | **Zmiana zachowania bez bledu kompilacji.** `repository.save(x)` nadal sie kompiluje, ale rozstrzyga sie teraz na `SimpleJpaRepository.save` — czyli `persist` dla encji transientnej zamiast `merge`. Kod, ktorego nikt nie tknal, zacznie dzialac inaczej (poprawnie: przekazany obiekt dostanie identyfikator). Wymaga przejrzenia miejsc wolajacych `save` na repozytoriach FTS. |
+| `delete(T)` → `indexedDelete(T)` | jw. — `delete` wraca do semantyki Spring Data (merge dla detached zamiast wyjatku) |
+| `createQuery(...)` usuniete z interfejsu | zero uzyc downstream (zweryfikowane) |
+| `SortField[]` → `SortSpec` w `SortFieldAware` | zero uzyc downstream |
+| `SearchQuery.getSortFields()` → `getSortSpecs()` | zero uzyc downstream |
+| `deleteAll(Class)` | bulk delete zamiast petli po encjach — bez zmiany sygnatury; uwaga: **nie odpala kaskad JPA ani listenerow** |
+| `countByIndex` | zamiast sentinela `-1` rzuca `HomeportalServiceException`. `portal/.../IndexManager.java:197` formatuje wynik do komunikatu JMX — po migracji trzeba go objac try/catch |
+
+Klasa ma teraz `@Transactional` na poziomie typu i nie robi eager `flushToIndexes()` — publikacja do
+indeksu nastepuje przy commicie. Konsument bez ambientnej transakcji dostanie `TransactionRequiredException`
+zamiast cichego rozjazdu bazy z indeksem.
+
+### `pageable/Page` (6 formularzy dziedziczacych, w tym kontrakt REST hop-a)
+
+**Werdykt: kompiluje sie, ale zmienia semantyke pochodnych metod.** `Page` implementuje teraz `Pageable`
+zamiast dziedziczyc po `PageRequest`. Zachowane bez zmian: nazwy pol (`page`, `size`, `sort`, `reverse` —
+to nazwy parametrow HTTP w publicznym API hop-a), 1-based numeracja `getPageNumber()`, `getSortField()`,
+`isReverseOrder()`.
+
+Zmienione: `getOffset()` liczy teraz `(page-1) * size` (wczesniej zwracalo stale 20, bo czytalo stan
+nadklasy), `equals`/`hashCode` porownuja realny stan formularza (wczesniej dwa formularze rozniace sie
+strona byly rowne), `next()`/`previousOrFirst()`/`first()` zwracaja `Page` w numeracji 1-based (wczesniej
+`PageRequest` w 0-based). Doszlo `toPageable()` — jedyne miejsce, gdzie zyje konwersja 1-based → 0-based;
+konsumenci moga zastapic nim swoje reczne `getPageNumber() - 1` (`hop/.../SearchQueryBuilder.setPageable`,
+`portal/.../SearchQueryBuilder.java:427`).
+
+### `pageable/PageItems`
+
+**Werdykt: naprawa bledu widocznego dla uzytkownika.** `getPageItems()` zwracalo `null` przy zerowej
+liczbie wynikow (`portal/.../AbstractListController.java:124` wola to bezwarunkowo) — teraz zwraca pusta
+liste. Budowanie linkow nie mutuje juz formularza zwiazanego z zadaniem, a blad budowy linku trafia do
+logu zamiast byc polykany.
+
+### `index/IndexerMonitor`
+
+**Werdykt: zmiana sygnatury.** `acquireLock(String)` zwraca teraz `boolean` (dotad `void`) i faktycznie
+odrzuca pozyskanie, gdy indeksowanie juz trwa. Wolajacy (`portal/.../IndexerScheduler`, `IndexManager`,
+`hop/.../MassIndexerScheduler`) powinni sprawdzac wynik zamiast zakladac, ze blokada zawsze przysluguje.
+
+---
+
 ## Do przeskanowania w kolejnych fazach
 - **Faza 4**: enumy `QueryParameter` w hop i portal, `@FieldBridge` w encjach portal/hop
 - **Faza 5**: 17 repozytoriow dziedziczacych `FullTextRepository`, 6 formularzy dziedziczacych `Page`,

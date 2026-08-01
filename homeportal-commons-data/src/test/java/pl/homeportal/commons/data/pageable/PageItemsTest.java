@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -164,38 +165,41 @@ public class PageItemsTest
         assertThat(pages.get(1).getLabel(), equalTo(6));
     }
 
-//    /**
-//     * 1,2,3,[4],5
-//     * [5],6,7,8,9
-//     * 5,6,[7],8,9
-//     */
-//    @Test
-//    public void testPagesFivePageFour()
-//    {
-//        // given
-//        final int current  = 4;
-//        final int pagesQty = 5;
-//        final int pageSize = 10;
-//
-//        PageItemList pageItemList = PageItemList.of(getPage(current), allResultsQty, pagesQty, pageSize);
-//
-//        // when
-//        List<PageItem> pages = pageItemList.getPageItems();
-//
-//        // then
-//        assertThat(pages.size(), equalTo(pagesQty));
-//        assertThat(pages.get(0).isCurrent(), equalTo(false));
-//        assertThat(pages.get(1).isCurrent(), equalTo(false));
-//        assertThat(pages.get(2).isCurrent(), equalTo(false));
-//        assertThat(pages.get(3).isCurrent(), equalTo(true));
-//        assertThat(pages.get(4).isCurrent(), equalTo(false));
-//
-//        assertThat(pages.get(0).getLabel(), equalTo(1));
-//        assertThat(pages.get(1).getLabel(), equalTo(2));
-//        assertThat(pages.get(2).getLabel(), equalTo(3));
-//        assertThat(pages.get(3).getLabel(), equalTo(4));
-//        assertThat(pages.get(4).getLabel(), equalTo(5));
-//    }
+    /**
+     * Regresja: przy zerowej liczbie wynikow petla budujaca elementy nie wykonywala
+     * sie ani razu, wiec leniwie inicjalizowane pole zostawalo null — a widok
+     * wywracal sie NPE na kazdej pustej liscie wynikow.
+     */
+    @Test
+    public void testNoResults()
+    {
+        // given
+        PageItems pageItems = PageItems.of(getPage(1), 0);
+
+        // when
+        List<PageItem> pages = pageItems.getPageItems();
+
+        // then
+        assertThat(pages, notNullValue());
+        assertThat(pages.size(), equalTo(0));
+    }
+
+    /**
+     * Regresja: budowanie linkow podmienialo numer strony w formularzu zwiazanym
+     * z zadaniem i przywracalo go dopiero na koncu petli.
+     */
+    @Test
+    public void testFormIsNotMutated()
+    {
+        // given
+        final InnerPage form = getPage(2);
+
+        // when
+        PageItems.of(form, allResultsQty);
+
+        // then
+        assertThat(form.getPageNumber(), equalTo(2));
+    }
 
     private InnerPage getPage(int index)
     {

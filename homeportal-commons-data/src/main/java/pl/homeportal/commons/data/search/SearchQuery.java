@@ -3,7 +3,6 @@ package pl.homeportal.commons.data.search;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.SortField;
 import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.search.encoding.ValueEncoders;
 
@@ -23,7 +22,7 @@ public class SearchQuery implements SortFieldAware
     private static final String OR = " OR ";
 
     private final List<String> parameters = new LinkedList<>();
-    private final LinkedList<SortField> sortFields = new LinkedList<>();
+    private final LinkedList<SortSpec> sortSpecs = new LinkedList<>();
 
     @Setter
     @Getter
@@ -134,7 +133,7 @@ public class SearchQuery implements SortFieldAware
 
     public boolean isSortEmpty()
     {
-        return sortFields.isEmpty();
+        return sortSpecs.isEmpty();
     }
 
     public String getQueryString()
@@ -142,9 +141,10 @@ public class SearchQuery implements SortFieldAware
         return String.join(AND, parameters);
     }
 
-    public LinkedList<SortField> getSortFields()
+    @Override
+    public List<SortSpec> getSortSpecs()
     {
-        return sortFields;
+        return sortSpecs;
     }
 
     public void addSortField(QueryParameter parameter)
@@ -153,7 +153,7 @@ public class SearchQuery implements SortFieldAware
         {
             return;
         }
-        sortFields.addLast(new SortField(parameter.getValue(), SortField.Type.STRING));
+        sortSpecs.addLast(SortSpec.of(parameter.getValue()));
     }
 
     public void addSortField(QueryParameter parameter, boolean reverse)
@@ -162,7 +162,7 @@ public class SearchQuery implements SortFieldAware
         {
             return;
         }
-        sortFields.addLast(new SortField(parameter.getValue(), SortField.Type.STRING, reverse));
+        sortSpecs.addLast(SortSpec.of(parameter.getValue(), reverse));
     }
 
     @Override

@@ -70,5 +70,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Baza w pamieci dla testu integracyjnego indeks<->zapytanie -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

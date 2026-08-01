@@ -4,6 +4,8 @@
 package pl.homeportal.commons.data.pageable;
 
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 
 import java.lang.reflect.Field;
@@ -27,10 +29,17 @@ import static pl.homeportal.commons.text.Constants.UTF_8;
 @Getter
 public class PageItems
 {
+    private static final Logger LOG = LoggerFactory.getLogger(PageItems.class);
+
     private static final int DEFAULT_PAGES_QTY = 3;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private List<PageItem> pageItems;
+    /**
+     * Inicjalizowana od razu: przy zerowej liczbie wynikow petla budujaca elementy
+     * nie wykonywala sie ani razu, wiec getPageItems() zwracalo null — a widok
+     * wywracal sie NPE na kazdej pustej liscie wynikow.
+     */
+    private final List<PageItem> pageItems = new ArrayList<>();
 
     public static PageItems of(Page form, int allResultsQty)
     {
@@ -69,8 +78,10 @@ public class PageItems
             }
 
             pageItem.setLabel(i);
-            form.setPage(i);
-            String link = pageableToUri(form, excludes, defaults);
+            // Kopia zamiast mutowania formularza zwiazanego z zadaniem: wyjatek
+            // w srodku petli zostawial go z podmieniona strona, ktora plynela dalej
+            // do modelu i widoku.
+            String link = pageableToUri(pageForLink(form, i), excludes, defaults);
             if (isBlank(link))
             {
                 pageItem.setLink(".");
@@ -81,9 +92,13 @@ public class PageItems
             }
             pageItems.addPageItem(pageItem);
         }
-        form.setPage(current);
-
         return pageItems;
+    }
+
+    private static Page pageForLink(Page form, int pageNumber)
+    {
+        final Page copy = new Page(pageNumber, form.getPageSize(), form.getSort());
+        return copy;
     }
 
     public static String pageableToUri(Pageable form, Set<String> excludes)
@@ -138,6 +153,7 @@ public class PageItems
         }
         catch (Exception e)
         {
+            LOG.warn("Could not build a pager link from: {}", form, e);
             return null;
         }
     }
@@ -156,10 +172,6 @@ public class PageItems
 
     private void addPageItem(PageItem pageItem)
     {
-        if (pageItems == null)
-        {
-            pageItems = new ArrayList<>();
-        }
         this.pageItems.add(pageItem);
     }
 
@@ -191,12 +203,15 @@ public class PageItems
             return false;
         }
 
-        if (defaults.containsKey(field.getName()) && defaults.get(field.getName()).equals(value.toString()))
+        // Kolejnosc ma znaczenie: wczesniej value.toString() bylo wolane PRZED
+        // sprawdzeniem null, wiec puste pole formularza konczylo sie NPE — polkniete
+        // przez blanket catch i zamienione na link ".".
+        if (value == null)
         {
             return false;
         }
 
-        if (value == null)
+        if (defaults.containsKey(field.getName()) && defaults.get(field.getName()).equals(value.toString()))
         {
             return false;
         }

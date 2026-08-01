@@ -1,17 +1,31 @@
 package pl.homeportal.commons.data.repository;
 
-import org.apache.lucene.search.SortField;
-import org.hibernate.search.jpa.FullTextQuery;
 import org.springframework.data.domain.Pageable;
 import pl.homeportal.commons.data.search.SearchQuery;
 
 import java.util.List;
 
+/**
+ * Fragment repozytorium Spring Data dokladajacy operacje na indeksie Lucene.
+ *
+ * Zmiany w 6.0:
+ * - {@code save}/{@code delete} zostaly przemianowane na {@code indexedSave}/{@code indexedDelete}.
+ *   Poprzednie nazwy mialy te sama erased signature co {@code CrudRepository} i **wygrywaly**
+ *   rozstrzygniecie fragmentu, przez co {@code repository.save(nowaEncja)} wolalo merge zamiast
+ *   persist i zostawialo przekazany obiekt bez identyfikatora. Po zmianie {@code save} i
+ *   {@code delete} znowu znacza to, co w Spring Data.
+ * - z API zniknely typy {@code org.apache.lucene.*} i {@code org.hibernate.search.*}; sortowanie
+ *   opisuje wlasny {@code SortSpec}, a budowanie zapytania jest szczegolem implementacji.
+ *   Dzieki temu repozytoria konsumentow nie kompiluja sie juz przeciw Lucene 5, co odblokowuje
+ *   pozniejsza migracje na Hibernate Search 6.
+ */
 public interface FullTextRepository<T>
 {
-    <S extends T> S save(S t);
+    /** Zapis encji wraz z aktualizacja indeksu. */
+    <S extends T> S indexedSave(S t);
 
-    void delete(T t);
+    /** Usuniecie encji wraz z usunieciem jej dokumentu z indeksu. */
+    void indexedDelete(T t);
 
     void deleteAll(Class<T> t);
 
@@ -34,6 +48,4 @@ public interface FullTextRepository<T>
     List<T> findAll(Pageable pageable, Class<T> t);
 
     List<T> findAllBySearchQuery(SearchQuery searchQuery, Class<T> t);
-
-    FullTextQuery createQuery(String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t);
 }

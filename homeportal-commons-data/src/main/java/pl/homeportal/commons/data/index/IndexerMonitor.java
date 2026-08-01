@@ -10,10 +10,9 @@ import static java.lang.Boolean.FALSE;
 @Component
 public class IndexerMonitor
 {
-    private static final Object MONITOR = new Object();
     private static final String NONE = "none";
 
-    private AtomicBoolean running = new AtomicBoolean(FALSE);
+    private final AtomicBoolean running = new AtomicBoolean(FALSE);
 
     @Getter
     private String lockOwner = NONE;
@@ -23,21 +22,29 @@ public class IndexerMonitor
         return running.get();
     }
 
-    public void acquireLock(String lockOwner)
+    /**
+     * @return true, gdy blokada zostala pozyskana; false, gdy indeksowanie juz trwa.
+     *
+     * Wczesniej metoda ustawiala flage bezwarunkowo i nie zwracala niczego — czyli
+     * nie byla blokada, tylko znacznikiem stanu. Scheduler i JMX mogly ruszyc
+     * z reindeksem rownolegle, a pierwszy releaseLock zwalnial flage w trakcie
+     * pracy drugiego.
+     */
+    public boolean acquireLock(String lockOwner)
     {
-        synchronized (MONITOR)
+        if (!running.compareAndSet(FALSE, Boolean.TRUE))
         {
-            this.running.set(Boolean.TRUE);
-            this.lockOwner = lockOwner;
+            return false;
         }
+
+        this.lockOwner = lockOwner;
+
+        return true;
     }
 
     public void releaseLock()
     {
-        synchronized (MONITOR)
-        {
-            this.running.set(FALSE);
-            this.lockOwner = NONE;
-        }
+        this.lockOwner = NONE;
+        this.running.set(FALSE);
     }
 }
