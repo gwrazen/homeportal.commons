@@ -532,10 +532,10 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [ ] 1.1 Build przechodzi: `mvn clean install`
-- [ ] 1.2 Build niezalezny od locale i encodingu
-- [ ] 1.3 Brak ostrzezen o niewersjonowanych pluginach
-- [ ] 1.4 Jedna wersja Spring Framework w drzewie zaleznosci
+- [x] 1.1 Build przechodzi: `mvn clean install`
+- [x] 1.2 Build niezalezny od locale i encodingu
+- [x] 1.3 Brak ostrzezen o niewersjonowanych pluginach
+- [x] 1.4 Jedna wersja Spring Framework w drzewie zaleznosci
 - [ ] 1.5 Workflow CI zielony na branchu
 
 #### Manual

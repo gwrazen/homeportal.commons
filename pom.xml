@@ -20,22 +20,25 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <slf4j.version>1.8.0-beta2</slf4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <slf4j.version>1.7.36</slf4j.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <commons.io.version>2.6</commons.io.version>
         <velocity.version>1.7</velocity.version>
         <imgscalr.version>4.2</imgscalr.version>
         <commons.email.version>1.2</commons.email.version>
         <lombok.version>1.16.14</lombok.version>
-        <javax.persitence.api.version>1.0</javax.persitence.api.version>
-        <hibernate.javax.persitence.api.version>1.0.0.Final</hibernate.javax.persitence.api.version>
         <hibernate.core.version>5.0.10.Final</hibernate.core.version>
         <hibernate.entitymanager.version>5.0.10.Final</hibernate.entitymanager.version>
         <hibernate.search.orm.version>5.5.4.Final</hibernate.search.orm.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <lucene.queryparser.version>5.3.1</lucene.queryparser.version>
-        <spring.data.jpa.version>2.2.10.RELEASE</spring.data.jpa.version>
-        <spring.context.version>5.1.4.RELEASE</spring.context.version>
+        <!-- Wersje wszystkich artefaktow spring-* pochodza z BOM-ow ponizej. Nie pinuj
+             ich pojedynczo — rozjazd miedzy spring-core a spring-context konczy sie
+             NoSuchMethodError u konsumenta. -->
+        <spring.framework.bom.version>5.2.9.RELEASE</spring.framework.bom.version>
+        <spring.data.releasetrain.version>Moore-SR10</spring.data.releasetrain.version>
         <guava.version>27.0.1-jre</guava.version>
         <junit.version>4.11</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
@@ -44,7 +47,13 @@
         <jackson.version>2.9.8</jackson.version>
         <javax.el.api.version>3.0.0</javax.el.api.version>
         <javax.el.version>2.2.4</javax.el.version>
-        <spring.test.version>5.2.9.RELEASE</spring.test.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
+        <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
+        <maven.resources.plugin.version>3.2.0</maven.resources.plugin.version>
+        <maven.install.plugin.version>2.5.2</maven.install.plugin.version>
+        <maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
     </properties>
 
     <distributionManagement>
@@ -57,6 +66,24 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- BOM-y musza byc pierwsze: importuja spojny zestaw wersji spring-*
+                 i spring-data-*, na ktorym opieraja sie deklaracje ponizej. -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.framework.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-releasetrain</artifactId>
+                <version>${spring.data.releasetrain.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -130,17 +157,8 @@
                 <version>${lucene.queryparser.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${spring.data.jpa.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.context.version}</version>
-            </dependency>
+            <!-- spring-context, spring-webmvc, spring-test i spring-data-jpa nie maja
+                 tu wpisow: ich wersjami zarzadzaja zaimportowane BOM-y. -->
 
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -157,7 +175,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.9.8</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
@@ -180,12 +198,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.context.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>javax.el-api</artifactId>
                 <version>${javax.el.api.version}</version>
@@ -195,12 +207,6 @@
                 <groupId>org.glassfish.web</groupId>
                 <artifactId>javax.el</artifactId>
                 <version>${javax.el.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.test.version}</version>
             </dependency>
 
             <dependency>
@@ -216,6 +222,16 @@
             </dependency>
 
             <!-- TEST -->
+            <!-- Binding slf4j tylko na czas testow: bez niego LoggerFactory zwraca
+                 NOPLogger, wiec warstwy logowania nie da sie sensownie przetestowac.
+                 Produkcyjny binding dostarcza konsument. -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -233,6 +249,46 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven.source.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven.install.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven.deploy.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,7 +1,7 @@
 ---
 change_id: commons-refactoring
 title: Przeglad modulow commons, usuniecie bugow i refaktor full-text search
-status: planned
+status: implementing
 created: 2026-08-01
 updated: 2026-08-01
 archived_at: null

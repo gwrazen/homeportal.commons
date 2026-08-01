@@ -1,0 +1,28 @@
+name: Build
+
+# Build z testami na kazdy push i pull request. Publikacja jest osobnym,
+# recznym workflow (publish.yml) — ten job niczego nie deployuje.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # JDK 8 z tego samego powodu co w publish.yml: Lombok 1.16.14 nie dziala
+      # na JDK 16+. Zmiana tej wersji nalezy do zmiany jdk17-migration.
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+
+      - name: Build and test
+        run: mvn -B verify

@@ -7,7 +7,9 @@ import pl.homeportal.commons.exception.HomeportalValidationException;
 
 import javax.validation.constraints.NotNull;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
 
 public class ObjectValidatorTest
 {
@@ -19,7 +21,6 @@ public class ObjectValidatorTest
     {
         final TestObject objectNull = null;
         ObjectValidator.validateWithNull(TestObject.class, objectNull);
-        fail();
     }
 
     @Test
@@ -27,29 +28,45 @@ public class ObjectValidatorTest
     {
         TestObject object = TestObject.of(ONE);
         ObjectValidator.validateWithNull(TestObject.class, object);
+        assertNotNull(object.getId());
     }
 
-    @Test(expected = HomeportalValidationException.class)
+    @Test
     public void validateWithNullConstraintViolationNull()
     {
         TestObject object = TestObject.of(null);
-        ObjectValidator.validateWithNull(TestObject.class, object);
-        fail();
+        try
+        {
+            ObjectValidator.validateWithNull(TestObject.class, object);
+            throw new AssertionError("Expected HomeportalValidationException for a null @NotNull field");
+        }
+        catch (HomeportalValidationException e)
+        {
+            assertNotNull(e.getMessage());
+        }
     }
 
     @Test
     public void validateWithoutNull()
     {
         TestObject object = TestObject.of(ONE);
-        ObjectValidator.validateWithNull(TestObject.class, object);
+        ObjectValidator.validateWithoutNull(object);
+        assertNotNull(object.getId());
     }
 
-    @Test(expected = HomeportalValidationException.class)
+    @Test
     public void validateWithoutNullConstraintViolationNull()
     {
         TestObject object = TestObject.of(null);
-        ObjectValidator.validateWithNull(TestObject.class, object);
-        fail();
+        try
+        {
+            ObjectValidator.validateWithoutNull(object);
+            throw new AssertionError("Expected HomeportalValidationException for a null @NotNull field");
+        }
+        catch (HomeportalValidationException e)
+        {
+            assertNotNull(e.getMessage());
+        }
     }
 
     @Test
@@ -61,14 +78,21 @@ public class ObjectValidatorTest
         ObjectValidator.validateGreaterThan(factor, value, message);
     }
 
-    @Test(expected = HomeportalValidationException.class)
+    @Test
     public void validateGreaterThanConstraintViolation()
     {
         final int factor = 10;
         final int value = 9;
-        final String message = "powers";
-        ObjectValidator.validateGreaterThan(factor, value, message);
-        fail();
+        final String argumentName = "powers";
+        try
+        {
+            ObjectValidator.validateGreaterThan(factor, value, argumentName);
+            throw new AssertionError("Expected HomeportalValidationException for a value below the factor");
+        }
+        catch (HomeportalValidationException e)
+        {
+            assertThat(e.getMessage(), containsString(argumentName));
+        }
     }
 
     @Data
