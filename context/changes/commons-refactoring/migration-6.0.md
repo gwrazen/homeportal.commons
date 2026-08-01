@@ -12,20 +12,37 @@ Mapa użycia API u konsumentów (co gdzie jest wołane) żyje w `consumers.md`.
 `hop`, `portal` i `importer` **nie nazywają dziś wersji commons** — biorą `${project.parent.version}`,
 czyli własną wersję 5.0. W tej postaci nie da się wziąć commons 6.0 bez podbicia własnej wersji produktu.
 
-Rekomendacja: wprowadzić własność, wzorem `hac` (`homeportal.hac/pom.xml:32`):
+Zrób **oba kroki naraz** — tak zrobił `hop` przy migracji (`homeportal.hop`, commit `743c5e9c`)
+i to jest wzorzec do powtórzenia:
 
-```xml
-<properties>
-    <homeportal.commons.version>6.0</homeportal.commons.version>
-</properties>
+1. **Wprowadź własność w root pomie** i użyj jej we *wszystkich* deklaracjach `homeportal-commons-*`
+   we wszystkich modułach:
+
+   ```xml
+   <properties>
+       <!-- Wersja commons żyje niezależnie od wersji produktu — inaczej wydanie
+            commons wymusza wydanie produktu. -->
+       <homeportal.commons.version>6.0</homeportal.commons.version>
+   </properties>
+   ```
+
+2. **Podbij własną wersję produktu** (parent + moduły). Wersje modułów zostają na
+   `${project.parent.version}` — to jest poprawne i ma zostać; zmienia się wyłącznie sposób
+   wskazywania wersji **commons**.
+
+Dlaczego oba, a nie jedno: sama własność wystarczy, żeby wziąć 6.0, ale zostawia produkt na wersji 5.0,
+która przestaje cokolwiek znaczyć (kod jest już inny). Sam bump wersji produktu też zadziała — dopóki
+numery obu przypadkiem się zgadzają. Rozjadą się przy pierwszym wydaniu commons, którego konsument nie
+chce brać, i wtedy `${project.parent.version}` znowu wskaże nieistniejącą wersję commons.
+
+**Pułapka — sprawdź zaszyte wersje.** W `hop` znalazła się jedna:
+`homeportal-hop-management/pom.xml:31` miało `<version>5.0</version>` dla `homeportal-commons-logging`.
+Sam bump parenta by tego nie złapał — moduł zostałby na 5.0 i wciągnął dwie wersje tej samej klasy
+na classpath. Przed migracją przelec:
+
+```bash
+grep -rn "homeportal-commons" --include=pom.xml . -A2 | grep -n "<version>[0-9]"
 ```
-
-i użyć jej we wszystkich deklaracjach `homeportal-commons-*`. To odwiązuje cykl wydawniczy konsumenta
-od commons.
-
-**Pułapka:** `homeportal.hop/homeportal-hop-management/pom.xml:31` ma zaszyte `<version>5.0</version>`
-dla `homeportal-commons-logging`. Bez poprawki ten moduł zostanie na 5.0 i wciągnie dwie wersje tej samej
-klasy na classpath.
 
 ### Nowy moduł
 
@@ -183,6 +200,16 @@ Reindeks nie może iść równolegle z drugim reindeksem — `IndexerMonitor` te
 ---
 
 ## 7. Kolejność migracji konsumentów
+
+**Status: `hop` jest w trakcie migracji** (`homeportal.hop`, branch `frogi`, zmiana 10x
+`commons-6.0-migration` w `homeportal-hop-application/context/changes/`). Krok wersjonowania (§1) ma już
+za sobą — zajrzyj tam po działający wzorzec, zanim ruszysz z `portal` czy `importer`.
+
+Migracja `hop` zamyka też cztery tickety otwarte w tamtym repo: `commons-data-search-defects`
+(oba znaleziska naprawione w 6.0), `hop-search-range-max-cap` i `hop-search-duplicate-range-clause`
+(zakresy otwarte zamiast sentinela `9999999`) oraz częściowo `hop-search-price-param-500` (zmienił się
+typ wyjątku). Warto sprawdzić, czy `portal` nie ma analogicznych własnych ticketów o tych samych
+usterkach — one też stały się nieaktualne.
 
 Rekomendowany pilot: **`hop`** — najmniejsza powierzchnia FTS (2 repozytoria dziedziczące
 `FullTextRepository`), ma już `HopSearchQueryBuilder` dziedziczący po abstrakcji z commons, i jako jedyny
