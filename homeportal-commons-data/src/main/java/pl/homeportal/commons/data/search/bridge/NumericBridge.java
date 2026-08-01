@@ -3,56 +3,33 @@ package pl.homeportal.commons.data.search.bridge;
 import org.hibernate.search.bridge.StringBridge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import pl.homeportal.commons.data.search.encoding.ValueEncoders;
 
 /**
+ * Cienki adapter na {@link ValueEncoders#NUMERIC} — to samo kodowanie stosuje strona
+ * zapytania przy zakresach.
+ *
+ * UWAGA: format zapisu zmienil sie w 6.0 (przesuniecie o 2^63, stala szerokosc 20),
+ * wiec indeks zbudowany wczesniej nie pasuje do nowych zapytan — wymagany jest pelny
+ * reindeks. Poprzedni format zawijal wartosci powyzej Integer.MAX_VALUE na ujemne
+ * i psul porzadek liczb ujemnych.
+ *
  * @author gwrazen
  */
 public class NumericBridge implements StringBridge
 {
-    private static final Logger LOG = LoggerFactory.getLogger(NumericBridge.class.getSimpleName());
+    private static final Logger LOG = LoggerFactory.getLogger(NumericBridge.class);
 
-    private static final int MAX_LENGTH = 10;
-    private static final int ZERO = 0;
-
-    /**
-     * <pre>Method index Long value instead of Double</pre>
-     *
-     * @param o <code>Double</code>
-     * @return <code>String</code>
-     */
+    @Override
     public String objectToString(Object o)
     {
-        if (null != o) {
-            try
-            {
-                Number number = (Number) o;
-                String value = String.valueOf(number.intValue());
-                if (value.length() < MAX_LENGTH)
-                {
-                    value = pad(value);
-                }
-
-                return value;
-            }
-            catch (Exception e)
-            {
-                LOG.warn("Unable to convert from Number to String: " + o);
-            }
-        }
-        return null;
-    }
-
-    private String pad(String value)
-    {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < MAX_LENGTH - value.length(); ++i)
+        final String encoded = ValueEncoders.NUMERIC.encode(o);
+        if (encoded == null && o != null)
         {
-            builder.append(ZERO);
+            LOG.warn("Unable to convert from Number to String: {}", o);
         }
-        builder.append(value);
 
-        return builder.toString();
+        return encoded;
     }
 
     public Long stringToObject(String value)
@@ -65,7 +42,7 @@ public class NumericBridge implements StringBridge
             }
             catch (Exception e)
             {
-                LOG.warn("Unable to convert from String to Number: " + value);
+                LOG.warn("Unable to convert from String to Number: {}", value);
             }
         }
 

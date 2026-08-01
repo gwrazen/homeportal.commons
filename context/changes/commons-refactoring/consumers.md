@@ -198,6 +198,56 @@ string (wczesniej kolejnosc zalezala od `HashMap`) — `OfferManager` przestaje 
 
 ---
 
+---
+
+## Faza 4 — kontrakt kodowania FTS
+
+### `search/QueryParameter` (enumy w hop i portal)
+
+| Konsument | Miejsce |
+|---|---|
+| hop | `homeportal-hop-service/.../search/HopQueryParameter.java:5` |
+| portal | `.../common/service/PortalQueryParameter.java:5` |
+| hop (test) | `.../PortalRepositoryTest.java:125` |
+
+**Werdykt: kompiluje sie bez zmian, ale wymaga swiadomej deklaracji.** Doszla metoda
+`default ValueEncoder encoder()` zwracajaca `ValueEncoders.TEXT`, czyli dotychczasowe zachowanie —
+istniejace enumy nie wymagaja zmian, zeby sie zbudowac. **Ale poprawnosc wymaga nadpisania jej wszedzie
+tam, gdzie pole encji jest indeksowane innym bridge'em:**
+
+| Bridge na polu encji | Encoder do zadeklarowania |
+|---|---|
+| `@FieldBridge(FeatureBridge)` — np. `PortalOffer.features` | `ValueEncoders.FEATURE` |
+| `@FieldBridge(NumericBridge)` — ceny, powierzchnie, pietra | `ValueEncoders.NUMERIC` |
+| `@FieldBridge(DateBridge)` — daty dodania | `ValueEncoders.DATE` |
+| `@FieldBridge(PropertyTypeBridge)` lub brak | `ValueEncoders.TEXT` (domyslne) |
+
+Dopoki hop nie zadeklaruje `FEATURE` dla parametru cech, filtr po cesze z polskim znakiem
+nadal bedzie zwracal zero wynikow — poprawka po stronie commons jest konieczna, ale nie wystarczajaca.
+
+### Bridge'y (`@FieldBridge` w ~20 polach encji portal/hop)
+
+**Werdykt: zmiana formatu indeksu — wymagany pelny reindeks.**
+- `NumericBridge`: nowy format (przesuniecie o 2^63, stala szerokosc 20). Stary obcinal do `int`
+  (cena 3 mld zapisywala sie jako `-1294967296`) i psul porzadek wartosci ujemnych.
+- `FeatureBridge`, `PropertyTypeBridge`, `DateBridge`: wynik bez zmian — sa teraz cienkimi adapterami
+  na te same encodery, ktorych uzywa strona zapytania.
+
+### `search/SearchQuery`
+
+| Konsument | Miejsce |
+|---|---|
+| hop | `.../search/HopSearchQueryBuilder.java:29,35,85` (sentinel `MAX = "9999999"`) |
+| portal | `.../common/service/SearchQueryBuilder.java:424` |
+
+**Werdykt: zmiana zachowania, zgodna w kompilacji.** Wszystkie dotychczasowe metody zostaly.
+Nowosci: `addRangeFrom`/`addRangeTo` (zakresy otwarte — pozwalaja usunac sentinel `9999999`, przez ktory
+oferty powyzej ~10 mln PLN wypadaly z wynikow), escapowanie skladni Lucene w kazdej wartosci, pomijanie
+pustych wartosci zamiast emitowania `(field:null)`, wyjatek zamiast cichego bledu przy nienumerycznej
+granicy zakresu. `isSortEmpty()` zwraca teraz to, co obiecuje nazwa (byla odwrocona; nikt jej nie wolal).
+
+---
+
 ## Do przeskanowania w kolejnych fazach
 - **Faza 4**: enumy `QueryParameter` w hop i portal, `@FieldBridge` w encjach portal/hop
 - **Faza 5**: 17 repozytoriow dziedziczacych `FullTextRepository`, 6 formularzy dziedziczacych `Page`,

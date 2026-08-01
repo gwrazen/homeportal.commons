@@ -1,29 +1,17 @@
 package pl.homeportal.commons.data.search.bridge;
 
 import org.hibernate.search.bridge.StringBridge;
+import pl.homeportal.commons.data.search.encoding.ValueEncoders;
 
-import static org.apache.commons.lang3.StringUtils.stripAccents;
-import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
-import static pl.homeportal.commons.text.Constants.REGEXP_SPACE;
-
-
+/**
+ * Cienki adapter na {@link ValueEncoders#TEXT} — to samo kodowanie stosuje strona
+ * zapytania, wiec indeks i zapytanie nie moga sie rozjechac.
+ */
 public class PropertyTypeBridge implements StringBridge
 {
-    /**
-     * Method removes all spaces and lower casing
-     */
     @Override
     public String objectToString(Object object)
     {
-        if (null != object)
-        {
-            String string = (String) object;
-            string = string.replaceAll(REGEXP_SPACE, EMPTY_STRING);
-            string = stripAccents(string);
-            string = string.toLowerCase();
-            return string;
-        }
-
-        return null;
+        return ValueEncoders.TEXT.encode(object);
     }
 }

@@ -2,8 +2,6 @@ package pl.homeportal.commons.data.repository;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SortField;
@@ -37,6 +35,9 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 100;
     private static final int THREADS_TO_LOAD_OBJECTS = 10;
     private static final String ID = "id";
+
+    /** Bezstanowy i wspoldzielony — inaczej niz poprzednia alokacja na kazde zapytanie. */
+    private static final Analyzer KEYWORD_ANALYZER = new KeywordAnalyzer();
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -204,7 +205,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
     {
         try
         {
-            QueryParser parser = new QueryParser(ID, getAnalyzer(keywordAnalyser));
+            QueryParser parser = new QueryParser(ID, getAnalyzer(keywordAnalyser, t));
             parser.setLowercaseExpandedTerms(true);
             Query luceneQuery = parser.parse(queryString);
             FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
@@ -226,13 +227,24 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         return Search.getFullTextEntityManager(entityManager);
     }
 
-    private Analyzer getAnalyzer(boolean keywordAnalyzer)
+    /**
+     * Analizator pochodzi z fabryki Hibernate Search, czyli jest dokladnie tym,
+     * ktorym pola encji byly analizowane przy indeksowaniu.
+     *
+     * Wczesniej budowany byl PerFieldAnalyzerWrapper z **pusta** mapa per-field,
+     * co degenerowalo sie do jednego analizatora dla wszystkich pol wszystkich
+     * encji (i dodatkowo alokowalo nowy, nigdy niezamykany Analyzer na kazde
+     * zapytanie). Flaga keywordAnalyser wymusza analizator dokladnego dopasowania
+     * dla zapytan, ktore maja trafiac w cala wartosc pola.
+     */
+    private Analyzer getAnalyzer(boolean keywordAnalyzer, Class<T> t)
     {
         if (keywordAnalyzer)
         {
-            return new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+            return KEYWORD_ANALYZER;
         }
-        return new PerFieldAnalyzerWrapper(new StandardAnalyzer());
+
+        return getFullTextEntityManager().getSearchFactory().getAnalyzer(t);
     }
 
     private Pageable createPageable(SearchQuery sQuery)
