@@ -563,12 +563,12 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [x] 3.1 Build przechodzi: `mvn clean install`
-- [x] 3.2 `-mail` nie ciagnie ORM/Lucene
-- [x] 3.3 `-domain` bez zaleznosci ORM/Lucene/Spring Data
-- [x] 3.4 Test: `forRentObject`/`forSaleObject` niepuste, `forRentLand` zwraca cechy gruntow
-- [x] 3.5 Test: round-trip wartosci wielokrotnych zachowuje wszystkie wartosci
-- [x] 3.6 Test: `toFeatures` deterministyczne
+- [x] 3.1 Build przechodzi: `mvn clean install` — c2451c7
+- [x] 3.2 `-mail` nie ciagnie ORM/Lucene — c2451c7
+- [x] 3.3 `-domain` bez zaleznosci ORM/Lucene/Spring Data — c2451c7
+- [x] 3.4 Test: `forRentObject`/`forSaleObject` niepuste, `forRentLand` zwraca cechy gruntow — c2451c7
+- [x] 3.5 Test: round-trip wartosci wielokrotnych zachowuje wszystkie wartosci — c2451c7
+- [x] 3.6 Test: `toFeatures` deterministyczne — c2451c7
 
 #### Manual
 
