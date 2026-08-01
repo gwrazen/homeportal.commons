@@ -616,11 +616,11 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [x] 6.1 Build przechodzi: `mvn clean install`
-- [x] 6.2 `mvn dependency:analyze` bez `Used undeclared` — dla scope compile; zostaje `hamcrest-core` w scope test (przychodzi z `junit`/`hamcrest-all`, deklarowanie go byloby szumem)
-- [x] 6.3 `spring-test` poza compile classpath — razem ze `spring-webmvc`, oba `provided` w `-test`
-- [x] 6.4 Workflow CI zielony
-- [x] 6.5 `migration-6.0.md` pokrywa kazda zmiane lamiaca z faz 3-5
+- [x] 6.1 Build przechodzi: `mvn clean install` — 4b9c424
+- [x] 6.2 `mvn dependency:analyze` bez `Used undeclared` — dla scope compile; zostaje `hamcrest-core` w scope test (przychodzi z `junit`/`hamcrest-all`, deklarowanie go byloby szumem) — 4b9c424
+- [x] 6.3 `spring-test` poza compile classpath — razem ze `spring-webmvc`, oba `provided` w `-test` — 4b9c424
+- [x] 6.4 Workflow CI zielony — 4b9c424
+- [x] 6.5 `migration-6.0.md` pokrywa kazda zmiane lamiaca z faz 3-5 — 4b9c424
 
 #### Manual
 
