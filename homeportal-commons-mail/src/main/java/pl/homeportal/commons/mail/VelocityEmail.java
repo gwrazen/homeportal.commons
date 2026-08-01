@@ -10,6 +10,8 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pl.homeportal.commons.exception.HomeportalServiceException;
+
 import javax.mail.Session;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -81,7 +83,7 @@ public class VelocityEmail extends HtmlEmail
         catch (EmailException e)
         {
             LOG.warn(String.format(INCORRECT_ADDRESS, fromEmail), e);
-            throw new RuntimeException(e);
+            throw new HomeportalServiceException(e.getMessage(), e);
         }
     }
 
@@ -95,7 +97,7 @@ public class VelocityEmail extends HtmlEmail
         catch (EmailException e)
         {
             LOG.warn(String.format(INCORRECT_ADDRESS, fromEmail), e);
-            throw new RuntimeException(e);
+            throw new HomeportalServiceException(e.getMessage(), e);
         }
     }
 
@@ -226,8 +228,9 @@ public class VelocityEmail extends HtmlEmail
         }
         catch (Exception e)
         {
-            LOG.error("Problem during sending email.", e);
-            return null;
+            // Zwracanie null sprawialo, ze NotifierAdapter logowal "Email sent"
+            // z odpowiedzia null — nieudana wysylka wygladala w logach jak sukces.
+            throw new HomeportalServiceException("Problem during sending email.", e);
         }
         finally
         {
@@ -239,6 +242,7 @@ public class VelocityEmail extends HtmlEmail
                 }
                 catch (IOException e)
                 {
+                    LOG.warn("Could not close the email template writer", e);
                 }
             }
         }

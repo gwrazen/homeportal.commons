@@ -12,7 +12,10 @@ import static pl.homeportal.commons.text.Constants.SPACE;
  */
 public class StringUtils
 {
-    private static final String NOT_ALPHANUMERIC = "[^a-zA-Z]";
+    // Nazwa mowi wprost, ze cyfry TEZ sa usuwane — stara nazwa (NOT_ALPHANUMERIC)
+    // sugerowala cos przeciwnego. Zachowanie zostaje bez zmian, bo z tego regexu
+    // powstaja slugi i URL-e, ktore sa juz zaindeksowane.
+    private static final String NOT_ALPHABETIC = "[^a-zA-Z]";
     private static final String NOT_ASCII = "[^\\p{ASCII}]";
     private static final String ONE_OR_MORE = "\\s+";
 
@@ -30,7 +33,7 @@ public class StringUtils
 
         input = input.trim();
         input = stripAccents(input);
-        input = input.replaceAll(NOT_ALPHANUMERIC, SPACE);
+        input = input.replaceAll(NOT_ALPHABETIC, SPACE);
         input = input.replaceAll(ONE_OR_MORE, SPACE);
         input =  input.trim();
         input = input.replaceAll(REGEXP_SPACE, spaceReplacement);
@@ -40,24 +43,19 @@ public class StringUtils
 
     public static String stripInvalidXmlCharacters(String input)
     {
-        StringBuilder sb = new StringBuilder();
+        if (input == null)
+        {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder(input.length());
         for (int i = 0; i < input.length(); i++)
         {
             char c = input.charAt(i);
 
-            if (i != 0)
+            if (XMLChar.isValid(c))
             {
-                if (XMLChar.isValid(c))
-                {
-                    sb.append(c);
-                }
-            }
-            else
-            {
-                if (c == '<')
-                {
-                    sb.append(c);
-                }
+                sb.append(c);
             }
         }
 

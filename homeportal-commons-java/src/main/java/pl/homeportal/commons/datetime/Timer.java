@@ -21,10 +21,15 @@ public class Timer
         end = currentTimeMillis();
     }
 
+    /**
+     * Nie nadpisuje juz wartosci zapisanej przez end(): wczesniej kazde wywolanie
+     * summary() przesuwalo koniec pomiaru na "teraz", wiec jawnie zamkniety pomiar
+     * raportowal takze czas tego, co dzialo sie po nim.
+     */
     public String summary()
     {
-        end = currentTimeMillis();
-        float taken = (end - start) / 1000f;
+        final long finish = (end == 0) ? currentTimeMillis() : end;
+        float taken = (finish - start) / 1000f;
         return taken + "s";
     }
 

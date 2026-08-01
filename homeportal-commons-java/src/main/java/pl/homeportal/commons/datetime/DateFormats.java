@@ -1,6 +1,7 @@
 package pl.homeportal.commons.datetime;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class DateFormats
 {
@@ -47,17 +48,17 @@ public class DateFormats
         {
             case SECOND:
             {
-                return new SimpleDateFormat(DATE_WITH_SECOND);
+                return new SimpleDateFormat(DATE_WITH_SECOND, Locale.ROOT);
             }
 
             case MINUTE:
             {
-                return new SimpleDateFormat(DATE_WITH_MINUTE);
+                return new SimpleDateFormat(DATE_WITH_MINUTE, Locale.ROOT);
             }
 
             case DAY:
             {
-                return new SimpleDateFormat(DATE_WITH_DAY);
+                return new SimpleDateFormat(DATE_WITH_DAY, Locale.ROOT);
             }
 
             default:
@@ -71,12 +72,12 @@ public class DateFormats
         {
             case SECOND:
             {
-                return new SimpleDateFormat(TIME_WITH_SECOND);
+                return new SimpleDateFormat(TIME_WITH_SECOND, Locale.ROOT);
             }
 
             case MINUTE:
             {
-                return new SimpleDateFormat(TIME_WITH_MINUTE);
+                return new SimpleDateFormat(TIME_WITH_MINUTE, Locale.ROOT);
             }
 
             default:

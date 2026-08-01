@@ -14,6 +14,26 @@ public class Files
 {
     public static final String ERROR_DELETING_FILE = "Error deleting file: %s";
     public static final String DELETED_FILE = "Deleted file: %s";
+    public static final String NOT_DELETED_FILE = "Could not delete file: %s";
+
+    /**
+     * File.delete() zwraca boolean i wczesniej byl ignorowany — log mowil
+     * "Deleted file", nawet gdy plik zostawal na dysku (read-only, blokada).
+     */
+    private static boolean delete(File file)
+    {
+        final boolean deleted = file.delete();
+        if (deleted)
+        {
+            log.info(String.format(DELETED_FILE, file.getName()));
+        }
+        else
+        {
+            log.warn(String.format(NOT_DELETED_FILE, file.getAbsolutePath()));
+        }
+
+        return deleted;
+    }
 
     public static boolean deleteDirectory(File directory)
     {
@@ -31,8 +51,7 @@ public class Files
                 {
                     if (file.isFile())
                     {
-                        file.delete();
-                        log.info(String.format(DELETED_FILE, file.getName()));
+                        delete(file);
                         continue;
                     }
                     deleteDirectory(file);
@@ -42,7 +61,7 @@ public class Files
         }
         catch (Exception e)
         {
-            log.error(String.format(ERROR_DELETING_FILE, directory.getAbsolutePath()));
+            log.error(String.format(ERROR_DELETING_FILE, directory.getAbsolutePath()), e);
             return false;
         }
     }
@@ -61,15 +80,17 @@ public class Files
             {
                 for (File file : files)
                 {
-                    if (filePattern.matcher(file.getName()).matches())
-                    {
-                        file.delete();
-                        log.info(String.format(DELETED_FILE, file.getName()));
-                        continue;
-                    }
+                    // Katalog sprawdzamy PRZED wzorcem: wczesniej katalog pasujacy
+                    // do wzorca konczyl sie nieudanym delete() i pominieciem rekurencji,
+                    // wiec pliki w srodku nigdy nie byly odwiedzane.
                     if (file.isDirectory())
                     {
                         deleteFiles(file, filePattern);
+                        continue;
+                    }
+                    if (filePattern.matcher(file.getName()).matches())
+                    {
+                        delete(file);
                     }
                 }
             }

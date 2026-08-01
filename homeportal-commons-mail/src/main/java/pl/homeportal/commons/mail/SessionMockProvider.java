@@ -1,5 +1,8 @@
 package pl.homeportal.commons.mail;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.mail.Session;
 import java.util.Properties;
 
@@ -9,6 +12,8 @@ import java.util.Properties;
 
 public class SessionMockProvider
 {
+    private static final Logger LOG = LoggerFactory.getLogger(SessionMockProvider.class);
+
     public Session getSession()
     {
         Session s = null;
@@ -18,7 +23,7 @@ public class SessionMockProvider
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            LOG.error("Could not create a mock mail session", e);
         }
         return s;
     }

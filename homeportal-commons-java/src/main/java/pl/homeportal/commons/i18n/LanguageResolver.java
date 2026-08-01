@@ -29,7 +29,9 @@ public class LanguageResolver
             return Language.getByValue(locale.getLanguage());
         }
 
-        return null;
+        // Brak LocaleResolver zdarza sie poza DispatcherServletem (filtr, dispatch
+        // typu ERROR, zasoby statyczne) — wtedy jezyk bierzemy wprost z zadania.
+        return Language.getByValue(request.getLocale().getLanguage());
     }
 
     public static Locale resolveLocale(HttpServletRequest request)
@@ -45,7 +47,7 @@ public class LanguageResolver
             return localeResolver.resolveLocale(request);
         }
 
-        return null;
+        return request.getLocale();
     }
 
     public static Locale locale()

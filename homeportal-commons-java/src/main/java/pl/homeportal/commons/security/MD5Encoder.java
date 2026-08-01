@@ -1,5 +1,8 @@
 package pl.homeportal.commons.security;
 
+import pl.homeportal.commons.exception.HomeportalSecurityException;
+
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -19,8 +22,10 @@ public class MD5Encoder
         try
         {
             MessageDigest md5 = MessageDigest.getInstance(MD5);
-            md5.update(data.getBytes());
-            byte result[] = md5.digest(key.getBytes());
+            // Jawny UTF-8: domyslny charset platformy dawal inny skrot po zmianie
+            // JVM/OS dla danych spoza ASCII, czyli uzytkownik przestawal sie logowac.
+            md5.update(data.getBytes(StandardCharsets.UTF_8));
+            byte result[] = md5.digest(key.getBytes(StandardCharsets.UTF_8));
             StringBuffer sb = new StringBuffer();
             for (int i = 0; i < result.length; i++)
             {
@@ -40,7 +45,8 @@ public class MD5Encoder
         }
         catch (NoSuchAlgorithmException e)
         {
-            return null;
+            // Zwracanie null zamienialo brak algorytmu w ciche "haslo == null".
+            throw new HomeportalSecurityException("MD5 algorithm not available", e);
         }
     }
 }

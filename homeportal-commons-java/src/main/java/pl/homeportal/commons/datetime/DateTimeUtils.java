@@ -15,8 +15,9 @@ public class DateTimeUtils
     private static final long MINUTE = 60000;
     private static final long HOUR = MINUTE * 60;
     private static final long DAY = HOUR * 24;
-    private static final long MONTH = DAY * 31;
-    private static final long YEAR = MONTH * 12;
+    // MONTH (= 31 dni) i YEAR (= 372 dni) zostaly usuniete: arytmetyka na stalej
+    // liczbie milisekund rozjezdzala sie z kalendarzem o ~7 dni na rok i ignorowala
+    // zmiane czasu, przez co todayPlusMonths nie bylo odwrotnoscia todayMinusMonths.
 
     public static Date now()
     {
@@ -70,17 +71,17 @@ public class DateTimeUtils
 
     public static Date todayPlusMonths(int months)
     {
-        return new Date(currentTimeMillis() + (MONTH * months));
+        return toDate(LocalDateTime.now().plusMonths(months));
     }
 
     public static Date todayMinusYears(int years)
     {
-        return new Date(currentTimeMillis() - (YEAR * years));
+        return toDate(LocalDateTime.now().minusYears(years));
     }
 
     public static Date todayPlusYears(int years)
     {
-        return new Date(currentTimeMillis() + (YEAR * years));
+        return toDate(LocalDateTime.now().plusYears(years));
     }
 
     public static String currentYear()

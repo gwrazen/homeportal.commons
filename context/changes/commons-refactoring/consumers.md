@@ -1,0 +1,162 @@
+# Mapa uzycia commons u konsumentow
+
+Zywy dokument: uzupelniany przy kazdej fazie, **zanim** zmieni sie dane API. Sluzy dwom celom —
+sprawdzeniu, czy poprawka nie lamie konsumenta, i jako material zrodlowy dla `migration-6.0.md` (faza 6).
+
+Skanowane repozytoria: `homeportal.portal`, `homeportal.hop`, `homeportal.importer`, `homeportal.hac`,
+`homeportal.spy` (spy nie ma zadnego powiazania kodowego — tylko recznie synchronizowany katalog cech).
+
+Skladnia werdyktu:
+- **bezpieczne** — zachowanie u konsumenta nie zmienia sie
+- **zmiana zachowania** — konsument zobaczy roznice; opis w kolumnie
+- **do sprawdzenia** — jeszcze nieprzeskanowane
+
+---
+
+## Faza 2 — `-java`, `-mail`, `-logging`
+
+### `zip/ZipEntryExtractor`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| importer | `homeportal-importer-worker-galactica/.../GalacticaImportAdapter.java:302` | `extract(OFFERS_XML_FILE, pkg)` → `IOUtils.toString(is, UTF_8)`, potem jawne `is.close()` |
+| importer | `.../processor/OfferProcessor.java:377` (`getImageContent`) | `extract(...)` → `IOUtils.toByteArray(is)`, **bez `close()`** |
+| importer | `.../processor/ResourcesProcessor.java:66` | `extract(...)` w petli po zasobach, w `try/catch`, **bez `close()`** |
+| importer | `.../processor/AgentProcessor.java:31` | import statyczny `extract` |
+| importer | `GalacticaImportAdapter.java:291` | `isAvailable(packageName)` jako bramka przed przetwarzaniem paczki |
+
+**Werdykt: zmiana zachowania (akceptowana).** Wpis jest teraz wczytywany w calosci do `ByteArrayInputStream`,
+a `ZipFile` zamykany w `try-with-resources`. Wariant alternatywny (strumien zamykajacy archiwum w `close()`)
+nie naprawilby wycieku w `OfferProcessor` i `ResourcesProcessor`, bo one nigdy nie wolaja `close()` — a to
+wlasnie one lecą w petli i wyczerpuja deskryptory. Koszt: przejsciowo dwie kopie zawartosci w pamieci.
+Potwierdzone z uzytkownikiem 2026-08-01: paczki galactiki sa male, koszt do zaakceptowania.
+Dodatkowo `extract` rzuca teraz `HomeportalServiceException` przy braku wpisu zamiast NPE.
+
+### `text/StringUtils.stripInvalidXmlCharacters`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| importer | `GalacticaImportAdapter.java:304` | wejsciem jest tresc `oferty.xml`, czyli string zaczynajacy sie od `<`; linia 305 dodatkowo robi `replaceFirst("^([\\W]+)<", "<")` |
+
+**Werdykt: bezpieczne.** Stary kod zachowywal pierwszy znak wylacznie wtedy, gdy byl nim `<` — czyli
+dokladnie w przypadku XML-a. Poprawka (zachowanie kazdego poprawnego znaku) daje dla tego wejscia identyczny
+wynik, a ewentualny BOM i tak usuwa `replaceFirst` w nastepnej linii.
+
+### `text/StringUtils.normalize`
+
+22 miejsca uzycia (portal 19, importer 2, hac 1) — generowanie slugow i URL-i.
+**Werdykt: bezpieczne.** Regex bez zmian; przemianowana zostala tylko prywatna stala
+(`NOT_ALPHANUMERIC` → `NOT_ALPHABETIC`), bo usuwa takze cyfry. Zmiana samego regexu zmienilaby juz
+zaindeksowane URL-e — swiadomie poza zakresem.
+
+### `reflection/ClassFieldReader.readFieldValues`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| importer | `homeportal-importer-configuration/.../ApplicationConfiguration.java:135` | `readFieldValues(this).forEach((k,v) -> log(k,v))` |
+| portal | `homeportal-portal-configuration/.../ApplicationConfiguration.java:425` | jw. |
+| hop | `homeportal-hop-configuration/.../ApplicationConfiguration.java:66` | jw. |
+
+**Werdykt: zmiana zachowania (zyskowna).** Zadna z trzech klas nie dziedziczy, wiec dodane przejscie po
+nadklasach nic tu nie zmienia. Pola `@Value` bywaja `null` — to byl zrodlem NPE, ktory poprawka usuwa.
+Widoczna roznica: pola **statyczne** sa teraz pomijane, wiec z logu konfiguracji znikna stale w rodzaju `LOG`.
+
+### `file/Files`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| importer | `homeportal-importer-service/.../CleanerService.java:51,53,55` | `deleteFiles(dir, Pattern.compile("oferty_%s\\d*_\\d*.zip"))` |
+| portal | `homeportal-portal-service/.../CompanyService.java:369` | `deleteDirectory(katalog agencji)` |
+| portal | `homeportal-portal-management/.../PortalsTempCleanScheduler.java:16` | import statyczny `deleteDirectory` |
+
+**Werdykt: bezpieczne.** Wzorzec importera pasuje wylacznie do plikow `.zip`, nigdy do nazw katalogow,
+wiec przestawienie kolejnosci (katalog sprawdzany przed wzorcem) nie zmienia tam niczego. Poprawka ma
+znaczenie dopiero dla wzorca pasujacego do katalogu — takiego uzycia dzis nie ma. Nowoscia sa logi `WARN`,
+gdy `delete()` zwroci `false` (wczesniej log klamal, ze plik zostal usuniety).
+
+### `security/MD5Encoder.createMD5Hash`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| portal | `homeportal-portal-service/.../UserService.java:528` | `createMD5Hash(user.getEmail(), key)` |
+| importer | `homeportal-importer-service/.../UserService.java:355` | identyczne wywolanie (duplikat) |
+
+**Werdykt: bezpieczne w praktyce.** Danymi wejsciowymi sa adres e-mail i klucz z konfiguracji — w obu
+przypadkach ASCII, dla ktorego UTF-8 i dowolny domyslny charset daja te same bajty. Zmiana ma znaczenie
+tylko dla znakow spoza ASCII. Do wyroznienia w dokumencie migracji.
+
+### `security/PasswordGenerator.generate`
+
+| Konsument | Miejsce | Do czego |
+|---|---|---|
+| portal | `.../web/mvc/form/RegistrationForm.java:116` | `apiKey` przy rejestracji |
+| portal | `.../management/mbean/security/ApiKeyManager.java:42` | regeneracja klucza API z JMX |
+| portal | `.../service/UserService.java:188, :555` | reset i generowanie hasla uzytkownika |
+
+**Werdykt: zmiana zachowania (zyskowna).** Konsumenci nie polegaja na konkretnym rozkladzie znakow,
+tylko na dlugosci. Przejscie z `Math.random()` na `SecureRandom` zmienia jedynie zrodlo losowosci —
+istotne, bo z tych wartosci powstaja klucze API i hasla resetu.
+
+### `datetime/DateTimeUtils`
+
+| Metoda | Konsumenci | Uwaga |
+|---|---|---|
+| `todayMinusMonths` | portal `OfferService.java:548` (wygasanie ofert), importer `CleanerService.java:74,83`, hop `Request.java:200` | juz dzis poprawna (`LocalDateTime.minusMonths`) — bez zmian |
+| `todayMinusYears` | hop `Request.java:207`, testy integracyjne hop-client | **bledna** (rok = 372 dni); poprawka przesuwa granice filtra o ~7 dni na rok |
+| `todayPlusMonths`, `todayPlusYears` | **zero uzyc downstream** | poprawka bez ryzyka |
+
+**Werdykt: zmiana zachowania, waska.** Jedyny realny konsument bledu to `Request.addedmin(todayMinusYears(n))`
+w kliencie hop — filtr "dodane od" przesunie sie o ~7 dni na kazdy rok wstecz, w strone poprawnej daty.
+
+### `i18n/Language`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| portal | `homeportal-portal-service/.../NotificationService.java:60` | `getByLocale(locale)` przy wyborze jezyka powiadomienia |
+
+`Language.UKRAINIAN` nie jest uzywany bezposrednio w zadnym z repozytoriow.
+**Werdykt: zmiana zachowania (zyskowna), wymaga aliasu.** Po zmianie `"ua"` → `"uk"` przegladarka
+wysylajaca `Accept-Language: uk` zacznie byc rozpoznawana (dzis `getByValue("uk")` zwraca `null`).
+Alias dla starej wartosci `"ua"` musi zostac na stale, bo moze byc utrwalona w bazie konsumenta.
+
+### `image/ImageProcessor`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| portal | `.../web/mvc/controller/wizard/EWizardStepPhotosController.java:184` | `new ImageProcessor()` + `add(...)` przy uploadzie zdjec |
+| importer | `.../processor/OfferProcessor.java:310` | `new ImageProcessor()` w petli po zdjeciach oferty |
+
+**Werdykt: do potwierdzenia przy implementacji** — zamiana watku na `ExecutorService` nie zmienia API
+(`new ImageProcessor()` + `add`), ale zmienia model wykonania. Oba miejsca tworza procesor lokalnie
+i nie wspoldziela go miedzy watkami.
+
+### `mail/NotifierAdapter`
+
+22 klasy dziedziczace (portal 21, importer 1). Konsumenci wolaja `notify(dto)`; wariant `notify(dto, false)`
+nie wystepuje w kodzie produkcyjnym konsumentow — testy portalu weryfikuja tylko `notify(any())`.
+**Werdykt: bezpieczne.** Usuniecie pola `fork` ze stanu instancji nie zmienia sygnatur uzywanych downstream.
+
+### `logging/LoggingSupport.logWithoutExceptionForSaveOrUpdate` / `...ForDelete`
+
+| Konsument | Miejsce |
+|---|---|
+| portal | `.../service/ResourceService.java:58, :91, :104`, `LocationService.java:36`, `IdentityService.java:66`, `ImportService.java:118` |
+
+**Werdykt: bezpieczne.** Sygnatury zostaja; zmienia sie tylko to, ze przekazany wyjatek trafia
+faktycznie do logu (dzis parametr jest ignorowany).
+
+### `exception/Homeportal*Exception`
+
+`HomeportalSecurityException` jest w portalu wolany wylacznie 4-argumentowym konstruktorem
+(`DepartmentFormValidator.java:55,70`, `ResourcesController.java:675,683,709`, `PortalsController.java:538,566,572,587`,
+`AgencyController.java:189`). Konstruktora bezargumentowego `HomeportalServiceException` nikt downstream nie uzywa.
+**Werdykt: bezpieczne.** Dodanie konstruktora z przyczyna i `serialVersionUID` niczego nie lamie.
+
+---
+
+## Do przeskanowania w kolejnych fazach
+
+- **Faza 3**: `LoggingSupport` z `AbstractEntity` (343 uzycia), `FeatureTypeProvider.for*()`, `FeatureConverter`
+- **Faza 4**: enumy `QueryParameter` w hop i portal, `@FieldBridge` w encjach portal/hop
+- **Faza 5**: 17 repozytoriow dziedziczacych `FullTextRepository`, 6 formularzy dziedziczacych `Page`,
+  `@EnableJpaRepositories(basePackages = ... "pl.homeportal.commons.data.repository")` w trzech aplikacjach

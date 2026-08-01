@@ -10,13 +10,18 @@ public enum Language
 {
     POLISH("pl"),
     ENGLISH("en"),
-    UKRAINIAN("ua");
+    // ISO 639-1 dla ukrainskiego to "uk" — "ua" jest kodem KRAJU. Przy starej
+    // wartosci przegladarka wysylajaca Accept-Language: uk nie byla rozpoznawana,
+    // a locale() zwracalo tag nieprzypisany do zadnego jezyka.
+    UKRAINIAN("uk", "ua");
 
-    private String value;
+    private final String value;
+    private final String[] aliases;
 
-    Language(String language)
+    Language(String language, String... aliases)
     {
         this.value = language;
+        this.aliases = aliases;
     }
 
     public String getValue()
@@ -33,13 +38,35 @@ public enum Language
     {
         for (Language language : values())
         {
-            if (language.getValue().equalsIgnoreCase(value))
+            if (language.matches(value))
             {
                 return language;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Aliasy istnieja dla wartosci, ktore mogly zostac utrwalone w bazie konsumenta
+     * przed poprawka kodu jezyka (np. "ua" dla ukrainskiego).
+     */
+    private boolean matches(String candidate)
+    {
+        if (value.equalsIgnoreCase(candidate))
+        {
+            return true;
+        }
+
+        for (String alias : aliases)
+        {
+            if (alias.equalsIgnoreCase(candidate))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Locale locale()

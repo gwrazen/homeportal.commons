@@ -1,5 +1,7 @@
 package pl.homeportal.commons.image;
 
+import pl.homeportal.commons.exception.HomeportalServiceException;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,6 +20,9 @@ public class ImageResizer
         g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
 
-        ImageIO.write(resizedImage, extension, destinationImage);
+        if (!ImageIO.write(resizedImage, extension, destinationImage))
+        {
+            throw new HomeportalServiceException("No image writer for extension: '" + extension + "'");
+        }
     }
 }

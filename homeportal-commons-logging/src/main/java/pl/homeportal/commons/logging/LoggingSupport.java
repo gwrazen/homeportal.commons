@@ -193,9 +193,19 @@ public class LoggingSupport
     }
 
     // log and serve exceptions
+    /**
+     * Przekazany wyjatek trafia teraz do logu — wczesniej parametr byl przyjmowany
+     * i ignorowany, wiec przyczyna bledu ginela mimo poprawnego wywolania.
+     */
     public static <T extends AbstractEntity> void logWithoutExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
     {
-        errorSaveOrUpdate(logger, entity);
+        if (entity == null)
+        {
+            warning(logger, NULL_MESSAGE, asList(METHOD_ERROR_SAVE_OR_UPDATE));
+            return;
+        }
+
+        logger.error(formatMessage(entity.isTransient() ? ERROR_SAVE : ERROR_UPDATE, entity), e);
     }
 
     public static <T extends AbstractEntity> RuntimeException logWithExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
@@ -206,7 +216,13 @@ public class LoggingSupport
 
     public static <T extends AbstractEntity> void logWithoutExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
     {
-        errorDelete(logger, aClass, id);
+        if (id == null)
+        {
+            warning(logger, NULL_MESSAGE, asList(METHOD_ERROR_DELETE));
+            return;
+        }
+
+        logger.error(formatMessage(ERROR_DELETE, aClass, id), e);
     }
 
     public static <T extends AbstractEntity> RuntimeException logWithExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)

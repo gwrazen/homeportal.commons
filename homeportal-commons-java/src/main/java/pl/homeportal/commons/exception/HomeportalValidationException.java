@@ -8,7 +8,6 @@ import java.util.Collection;
 import static java.lang.String.format;
 import static java.lang.System.lineSeparator;
 import static java.util.Objects.isNull;
-import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 /**
  * Created by Grzegorz Wrażeń on 28-02-2021 at 18:29
@@ -16,6 +15,8 @@ import static pl.homeportal.commons.text.Constants.EMPTY_STRING;
 
 public class HomeportalValidationException extends RuntimeException
 {
+    private static final long serialVersionUID = 1L;
+
     private static final String ERROR_CODE = "[ERR-HP-VAL]: ";
     private static final String CONSTRAINT_VIOLATIONS_HEADER = "Constraint violations:";
 
@@ -43,7 +44,7 @@ public class HomeportalValidationException extends RuntimeException
     {
         if (isNull(violations))
         {
-            return ERROR_CODE.concat(super.getMessage());
+            return ERROR_CODE.concat(String.valueOf(super.getMessage()));
         }
 
         final StringBuffer message = new StringBuffer();
@@ -52,7 +53,6 @@ public class HomeportalValidationException extends RuntimeException
         message.append(CONSTRAINT_VIOLATIONS_HEADER);
         message.append(lineSeparator());
         violations.forEach(v -> addMessage(message, v));
-//        removeLastLine(message);
 
         return message.toString();
     }
@@ -63,13 +63,6 @@ public class HomeportalValidationException extends RuntimeException
         message.append(lineSeparator());
 
         return message;
-    }
-
-    private void removeLastLine(StringBuffer message)
-    {
-        int start = message.length() - 1;
-        int end = message.length();
-        message.replace(start, end, EMPTY_STRING);
     }
 
     @Getter

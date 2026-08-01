@@ -5,6 +5,8 @@ import org.springframework.context.MessageSource;
 
 import javax.mail.Session;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static java.lang.String.format;
 import static pl.homeportal.commons.logging.LoggingSupport.error;
@@ -22,32 +24,47 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
 {
     private static final Logger LOG = logger(NotifierAdapter.class);
 
+    private static final int MAX_SENDER_THREADS = 4;
+
+    /**
+     * Pula zamiast `new Thread(...)` na kazdy mail: przy wysylce masowej kazde
+     * powiadomienie tworzylo osobny watek systemowy.
+     */
+    private static final ExecutorService SENDERS = Executors.newFixedThreadPool(MAX_SENDER_THREADS, runnable -> {
+        final Thread thread = new Thread(runnable, "notifier-sender");
+        thread.setDaemon(true);
+        return thread;
+    });
+
     protected Session session;
     protected MessageSource messageSource;
-
-    private boolean fork = true;
 
     protected abstract EmailTemplate template();
 
     @Override
     public void notify(BaseDTO dto)
     {
+        notify(dto, true);
+    }
+
+    /**
+     * Tryb wysylki jest parametrem sciezki wywolania, a nie stanem instancji.
+     * Wczesniej pole `fork` bylo ustawiane przez notify(dto, false) i nigdy nie
+     * przywracane — na beanie singletonowym jedno wywolanie synchroniczne trwale
+     * przelaczalo wszystkie kolejne powiadomienia.
+     */
+    @Override
+    public void notify(BaseDTO dto, boolean fork)
+    {
         try
         {
-            send(dto);
+            send(dto, fork);
         }
         catch (Exception e)
         {
             error(LOG, e, format(Error.NOTIFICATION_SENDING_ERR, template()));
             throw e;
         }
-    }
-
-    @Override
-    public void notify(BaseDTO dto, boolean fork)
-    {
-        this.fork = fork;
-        notify(dto);
     }
 
     @Override
@@ -68,7 +85,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         return message(SENDER_NAME, null, locale);
     }
 
-    private void send(BaseDTO dto)
+    private void send(BaseDTO dto, boolean fork)
     {
         if (!isEnabled())
         {
@@ -82,9 +99,7 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
             return;
         }
 
-        new Thread(() -> {
-                       createAndSend(dto);
-                   }).start();
+        SENDERS.submit(() -> createAndSend(dto));
     }
 
     private void createAndSend(BaseDTO dto)
