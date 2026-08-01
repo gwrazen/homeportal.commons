@@ -20,23 +20,26 @@ import java.io.Serializable;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbstractEntity<IDENTITY extends Number> implements Serializable
+public class AbstractEntity<IDENTITY extends Number> implements Identifiable, Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     protected IDENTITY id;
 
+    @Override
     public String getIdAsString()
     {
         return String.valueOf(id.intValue());
     }
 
+    @Override
     public boolean isPersisted()
     {
         return id != null ? true : false;
     }
 
+    @Override
     public boolean isTransient()
     {
         return id == null ? true : false;

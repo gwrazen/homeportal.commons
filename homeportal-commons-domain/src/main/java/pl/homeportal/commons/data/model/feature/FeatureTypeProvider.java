@@ -3,6 +3,8 @@ package pl.homeportal.commons.data.model.feature;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.Collections.unmodifiableList;
+
 /**
  * Created by gwrazen on 02/10/2014.
  */
@@ -151,26 +153,26 @@ public class FeatureTypeProvider
 
     private static void initForRentObject()
     {
-        forRentOffice.add(FeatureType.MARKET);
-        forRentOffice.add(FeatureType.PROPERTY_TYPE);
-        forRentOffice.add(FeatureType.APARTMENT_TYPE);
+        forRentObject.add(FeatureType.MARKET);
+        forRentObject.add(FeatureType.PROPERTY_TYPE);
+        forRentObject.add(FeatureType.APARTMENT_TYPE);
 
-        forRentOffice.add(FeatureType.WINDOWS);
-        forRentOffice.add(FeatureType.FURNITURE);
-        forRentOffice.add(FeatureType.BALCONY);
-        forRentOffice.add(FeatureType.TERRACE);
-        forRentOffice.add(FeatureType.INSTALLATIONS);
-        forRentOffice.add(FeatureType.HEATING);
+        forRentObject.add(FeatureType.WINDOWS);
+        forRentObject.add(FeatureType.FURNITURE);
+        forRentObject.add(FeatureType.BALCONY);
+        forRentObject.add(FeatureType.TERRACE);
+        forRentObject.add(FeatureType.INSTALLATIONS);
+        forRentObject.add(FeatureType.HEATING);
 
-        forRentOffice.add(FeatureType.APARTMENT_PERFORMANCE);
-        forRentOffice.add(FeatureType.FLOOR);
-        forRentOffice.add(FeatureType.FLOOR_QUANTITY);
-        forRentOffice.add(FeatureType.PAYMENTS_IN_RENT);
-        forRentOffice.add(FeatureType.PAYMENTS_VIA_METERS);
+        forRentObject.add(FeatureType.APARTMENT_PERFORMANCE);
+        forRentObject.add(FeatureType.FLOOR);
+        forRentObject.add(FeatureType.FLOOR_QUANTITY);
+        forRentObject.add(FeatureType.PAYMENTS_IN_RENT);
+        forRentObject.add(FeatureType.PAYMENTS_VIA_METERS);
 
-        forRentOffice.add(FeatureType.LEASE_TERM);
-        forRentOffice.add(FeatureType.DEPOSIT_TYPE);
-        forRentOffice.add(FeatureType.DRIVE_ACCESS);
+        forRentObject.add(FeatureType.LEASE_TERM);
+        forRentObject.add(FeatureType.DEPOSIT_TYPE);
+        forRentObject.add(FeatureType.DRIVE_ACCESS);
     }
 
     private static void initForSaleApartment()
@@ -216,7 +218,6 @@ public class FeatureTypeProvider
         forSaleHouse.add(FeatureType.HOUSE_ROOF_TYPE);
         forSaleHouse.add(FeatureType.HOUSE_BUILD_STATE);
         forSaleHouse.add(FeatureType.SEWERAGE_SYSTEM);
-        forSaleHouse.add(FeatureType.FLOOR_QUANTITY);
         forSaleHouse.add(FeatureType.FLOOR_QUANTITY);
         forSaleHouse.add(FeatureType.HOUSE_CELLAR);
     }
@@ -271,82 +272,82 @@ public class FeatureTypeProvider
 
     private static void initForSaleObject()
     {
-        forSaleOffice.add(FeatureType.MARKET);
-        forSaleOffice.add(FeatureType.PROPERTY_TYPE);
-        forSaleOffice.add(FeatureType.APARTMENT_TYPE);
+        forSaleObject.add(FeatureType.MARKET);
+        forSaleObject.add(FeatureType.PROPERTY_TYPE);
+        forSaleObject.add(FeatureType.APARTMENT_TYPE);
 
-        forSaleOffice.add(FeatureType.WINDOWS);
-        forSaleOffice.add(FeatureType.FURNITURE);
-        forSaleOffice.add(FeatureType.BALCONY);
-        forSaleOffice.add(FeatureType.TERRACE);
-        forSaleOffice.add(FeatureType.INSTALLATIONS);
-        forSaleOffice.add(FeatureType.HEATING);
+        forSaleObject.add(FeatureType.WINDOWS);
+        forSaleObject.add(FeatureType.FURNITURE);
+        forSaleObject.add(FeatureType.BALCONY);
+        forSaleObject.add(FeatureType.TERRACE);
+        forSaleObject.add(FeatureType.INSTALLATIONS);
+        forSaleObject.add(FeatureType.HEATING);
 
-        forSaleOffice.add(FeatureType.APARTMENT_PERFORMANCE);
-        forSaleOffice.add(FeatureType.FLOOR);
-        forSaleOffice.add(FeatureType.FLOOR_QUANTITY);
-        forSaleOffice.add(FeatureType.PAYMENTS_IN_RENT);
-        forSaleOffice.add(FeatureType.PAYMENTS_VIA_METERS);
-        forSaleOffice.add(FeatureType.DRIVE_ACCESS);
+        forSaleObject.add(FeatureType.APARTMENT_PERFORMANCE);
+        forSaleObject.add(FeatureType.FLOOR);
+        forSaleObject.add(FeatureType.FLOOR_QUANTITY);
+        forSaleObject.add(FeatureType.PAYMENTS_IN_RENT);
+        forSaleObject.add(FeatureType.PAYMENTS_VIA_METERS);
+        forSaleObject.add(FeatureType.DRIVE_ACCESS);
     }
 
     public static List<FeatureType> forRentApartment()
     {
-        return forRentApartment;
+        return unmodifiableList(forRentApartment);
     }
 
     public static List<FeatureType> forRentHouse()
     {
-        return forRentHouse;
+        return unmodifiableList(forRentHouse);
     }
 
     public static List<FeatureType> forRentOffice()
     {
-        return forRentOffice;
+        return unmodifiableList(forRentOffice);
     }
 
     public static List<FeatureType> forRentHall()
     {
-        return forRentHall;
+        return unmodifiableList(forRentHall);
     }
 
     public static List<FeatureType> forRentLand()
     {
-        return forRentHall;
+        return unmodifiableList(forRentLand);
     }
 
     public static List<FeatureType> forRentObject()
     {
-        return forRentObject;
+        return unmodifiableList(forRentObject);
     }
 
     public static List<FeatureType> forSaleApartment()
     {
-        return forSaleApartment;
+        return unmodifiableList(forSaleApartment);
     }
 
     public static List<FeatureType> forSaleHouse()
     {
-        return forSaleHouse;
+        return unmodifiableList(forSaleHouse);
     }
 
     public static List<FeatureType> forSaleOffice()
     {
-        return forSaleOffice;
+        return unmodifiableList(forSaleOffice);
     }
 
     public static List<FeatureType> forSaleHall()
     {
-        return forSaleHall;
+        return unmodifiableList(forSaleHall);
     }
 
     public static List<FeatureType> forSaleLand()
     {
-        return forSaleLand;
+        return unmodifiableList(forSaleLand);
     }
 
     public static List<FeatureType> forSaleObject()
     {
-        return forSaleObject;
+        return unmodifiableList(forSaleObject);
     }
 }

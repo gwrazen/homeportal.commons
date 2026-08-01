@@ -563,12 +563,12 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [ ] 3.1 Build przechodzi: `mvn clean install`
-- [ ] 3.2 `-mail` nie ciagnie ORM/Lucene
-- [ ] 3.3 `-domain` bez zaleznosci ORM/Lucene/Spring Data
-- [ ] 3.4 Test: `forRentObject`/`forSaleObject` niepuste, `forRentLand` zwraca cechy gruntow
-- [ ] 3.5 Test: round-trip wartosci wielokrotnych zachowuje wszystkie wartosci
-- [ ] 3.6 Test: `toFeatures` deterministyczne
+- [x] 3.1 Build przechodzi: `mvn clean install`
+- [x] 3.2 `-mail` nie ciagnie ORM/Lucene
+- [x] 3.3 `-domain` bez zaleznosci ORM/Lucene/Spring Data
+- [x] 3.4 Test: `forRentObject`/`forSaleObject` niepuste, `forRentLand` zwraca cechy gruntow
+- [x] 3.5 Test: round-trip wartosci wielokrotnych zachowuje wszystkie wartosci
+- [x] 3.6 Test: `toFeatures` deterministyczne
 
 #### Manual
 

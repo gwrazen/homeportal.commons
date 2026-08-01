@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pl.homeportal</groupId>
+        <artifactId>homeportal-commons</artifactId>
+        <version>6.0</version>
+    </parent>
+
+    <artifactId>homeportal-commons-domain</artifactId>
+
+    <!--
+      Model domenowy bez ORM, Lucene i Springa: stale produktow/rynkow, system cech
+      i interfejsy znacznikowe typow nieruchomosci. Dzieki temu konsument, ktory
+      potrzebuje samych typow domenowych (np. hac na stosie jakarta/Hibernate 6),
+      nie musi ciagnac -data.
+
+      Ten modul celowo NIE ma zaleznosci wewnetrznych. Kazda nowa zaleznosc tutaj
+      odbiera mu jedyny powod istnienia — trzymaj go lekkim.
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- TEST -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -2,7 +2,7 @@ package pl.homeportal.commons.logging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.homeportal.commons.data.entity.AbstractEntity;
+import pl.homeportal.commons.data.entity.Identifiable;
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class LoggingSupport
         logger.info(message);
     }
 
-    public static <T extends AbstractEntity> void information(Logger logger, String messageTemplate, T entity)
+    public static <T extends Identifiable> void information(Logger logger, String messageTemplate, T entity)
     {
         if (Objects.isNull(entity))
         {
@@ -66,7 +66,7 @@ public class LoggingSupport
         logger.info(formatMessage(messageTemplate, entity));
     }
 
-    public static <T extends AbstractEntity> void informationSaveOrUpdate(Logger logger, T entity)
+    public static <T extends Identifiable> void informationSaveOrUpdate(Logger logger, T entity)
     {
         if (Objects.isNull(entity))
         {
@@ -82,7 +82,7 @@ public class LoggingSupport
         logger.info(formatMessage(INFORMATION_UPDATE, entity));
     }
 
-    public static <T extends AbstractEntity> void informationDelete(Logger logger, Class<T> aClass, Object id)
+    public static <T extends Identifiable> void informationDelete(Logger logger, Class<T> aClass, Object id)
     {
         if (id == null)
         {
@@ -104,7 +104,7 @@ public class LoggingSupport
         logger.warn(message);
     }
 
-    public static <T extends AbstractEntity> void warningSave(Logger logger, T entity)
+    public static <T extends Identifiable> void warningSave(Logger logger, T entity)
     {
         if (entity == null)
         {
@@ -114,7 +114,7 @@ public class LoggingSupport
         logger.warn(formatMessage(WARNING_SAVE, entity));
     }
 
-    public static <T extends AbstractEntity> void warningRead(Logger logger, Class<T> aClass, Object id)
+    public static <T extends Identifiable> void warningRead(Logger logger, Class<T> aClass, Object id)
     {
         if (id == null)
         {
@@ -153,14 +153,14 @@ public class LoggingSupport
         logger.error(message);
     }
 
-    public static <T extends AbstractEntity> String error(Logger logger, String messageTemplate, T entity)
+    public static <T extends Identifiable> String error(Logger logger, String messageTemplate, T entity)
     {
         String message = formatMessage(messageTemplate, entity);
         logger.error(message);
         return message;
     }
 
-    public static <T extends AbstractEntity> String errorSaveOrUpdate(Logger logger, T entity)
+    public static <T extends Identifiable> String errorSaveOrUpdate(Logger logger, T entity)
     {
         if (entity == null)
         {
@@ -179,7 +179,7 @@ public class LoggingSupport
         return message;
     }
 
-    public static <T extends AbstractEntity> String errorDelete(Logger logger, Class<T> aClass, Object id)
+    public static <T extends Identifiable> String errorDelete(Logger logger, Class<T> aClass, Object id)
     {
         if (id == null)
         {
@@ -197,7 +197,7 @@ public class LoggingSupport
      * Przekazany wyjatek trafia teraz do logu — wczesniej parametr byl przyjmowany
      * i ignorowany, wiec przyczyna bledu ginela mimo poprawnego wywolania.
      */
-    public static <T extends AbstractEntity> void logWithoutExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
+    public static <T extends Identifiable> void logWithoutExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
     {
         if (entity == null)
         {
@@ -208,13 +208,13 @@ public class LoggingSupport
         logger.error(formatMessage(entity.isTransient() ? ERROR_SAVE : ERROR_UPDATE, entity), e);
     }
 
-    public static <T extends AbstractEntity> RuntimeException logWithExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
+    public static <T extends Identifiable> RuntimeException logWithExceptionForSaveOrUpdate(Logger logger, T entity, Exception e)
     {
         String message = errorSaveOrUpdate(logger, entity);
         return new HomeportalServiceException(message, e);
     }
 
-    public static <T extends AbstractEntity> void logWithoutExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
+    public static <T extends Identifiable> void logWithoutExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
     {
         if (id == null)
         {
@@ -225,20 +225,20 @@ public class LoggingSupport
         logger.error(formatMessage(ERROR_DELETE, aClass, id), e);
     }
 
-    public static <T extends AbstractEntity> RuntimeException logWithExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
+    public static <T extends Identifiable> RuntimeException logWithExceptionForDelete(Logger logger, Class<T> aClass, Object id, Exception e)
     {
         String message = errorDelete(logger, aClass, id);
         return new HomeportalServiceException(message, e);
     }
 
-    public static <T extends AbstractEntity> RuntimeException logWithException(Logger logger, String messageTemplate, T entity, Exception e)
+    public static <T extends Identifiable> RuntimeException logWithException(Logger logger, String messageTemplate, T entity, Exception e)
     {
         String message = formatMessage(messageTemplate, entity);
         logger.error(message, e);
         return new HomeportalServiceException(message, e);
     }
 
-    public static <T extends AbstractEntity> void logWithoutException(Logger logger, String messageTemplate, T entity, Exception e)
+    public static <T extends Identifiable> void logWithoutException(Logger logger, String messageTemplate, T entity, Exception e)
     {
         String message = formatMessage(messageTemplate, entity);
         logger.error(message, e);
@@ -251,7 +251,7 @@ public class LoggingSupport
     }
 
     // generic message methods
-    public static <T extends AbstractEntity> String formatMessage(String messageTemplate, T entity)
+    public static <T extends Identifiable> String formatMessage(String messageTemplate, T entity)
     {
         if (Objects.isNull(entity))
         {
@@ -260,12 +260,12 @@ public class LoggingSupport
         return format(messageTemplate, shortName(entity), entity);
     }
 
-    public static <T extends AbstractEntity> String formatMessage(String messageTemplate, Class<T> aClass, Object id)
+    public static <T extends Identifiable> String formatMessage(String messageTemplate, Class<T> aClass, Object id)
     {
         return format(messageTemplate, shortName(aClass), id);
     }
 
-    public static <T extends AbstractEntity> String shortName(T entity)
+    public static <T extends Identifiable> String shortName(T entity)
     {
         return entity.getClass().getSimpleName();
     }

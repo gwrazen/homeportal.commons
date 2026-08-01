@@ -11,6 +11,7 @@
 
     <modules>
         <module>homeportal-commons-java</module>
+        <module>homeportal-commons-domain</module>
         <module>homeportal-commons-data</module>
         <module>homeportal-commons-mail</module>
         <module>homeportal-commons-logging</module>

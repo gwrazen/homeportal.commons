@@ -19,16 +19,15 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!--
+          Celowo -domain, a nie -data: LoggingSupport potrzebuje wylacznie kontraktu
+          Identifiable. Zaleznosc od -data ciagnela tu Hibernate, Hibernate Search
+          i Lucene, a dalej — tranzytywnie — do -mail.
+        -->
         <dependency>
             <groupId>pl.homeportal</groupId>
-            <artifactId>homeportal-commons-data</artifactId>
+            <artifactId>homeportal-commons-domain</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-
-        <!-- EXTERNALS -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
         </dependency>
 
     <!-- TEST -->

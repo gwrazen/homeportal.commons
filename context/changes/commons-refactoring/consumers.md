@@ -154,9 +154,51 @@ faktycznie do logu (dzis parametr jest ignorowany).
 
 ---
 
-## Do przeskanowania w kolejnych fazach
+---
 
-- **Faza 3**: `LoggingSupport` z `AbstractEntity` (343 uzycia), `FeatureTypeProvider.for*()`, `FeatureConverter`
+## Faza 3 — `commons-domain`, model domenowy, rozciecie `-logging`
+
+### `logging/LoggingSupport` (343 uzycia downstream)
+
+**Werdykt: bezpieczne w kodzie zrodlowym, niezgodne binarnie.** Ograniczenie generyczne zmienilo sie
+z `<T extends AbstractEntity>` na `<T extends Identifiable>` (nowy interfejs w `-domain`, implementowany
+przez `AbstractEntity`). Kazde wywolanie downstream kompiluje sie bez zmian — encje konsumentow dziedzicza
+po `AbstractEntity`, wiec spelniaja nowy kontrakt. Zmienia sie erasure, wiec konsument **musi sie
+przekompilowac** (i tak musi, bo 6.0 jest wydaniem lamiacym).
+
+### `model/feature/FeatureTypeProvider`
+
+| Konsument | Miejsce |
+|---|---|
+| portal | `homeportal-portal-model/.../offer/OfferSaleHall.java:76` i rownolegle klasy `Offer*` — `getFeatureTypes()` |
+| hop | `homeportal-hop-model/...` — analogicznie (12 uzyc) |
+
+**Werdykt: zmiana zachowania (naprawa).** `forRentObject()` i `forSaleObject()` zwracaly dotad **puste
+listy**, a `forRentLand()` — cechy hal. Po poprawce oferty typu "obiekt" dostaja wlasny zestaw filtrow,
+a grunty pod wynajem — grunowy. Gettery zwracaja teraz `unmodifiableList`: konsument, ktory probowalby
+modyfikowac zwrocona liste, dostanie `UnsupportedOperationException` (dzis nikt tego nie robi).
+
+### `model/feature/FeatureConverter`
+
+| Konsument | Miejsce | Na czym polega |
+|---|---|---|
+| portal | `homeportal-portal-model/.../offer/Offer.java:238,248` | `toFeatureMap(features)` → `Map<String,String>`, odczyt przez `featureMap.get(nazwa)` |
+| portal | `homeportal-portal-management/.../OfferManager.java:210` | `toFeatures(featuresMap)` — zapis z powrotem do bazy |
+| hop | `homeportal-hop-model/.../PortalOffer.java:246` | `toFeatureMap(features)` |
+| hac | `homeportal-hac-client/.../OfferFeatures.java:23` | tylko dokumentacja ksztaltu (`grupa → lista kodow`) |
+
+**Werdykt: zmiana zachowania — wymaga weryfikacji manualnej.** Wartoscia w mapie jest teraz cala czesc
+po dwukropku, wiec cecha wielowartosciowa zwraca `"prąd^woda^gaz"` zamiast `"prąd"`. Dla cech
+jednowartosciowych (wszystkie numeryczne, MARKET, HEATING itd.) nic sie nie zmienia. **Do sprawdzenia
+w portalu: czy ktores miejsce renderuje wartosc cechy wielowartosciowej wprost do widoku** — tam
+zamiast jednej wartosci pojawi sie string z separatorami. Dla takich przypadkow doszla metoda
+`toFeatureValues(String)` zwracajaca `Map<String, List<String>>`.
+Druga zmiana: `toFeatures` sortuje klucze, wiec ponowna serializacja tej samej mapy daje zawsze ten sam
+string (wczesniej kolejnosc zalezala od `HashMap`) — `OfferManager` przestaje brudzic wiersz bez potrzeby.
+
+---
+
+## Do przeskanowania w kolejnych fazach
 - **Faza 4**: enumy `QueryParameter` w hop i portal, `@FieldBridge` w encjach portal/hop
 - **Faza 5**: 17 repozytoriow dziedziczacych `FullTextRepository`, 6 formularzy dziedziczacych `Page`,
   `@EnableJpaRepositories(basePackages = ... "pl.homeportal.commons.data.repository")` w trzech aplikacjach
