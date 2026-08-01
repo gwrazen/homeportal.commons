@@ -580,12 +580,12 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Automated
 
-- [x] 4.1 Build przechodzi: `mvn clean install`
-- [x] 4.2 Test zgodnosci kodowania dla kazdej stalej `QueryParameter` — w commons w postaci parity encoder↔bridge dla wszystkich czterech kodowan i zestawu wartosci brzegowych (`EncodingContractTest`); weryfikacja per stala enuma nalezy do migracji konsumenta, bo enumy `QueryParameter` zyja w hop i portal
-- [x] 4.3 Test: brak przepelnienia dla wartosci `> Integer.MAX_VALUE`
-- [x] 4.4 Test: porzadek wartosci ujemnych
-- [x] 4.5 Test: znaki specjalne Lucene nie wywracaja parsera
-- [x] 4.6 Test: zakres jednostronny
+- [x] 4.1 Build przechodzi: `mvn clean install` — a8fc37e
+- [x] 4.2 Test zgodnosci kodowania dla kazdej stalej `QueryParameter` — w commons w postaci parity encoder↔bridge dla wszystkich czterech kodowan i zestawu wartosci brzegowych (`EncodingContractTest`); weryfikacja per stala enuma nalezy do migracji konsumenta, bo enumy `QueryParameter` zyja w hop i portal — a8fc37e
+- [x] 4.3 Test: brak przepelnienia dla wartosci `> Integer.MAX_VALUE` — a8fc37e
+- [x] 4.4 Test: porzadek wartosci ujemnych — a8fc37e
+- [x] 4.5 Test: znaki specjalne Lucene nie wywracaja parsera — a8fc37e
+- [x] 4.6 Test: zakres jednostronny — a8fc37e
 
 #### Manual
 
