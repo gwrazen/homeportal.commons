@@ -134,10 +134,23 @@ public class EncodingContractTest
     public void encodersAreNullSafe()
     {
         for (ValueEncoder encoder : Arrays.asList(ValueEncoders.TEXT, ValueEncoders.FEATURE,
-                                                  ValueEncoders.NUMERIC, ValueEncoders.DATE))
+                                                  ValueEncoders.NUMERIC, ValueEncoders.DATE,
+                                                  ValueEncoders.ANALYZED))
         {
             assertNull(encoder.encode(null));
         }
+    }
+
+    /**
+     * Pole bez bridge'a trafia do indeksu jako ciag tokenow, wiec wartosc zapytania musi dojsc
+     * do QueryParsera nietknieta. TEXT skleilby fraze w term, ktorego w indeksie nie ma.
+     */
+    @Test
+    public void analyzedEncoderLeavesValueForTheQueryParser()
+    {
+        assertEquals("mieszkanie Bielsko Biała", ValueEncoders.ANALYZED.encode("  mieszkanie Bielsko Biała  "));
+        assertEquals("mieszkaniebielskobiala", ValueEncoders.TEXT.encode("mieszkanie Bielsko Biała"));
+        assertNull(ValueEncoders.ANALYZED.encode("   "));
     }
 
     @Test

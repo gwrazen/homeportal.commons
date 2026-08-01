@@ -91,6 +91,27 @@ public final class ValueEncoders
     };
 
     /**
+     * Wartosc oddana bez zmian (poza przycieciem bialych znakow) — dla pol indeksowanych
+     * **bez bridge'a**, czyli jako zwykly tekst analizowany przez analizator Lucene'a.
+     *
+     * Takie pole (np. opis oferty) jest w indeksie ciagiem tokenow, a nie jednym sklejonym
+     * termem, wiec normalizacja po stronie zapytania je rozmija: {@code TEXT} usunelby spacje
+     * i zamienil fraze "mieszkanie Bielsko Biała" w "mieszkaniebielskobiala", czyli term,
+     * ktorego w indeksie nie ma. Analize zapytania robi tu {@code QueryParser} i to on musi
+     * dostac wartosc w oryginalnej postaci.
+     */
+    public static final ValueEncoder ANALYZED = value -> {
+        if (value == null)
+        {
+            return null;
+        }
+
+        final String text = String.valueOf(value).trim();
+
+        return text.isEmpty() ? null : text;
+    };
+
+    /**
      * Data z dokladnoscia do sekundy, w formacie {@code DateTools} (yyyyMMddHHmmss).
      */
     public static final ValueEncoder DATE = value -> {

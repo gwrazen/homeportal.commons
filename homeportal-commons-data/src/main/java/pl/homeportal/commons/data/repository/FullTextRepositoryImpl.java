@@ -2,10 +2,12 @@ package pl.homeportal.commons.data.repository;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
+import org.hibernate.search.SearchFactory;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
@@ -27,6 +29,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static pl.homeportal.commons.text.Constants.SPACE;
 
@@ -45,6 +48,9 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
 
     /** Bezstanowy i wspoldzielony — inaczej niz poprzednia alokacja na kazde zapytanie. */
     private static final Analyzer KEYWORD_ANALYZER = new KeywordAnalyzer();
+
+    /** Awaryjny analizator dla korzenia bez ani jednego zaindeksowanego podtypu — zachowanie 5.0. */
+    private static final Analyzer DEFAULT_ANALYZER = new StandardAnalyzer();
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -76,13 +82,24 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         // Bulk delete zamiast ladowania calej tabeli do pamieci i usuwania wiersz
         // po wierszu — poprzednia wersja konczyla sie OutOfMemoryError na duzych tabelach.
         entityManager.createQuery("delete from " + t.getSimpleName()).executeUpdate();
-        getFullTextEntityManager().purgeAll(t);
+
+        // Bulk delete omija listenery Hibernate Search, wiec dokumenty musi usunac purgeAll —
+        // i musi to zrobic od razu, bo po deleteAll indeks ma byc pusty niezaleznie od tego,
+        // czy transakcja wolajacego kiedykolwiek sie zatwierdzi.
+        final FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        fullTextEntityManager.purgeAll(t);
+        fullTextEntityManager.flushToIndexes();
     }
 
     @Override
     public void purge(T t)
     {
-        getFullTextEntityManager().purge(t.getClass(), t.getId());
+        // purge i indexOne to para jawnych operacji na samym indeksie — obie publikuja od razu,
+        // inaczej niz indexedSave/indexedDelete, ktore czekaja na commit. Bez flusha purge byl
+        // jedyna z czworki, po ktorej nie dalo sie sprawdzic wyniku bez konczenia transakcji.
+        final FullTextEntityManager fullTextEntityManager = getFullTextEntityManager();
+        fullTextEntityManager.purge(t.getClass(), t.getId());
+        fullTextEntityManager.flushToIndexes();
     }
 
     @Override
@@ -266,7 +283,44 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             return KEYWORD_ANALYZER;
         }
 
-        return getFullTextEntityManager().getSearchFactory().getAnalyzer(t);
+        final SearchFactory searchFactory = getFullTextEntityManager().getSearchFactory();
+        final Class<?> indexedType = resolveIndexedType(searchFactory, t);
+
+        return indexedType == null ? DEFAULT_ANALYZER : searchFactory.getAnalyzer(indexedType);
+    }
+
+    /**
+     * Korzeniem zapytania moze byc nadklasa, ktora sama nie jest {@code @Indexed} — Hibernate Search
+     * celuje wtedy we wszystkie zaindeksowane podtypy. Tak odpytuje hop: {@code PortalOffer} jest
+     * abstrakcyjny, a {@code @Indexed(index = "offers")} maja jego podklasy.
+     *
+     * {@code SearchFactory#getAnalyzer(Class)} jest zdefiniowane wylacznie dla typu zaindeksowanego
+     * i dla takiego korzenia rzuca HSEARCH000109 z wnetrza fabryki. Do 5.0 problem nie wychodzil,
+     * bo analizator byl budowany na sztywno i fabryki nie pytal wcale.
+     *
+     * Podtypy jednego korzenia dziela indeks, a wraz z nim analizator, wiec wybor pierwszego
+     * z nich jest rownowazny wyborowi dowolnego. Kolejnosc jest ustalona po nazwie klasy, zeby
+     * ten sam korzen zawsze dawal ten sam analizator.
+     */
+    private Class<?> resolveIndexedType(SearchFactory searchFactory, Class<T> t)
+    {
+        final Set<Class<?>> indexedTypes = searchFactory.getIndexedTypes();
+        if (indexedTypes.contains(t))
+        {
+            return t;
+        }
+
+        Class<?> resolved = null;
+        for (Class<?> candidate : indexedTypes)
+        {
+            if (t.isAssignableFrom(candidate)
+                && (resolved == null || candidate.getName().compareTo(resolved.getName()) < 0))
+            {
+                resolved = candidate;
+            }
+        }
+
+        return resolved;
     }
 
     private Pageable createPageable(SearchQuery sQuery)

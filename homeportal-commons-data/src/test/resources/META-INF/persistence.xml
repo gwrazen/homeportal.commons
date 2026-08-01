@@ -9,6 +9,8 @@
     <persistence-unit name="commons-it" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>pl.homeportal.commons.data.repository.IndexedThing</class>
+        <class>pl.homeportal.commons.data.repository.ThingRoot</class>
+        <class>pl.homeportal.commons.data.repository.ThingLeaf</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

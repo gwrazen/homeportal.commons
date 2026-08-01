@@ -208,6 +208,38 @@ public class FullTextRepositoryIntegrationTest
         assertTrue("Przekazany obiekt musi dostac identyfikator", thing.isPersisted());
     }
 
+    /**
+     * Regresja: korzeniem zapytania moze byc nadklasa, ktora sama nie jest {@code @Indexed}
+     * (tak odpytuje hop — {@code PortalOffer} jest abstrakcyjny, {@code @Indexed} maja podklasy).
+     * {@code SearchFactory#getAnalyzer(Class)} jest zdefiniowane wylacznie dla typu zaindeksowanego
+     * i dla takiego korzenia rzucalo HSEARCH000109, czyli kazde zapytanie o oferty wracalo z bledem.
+     */
+    @Test
+    public void findsByNonIndexedRootOfIndexedHierarchy() throws Exception
+    {
+        final FullTextRepositoryImpl<ThingRoot> hierarchyRepository = repositoryFor();
+
+        entityManager.getTransaction().begin();
+        hierarchyRepository.indexedSave(new ThingLeaf("Nowy Sącz"));
+        entityManager.getTransaction().commit();
+
+        final SearchQuery query = new SearchQuery();
+        query.addParameter(Parameter.CITY, "Nowy Sącz");
+
+        assertEquals(1, hierarchyRepository.findAllBySearchQuery(query, ThingRoot.class).size());
+        assertEquals(1, hierarchyRepository.countBySearchQuery(query, ThingRoot.class));
+    }
+
+    private FullTextRepositoryImpl<ThingRoot> repositoryFor() throws Exception
+    {
+        final FullTextRepositoryImpl<ThingRoot> instance = new FullTextRepositoryImpl<>();
+        final Field field = FullTextRepositoryImpl.class.getDeclaredField("entityManager");
+        field.setAccessible(true);
+        field.set(instance, entityManager);
+
+        return instance;
+    }
+
     private SearchQuery query()
     {
         final SearchQuery query = new SearchQuery();
