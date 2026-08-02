@@ -192,10 +192,19 @@ Kolejność:
 4. Zweryfikuj filtry: cecha z polskim znakiem, miasto dwuczłonowe, cena powyżej 10 mln
 5. Dopiero teraz kieruj ruch użytkowników na nowe filtry
 
-**Czas pełnego reindeksu: _do zmierzenia na środowisku testowym_** — wpisz zmierzoną wartość tutaj przed
-wdrożeniem produkcyjnym. Do jego zakończenia wyszukiwarka zwraca niepełne wyniki, więc to okno serwisowe.
+**Czas pełnego reindeksu — zmierzony na produkcji hopa 2026-08-02: 554 s (9 min 14 s) dla
+4 459 830 dokumentów**, czyli ~8 050 dok./s przy `batch.size = 100` i 10 wątkach. Dla porównania
+ten sam indeks na commons 5.0 (2026-07-26): 8 min 48 s — nowy format `NumericBridge` (20 znaków
+zamiast 10) kosztuje kilkanaście procent czasu. Po zakończeniu liczba dokumentów zgadzała się
+z liczbą wierszy co do jednego.
 
-Reindeks nie może iść równolegle z drugim reindeksem — `IndexerMonitor` teraz to egzekwuje.
+Krok 1 procedury jest **wyraźnie odczuwalny**, a nie tylko „niepełne wyniki": między wdrożeniem
+kodu a końcem reindeksu filtry liczbowe zwracają praktycznie nic (zmierzone na hopie:
+`?pricemin=500000` → 135 zamiast 606 074), bo indeks jest jeszcze w starym formacie. Filtry
+tekstowe działają normalnie. Planować to jako jedno okno, nie dwa etapy.
+
+Reindeks nie może iść równolegle z drugim reindeksem — `IndexerMonitor` teraz to egzekwuje;
+potwierdzone na produkcji (`monitorStatus` w trakcie: `acquired: true by: Mass Offer Indexer`).
 
 ---
 
