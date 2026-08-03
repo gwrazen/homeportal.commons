@@ -29,7 +29,7 @@
         <velocity.version>1.7</velocity.version>
         <imgscalr.version>4.2</imgscalr.version>
         <commons.email.version>1.2</commons.email.version>
-        <javax.mail.version>1.4.7</javax.mail.version>
+        <javax.mail.version>1.5.6</javax.mail.version>
         <lombok.version>1.16.14</lombok.version>
         <hibernate.core.version>5.0.10.Final</hibernate.core.version>
         <hibernate.entitymanager.version>5.0.10.Final</hibernate.entitymanager.version>
@@ -127,10 +127,17 @@
 
             <!-- Uzywany wprost przez -mail; dotad przychodzil tylko tranzytywnie
                  przez commons-email, wiec konsument bioracy sam -mail dostawal
-                 NoClassDefFoundError. -->
+                 NoClassDefFoundError.
+
+                 MUSI byc com.sun.mail:javax.mail, NIE javax.mail:mail. Ten drugi
+                 zatrzymal sie na 1.4.7 (2013) i negocjuje SSLv3/TLSv1 - oba wylaczone
+                 w java.security nowszych JDK 8 (u351: jdk.tls.disabledAlgorithms).
+                 Wjechal tu przy pruningu 6.0 i polozyl CALA poczta na prodzie portalu:
+                 SSLHandshakeException "No appropriate protocol" na kazdej wysylce,
+                 cicho, bo notyfikacje leca w osobnym watku. -->
             <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
                 <version>${javax.mail.version}</version>
             </dependency>
 
