@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 public interface IHouse extends Serializable
 {
-    Integer getRoomQuantity();
+    Integer getRooms();
 
-    void setRoomQuantity(Integer noOfBedrooms);
+    void setRooms(Integer noOfBedrooms);
 
     void setBuildYear(Integer buildYear);
 

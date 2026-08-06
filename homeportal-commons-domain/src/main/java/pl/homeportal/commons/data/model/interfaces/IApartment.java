@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public interface IApartment extends Serializable
 {
-    Integer getRoomQuantity();
+    Integer getRooms();
 
-    void setRoomQuantity(Integer roomQuantity);
+    void setRooms(Integer rooms);
 
     void setBuildYear(Integer buildYear);
 

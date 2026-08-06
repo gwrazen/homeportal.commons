@@ -11,9 +11,9 @@ public interface IObject extends Serializable
 
     void setMaintenanceFee(Double maintenanceFee);
 
-    Integer getRoomQuantity();
+    Integer getRooms();
 
-    void setRoomQuantity(Integer roomQuantity);
+    void setRooms(Integer rooms);
 
     Integer getBuildYear();
 

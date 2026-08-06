@@ -8,9 +8,9 @@ public interface IOffice extends Serializable
 
     void setBuildYear(Integer buildYear);
 
-    Integer getRoomQuantity();
+    Integer getRooms();
 
-    void setRoomQuantity(Integer roomQuantity);
+    void setRooms(Integer rooms);
 
     Double getMaintenanceFee();
 
