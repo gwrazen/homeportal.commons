@@ -67,6 +67,25 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         }
     }
 
+    /**
+     * Wysylka synchroniczna z wynikiem — patrz {@link Notifier#notifyChecked(BaseDTO)}.
+     *
+     * Swiadomie NIE idzie przez {@link #send(BaseDTO, boolean)}: tamta sciezka konczy sie
+     * {@code void} i nie da sie z niej odczytac, czy mail wyszedl. Zachowanie {@code notify()}
+     * zostaje przez to nietkniete, wiec pozostale aplikacje nie zmieniaja sie po przebudowie.
+     */
+    @Override
+    public boolean notifyChecked(BaseDTO dto)
+    {
+        if (!isEnabled())
+        {
+            information(LOG, format(NOTIFICATION_DISABLED_MSG, template()));
+            return false;
+        }
+
+        return createAndSend(dto);
+    }
+
     @Override
     public String message(String key, Locale locale)
     {
@@ -102,17 +121,24 @@ public abstract class NotifierAdapter<T extends BaseDTO> implements Notifier<Bas
         SENDERS.submit(() -> createAndSend(dto));
     }
 
-    private void createAndSend(BaseDTO dto)
+    /**
+     * Zwracany wynik jest dodatkiem dla {@link #notifyChecked(BaseDTO)} — samo zachowanie zostaje
+     * takie jak bylo: wyjatek jest lapany i logowany, nigdy nie leci w gore. Dlatego
+     * {@link #send(BaseDTO, boolean)} moze ten wynik spokojnie zignorowac.
+     */
+    private boolean createAndSend(BaseDTO dto)
     {
         try
         {
             final VelocityEmail email = createVelocityEmail(dto);
             final String response = email.send();
             information(LOG, format(NOTIFICATION_SENT_MSG, template(), response));
+            return true;
         }
         catch (Exception e)
         {
             error(LOG, e, Error.CREATE_AND_SEND_ERR);
+            return false;
         }
     }
 
