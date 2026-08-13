@@ -13,7 +13,8 @@ public enum Language
     // ISO 639-1 dla ukrainskiego to "uk" — "ua" jest kodem KRAJU. Przy starej
     // wartosci przegladarka wysylajaca Accept-Language: uk nie byla rozpoznawana,
     // a locale() zwracalo tag nieprzypisany do zadnego jezyka.
-    UKRAINIAN("uk", "ua");
+    UKRAINIAN("uk", "ua"),
+    GERMAN("de");
 
     private final String value;
     private final String[] aliases;

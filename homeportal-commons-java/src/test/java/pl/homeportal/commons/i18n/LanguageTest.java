@@ -46,8 +46,16 @@ public class LanguageTest
     }
 
     @Test
+    public void resolvesGerman()
+    {
+        assertEquals(Language.GERMAN, Language.getByValue("de"));
+        assertEquals(Language.GERMAN, Language.getByLocale(new Locale("de")));
+        assertEquals("de", Language.GERMAN.locale().getLanguage());
+    }
+
+    @Test
     public void unknownValueResolvesToNull()
     {
-        assertNull(Language.getByValue("de"));
+        assertNull(Language.getByValue("fr"));
     }
 }

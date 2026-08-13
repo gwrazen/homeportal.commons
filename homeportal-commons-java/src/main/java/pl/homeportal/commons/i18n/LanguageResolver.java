@@ -26,12 +26,23 @@ public class LanguageResolver
         if (localeResolver != null)
         {
             Locale locale = localeResolver.resolveLocale(request);
-            return Language.getByValue(locale.getLanguage());
+            return orDefault(Language.getByValue(locale.getLanguage()));
         }
 
         // Brak LocaleResolver zdarza sie poza DispatcherServletem (filtr, dispatch
         // typu ERROR, zasoby statyczne) — wtedy jezyk bierzemy wprost z zadania.
-        return Language.getByValue(request.getLocale().getLanguage());
+        return orDefault(Language.getByValue(request.getLocale().getLanguage()));
+    }
+
+    /**
+     * Jezyk nierozpoznany schodzi na polski, a nie na null. Wynik tej metody leci
+     * prosto do zapytan po kolumnie Language (cechy oferty, meta SEO), gdzie null
+     * konczyl sie pustym wynikiem albo NPE — a zadanie z Accept-Language spoza
+     * naszej listy jest normalnym ruchem z internetu, nie bledem konfiguracji.
+     */
+    private static Language orDefault(Language language)
+    {
+        return language == null ? Language.POLISH : language;
     }
 
     public static Locale resolveLocale(HttpServletRequest request)
