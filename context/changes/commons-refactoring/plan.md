@@ -541,7 +541,7 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 #### Manual
 
 - [ ] 1.6 Log z commons pojawia sie w aplikacji konsumenckiej (binding slf4j)
-- [ ] 1.7 Polskie znaki poprawne po buildzie na innym domyslnym encodingu
+- [x] 1.7 Polskie znaki poprawne po buildzie na innym domyslnym encodingu — zweryfikowane 2026-08-29: `mvn clean install -Dfile.encoding=ISO-8859-1 -Duser.language=en -Duser.country=US` zielony, `javap -c Market.class` pokazuje `String wtórny`
 
 ### Phase 2: Bugfixy poza FTS
 
@@ -574,7 +574,7 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 - [ ] 3.7 Filtry cech dla ofert typu "obiekt" pokazuja pozycje
 - [ ] 3.8 Filtry dla gruntow pokazuja cechy gruntow
-- [ ] 3.9 `hac` kompiluje sie z `commons-domain` bez `<exclusions>`
+- [x] 3.9 `hac` kompiluje sie z `commons-domain` bez `<exclusions>` — zweryfikowane 2026-08-29 probnie (pom przywrocony): build hac na JDK 17 zielony, `dependency:tree` bez `hibernate-search`/`lucene`
 
 ### Phase 4: FTS — kontrakt kodowania
 
@@ -592,7 +592,7 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 - [ ] 4.7 Filtr po cesze z polskim znakiem zwraca wyniki (po reindeksie)
 - [ ] 4.8 Filtr po miescie dwuczlonowym zwraca wyniki
 - [ ] 4.9 Filtr "cena od" zwraca oferty powyzej 10 mln PLN
-- [ ] 4.10 Czas pelnego reindeksu zmierzony i zapisany
+- [x] 4.10 Czas pelnego reindeksu zmierzony i zapisany — pomiar z produkcji hopa 2026-08-02: 554 s dla 4 459 830 dokumentow, zapisany w `migration-6.0.md` §6
 
 ### Phase 5: FTS — API repozytorium i paginacja
 
@@ -624,5 +624,5 @@ Kolejnosc wdrozenia dla pojedynczego konsumenta: podniesienie wersji → dostoso
 
 #### Manual
 
-- [ ] 6.6 Probne podniesienie `hop` do 6.0 kompiluje sie wg dokumentu migracji
-- [ ] 6.7 `hac` kompiluje sie z `commons-domain` bez `<exclusions>`
+- [x] 6.6 Probne podniesienie `hop` do 6.0 kompiluje sie wg dokumentu migracji — spelnione realna migracja: `hop` na `master` (`743c5e9c`) ma `homeportal.commons.version = 6.0` i buduje sie na zielono (9 modulow)
+- [x] 6.7 `hac` kompiluje sie z `commons-domain` bez `<exclusions>` — patrz 3.9
