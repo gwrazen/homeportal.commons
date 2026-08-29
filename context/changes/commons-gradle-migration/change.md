@@ -45,7 +45,6 @@ Stąd `/10x-frame` przed `/10x-plan`.
 
 ## Uwaga o nazewnictwie
 
-Otwarty ticket w tym repo nazywa się `jdk17-migration` — **bez prefiksu**, inaczej niż jego
-bliźniaki w pozostałych repach (`hp-jdk17-migration`, `hop-jdk17-migration`,
-`importer-jdk17-migration`) i inaczej niż zarchiwizowany `commons-refactoring`. Ten ticket trzyma
-konwencję z archiwum i z rodziny cross-repo. Do rozważenia zmiana nazwy tamtego dla spójności.
+Prefiks `commons-` jest tu konwencją: tak nazywa się zarchiwizowany `commons-refactoring`
+i tak nazywają się bliźniaki w pozostałych repach. Otwarty ticket migracyjny, który stał bez
+prefiksu, został **przemianowany 2026-08-29 na `commons-jdk17-migration`**.

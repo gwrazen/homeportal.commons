@@ -1,9 +1,9 @@
 ---
-change_id: jdk17-migration
+change_id: commons-jdk17-migration
 title: Migracja homeportal.commons z Javy 8 na 17 — biblioteka idzie OSTATNIA, bo konsument na 8 nie odczyta bajtkodu 17; całość na osobnym branchu, bez merge'a
 status: new
 created: 2026-08-01
-updated: 2026-08-21
+updated: 2026-08-29
 archived_at: null
 ---
 
@@ -18,6 +18,12 @@ artefaktu z tej gałęzi. Przy bibliotece to zastrzeżenie waży więcej niż pr
 artefakt trafia do czterech repozytoriów naraz i nie da się go cofnąć jednym `revert`.
 
 Treść dopisana 2026-08-21 (ticket założony 2026-08-01 jako sam tytuł, bez ustaleń).
+
+⚠️ **Przemianowany 2026-08-29 z `jdk17-migration` na `commons-jdk17-migration`** — na życzenie
+usera, dla zgodności z bliźniakami w pozostałych repach (`hp-jdk17-migration`,
+`hop-jdk17-migration`, `importer-jdk17-migration`) i z konwencją prefiksu widoczną
+w zarchiwizowanym `commons-refactoring`. Odsyłacze do starej nazwy poprawione w portalu, hopie i imporcie; w `context/archive/2026-08-01-commons-refactoring/` **zostały stare nazwy** —
+archiwum jest tylko do odczytu i zapisuje stan z dnia zamknięcia.
 
 ## Stan zastany — zmierzony 2026-08-21
 
