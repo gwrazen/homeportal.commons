@@ -6,7 +6,7 @@
     <parent>
         <groupId>pl.homeportal</groupId>
         <artifactId>homeportal-commons</artifactId>
-        <version>6.1</version>
+        <version>6.0</version>
     </parent>
 
     <artifactId>homeportal-commons-logging</artifactId>
