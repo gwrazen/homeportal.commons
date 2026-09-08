@@ -1,10 +1,10 @@
 ---
 change_id: commons-jdk17-migration
 title: Migracja homeportal.commons z Javy 8 na 17 — osobna linia 7.0, bo konsument na 8 nie odczyta bajtkodu 17; wydanie z gałęzi `jdk17`, bez merge'a do mastera
-status: implemented
+status: archived
 created: 2026-08-01
 updated: 2026-09-08
-archived_at: null
+archived_at: 2026-09-08T19:34:08Z
 ---
 
 ## Notes
