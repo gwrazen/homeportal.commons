@@ -406,16 +406,16 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [x] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/` — a668254
-- [x] 3.2 Build commons zielony po podbiciu wersji — a668254
-- [x] 3.3 Build haca przeciw 7.0 przechodzi — a668254
-- [x] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste) — a668254
+- [x] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/` — 66dcb3a
+- [x] 3.2 Build commons zielony po podbiciu wersji — 66dcb3a
+- [x] 3.3 Build haca przeciw 7.0 przechodzi — 66dcb3a
+- [x] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste) — 66dcb3a
 
 #### Manual
 
-- [x] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku — a668254
-- [x] 3.6 Potwierdzone, że nic nie zostało wydane — a668254
-- [x] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK — nie dotyczy, hac przeszedł — a668254
+- [x] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku — 66dcb3a
+- [x] 3.6 Potwierdzone, że nic nie zostało wydane — 66dcb3a
+- [x] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK — nie dotyczy, hac przeszedł — 66dcb3a
 
 ### Phase 4: Wydanie 7.0 i ślad po nim
 
