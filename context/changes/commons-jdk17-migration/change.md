@@ -161,3 +161,35 @@ też to, czego Hibernate potrzebuje na 17.
 **Baseline z JDK 8 na `masterze`: identyczny** — 59/15/59/4/2, BUILD SUCCESS. Liczba testów nie
 spadła. Przy okazji odtworzone w `~/.m2` prawdziwe 6.0 (bajtkod 52), więc lokalne buildy
 `hop`/`portal`/`importera` na ósemce znów działają.
+
+## Faza 3 — wersja 7.0 i dowód u konsumenta (2026-09-08)
+
+- Reaktor podbity `6.0` → **7.0** (root + sześć modułów), `mvn clean install` na 17 zielony.
+- Sześć artefaktów 7.0 leży w `~/.m2`; `javap` na 7.0 → `major version: 61`, na 6.0 → `52`.
+- **`hac` zbudowany przeciw 7.0 z pełnym kompletem testów: BUILD SUCCESS**, wszystkie moduły,
+  372 testy bez błędu — w tym testy podnoszące kontekst Spring Boota. Zmiana
+  `homeportal.commons.version` 5.0 → 7.0 w `hac/pom.xml` była tymczasowa i została **cofnięta**
+  (`git checkout -- pom.xml`, drzewo haca czyste).
+- Skok 5.0 → 7.0 przeszedł od razu, więc kontrolny build przeciw 6.0 okazał się niepotrzebny.
+
+## Gałęzie `jdk17` w pozostałych repach (2026-09-08)
+
+Na życzenie usera założone gałęzie `jdk17` (odbite od `mastera`, wypchnięte na `origin`)
+w `hac`, `hop`, `portal` i `importer` — **bez podbijania tam wersji**: te repa nie stoją jeszcze
+na 17, więc numer mówiący o platformie byłby nieprawdą. Wersję podbija się w ich własnych
+ticketach. `spy` pominięty — projekt Pythonowy, nie ma artefaktu Mavena.
+
+Numer **7.0 zostaje** — decyzja usera po rozważeniu mylącej zbieżności z „Javą 1.7".
+
+## Faza 4 wstrzymana — decyzja usera 2026-09-08: „wszystko lokalnie"
+
+Nic nie zostało opublikowane ani wypchnięte z tego repo. Stan:
+
+- `mvn deploy` **nie padał** — w GitHub Packages nadal jest tylko 5.0 i 6.0;
+- tagu `v7.0` **nie zakładam** — tag wskazywałby wydanie, którego nie ma;
+- gałąź `jdk17` żyje **wyłącznie lokalnie**, z trzema commitami (fazy 1-3);
+- sześć artefaktów 7.0 leży w `~/.m2` i tyle wystarczy, żeby budować przeciw nim lokalnie
+  (`hac` już to zrobił: 372 testy zielone).
+
+Do wznowienia zostaje sama faza 4 z `plan.md`: deploy, tag `v7.0`, push gałęzi i tagu,
+a potem przeniesienie folderu ticketu na `mastera` (gałąź nie wchodzi do niego merge'em).

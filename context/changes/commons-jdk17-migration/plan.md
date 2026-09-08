@@ -393,29 +393,29 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [x] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`)
-- [x] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`)
-- [x] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8
+- [x] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`) — 6ea9834
+- [x] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`) — 6ea9834
+- [x] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8 — 6ea9834
 
 #### Manual
 
-- [x] 2.4 Podbite wersje wypisane w `change.md` z powodem
-- [x] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x
+- [x] 2.4 Podbite wersje wypisane w `change.md` z powodem — 6ea9834
+- [x] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x — 6ea9834
 
 ### Phase 3: Wersja 7.0 i dowód u konsumenta
 
 #### Automated
 
-- [ ] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/`
-- [ ] 3.2 Build commons zielony po podbiciu wersji
-- [ ] 3.3 Build haca przeciw 7.0 przechodzi
-- [ ] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste)
+- [x] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/` — a668254
+- [x] 3.2 Build commons zielony po podbiciu wersji — a668254
+- [x] 3.3 Build haca przeciw 7.0 przechodzi — a668254
+- [x] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste) — a668254
 
 #### Manual
 
-- [ ] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku
-- [ ] 3.6 Potwierdzone, że nic nie zostało wydane
-- [ ] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK
+- [x] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku — a668254
+- [x] 3.6 Potwierdzone, że nic nie zostało wydane — a668254
+- [x] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK — nie dotyczy, hac przeszedł — a668254
 
 ### Phase 4: Wydanie 7.0 i ślad po nim
 
