@@ -213,3 +213,16 @@ Search 5.5.4 i Lucene 5.3.1 **bez zmian**.
 `master` został nietknięty: wersja 6.0, `maven.compiler.source/target` 1.8. Linia 6.x dalej
 obsługuje `hop`, `portal` i `importer`; `hac` stoi na 5.0. Żadne repo konsumujące nie zostało
 podbite do 7.0 — to osobna decyzja, poza tym ticketem.
+
+## CI gałęzi `jdk17` — poprawione 2026-09-08 po wydaniu
+
+Build na GitHubie padał na każdym pushu do `jdk17`: `.github/workflows/build.yml` przypinał
+**JDK 8**, a javac z ósemki nie zna flagi `--release` (`invalid flag: --release`). Sam plik to
+przewidywał — komentarz mówił, że zmiana wersji JDK należy do tego ticketu.
+
+Na gałęzi `jdk17` oba workflow (`build.yml`, `publish.yml`) budują teraz na **JDK 17**;
+na `masterze` zostają na 8, bo linia 6.x to dalej kod Javy 8. Przebieg po poprawce: zielony.
+
+⚠️ Przebieg z tagu `v7.0` pozostaje czerwony w historii Actions — tag wskazuje commit sprzed
+poprawki CI. Artefakty 7.0 poszły z lokalnej maszyny, nie z tego workflow, więc na wydanie
+to nie wpływa.
