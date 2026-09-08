@@ -1,7 +1,7 @@
 ---
 change_id: commons-jdk17-migration
 title: Migracja homeportal.commons z Javy 8 na 17 — osobna linia 7.0, bo konsument na 8 nie odczyta bajtkodu 17; wydanie z gałęzi `jdk17`, bez merge'a do mastera
-status: planned
+status: implementing
 created: 2026-08-01
 updated: 2026-09-08
 archived_at: null
@@ -112,3 +112,30 @@ niezgodności bajtkodu i refleksji wychodzą przy starcie kontekstu, nie przy ko
 
 [[hop-jdk17-migration]], [[hp-jdk17-migration]], [[importer-jdk17-migration]] — trzy aplikacje
 do przeniesienia na 17; ten ticket wchodzi **po nich**, nie przed.
+
+## Zmierzone na 17 — faza 1 (2026-09-08)
+
+Branch `jdk17`, `maven.compiler.release` = 17, Lombok 1.16.14 → **1.18.30**, JDK 17.0.7,
+Maven 3.5.0.
+
+- **Kompilacja: przechodzi w komplecie.** `mvn clean install -DskipTests` — wszystkie sześć
+  modułów SUCCESS, `javap` na wyjściu pokazuje `major version: 61`. Lombok po podbiciu nie
+  zgłasza nic; poza nim nie pękł ani jeden plik. 24 linie `javax.*` nie wymagały ruchu, zgodnie
+  z przewidywaniem.
+- **Testy: 59 uruchomionych, 9 błędów, wszystkie w jednym miejscu** —
+  `FullTextRepositoryIntegrationTest` w module `data`, każdy z tym samym powodem:
+
+  ```
+  java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+      at FullTextRepositoryIntegrationTest.setUp(FullTextRepositoryIntegrationTest.java:83)
+  ```
+
+⚠️ **Przyczyna jest inna, niż zakładał plan.** To nie javassist ani wersja Hibernate, tylko
+**JAXB usunięty z JDK w Javie 11** (JEP 320). Hibernate 5.0 potrzebuje go do bootstrapu
+`EntityManagerFactory`, a na Javie 8 dostawał go z JDK za darmo. Lekarstwem jest dodanie
+zależności JAXB, nie podbicie Hibernate — zakres fazy 2 do skorygowania.
+
+⚠️ **Uboczny skutek do posprzątania:** build na branchu zainstalował do `~/.m2` artefakty
+**6.0 z bajtkodem 17**. Dopóki nie odtworzymy tam prawdziwego 6.0 (przebudowa z `mastera`
+na JDK 8), lokalny build `hop`/`portal`/`importer` na ósemce wywali się na
+`UnsupportedClassVersionError`.

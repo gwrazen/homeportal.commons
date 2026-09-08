@@ -379,15 +379,15 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [ ] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera`
-- [ ] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`)
-- [ ] 1.3 `javap -verbose` pokazuje `major version: 61`
-- [ ] 1.4 `master` nietknięty (`git diff master --stat`)
+- [x] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera`
+- [x] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`)
+- [x] 1.3 `javap -verbose` pokazuje `major version: 61`
+- [x] 1.4 `master` nietknięty (`git diff master --stat`)
 
 #### Manual
 
-- [ ] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md`
-- [ ] 1.6 Lista błędów nie zawiera już nic od Lomboka
+- [x] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md`
+- [x] 1.6 Lista błędów nie zawiera już nic od Lomboka
 
 ### Phase 2: Moduł `data` na zielono
 
