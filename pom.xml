@@ -30,6 +30,12 @@
         <commons.email.version>1.2</commons.email.version>
         <javax.mail.version>1.5.6</javax.mail.version>
         <lombok.version>1.18.30</lombok.version>
+        <!-- JAXB wylecial z JDK w Javie 11 (JEP 320), a Hibernate 5 potrzebuje go do bootstrapu.
+             Linia 2.3.x jest ostatnia w pakiecie javax.xml.bind - 3.x to juz jakarta.*. -->
+        <jaxb.version>2.3.1</jaxb.version>
+        <!-- javassist 3.18 definiuje klasy przez ClassLoader.defineClass, co JPMS blokuje od Javy 16.
+             Nowsza linia robi to przez MethodHandles.Lookup. -->
+        <javassist.version>3.29.2-GA</javassist.version>
         <hibernate.core.version>5.0.10.Final</hibernate.core.version>
         <hibernate.entitymanager.version>5.0.10.Final</hibernate.entitymanager.version>
         <hibernate.search.orm.version>5.5.4.Final</hibernate.search.orm.version>
@@ -147,6 +153,24 @@
                 <!-- Procesor adnotacji dziala tylko przy kompilacji; provided trzyma
                      go poza runtime classpath konsumenta. -->
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
             </dependency>
 
             <dependency>

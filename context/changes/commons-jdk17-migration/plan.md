@@ -379,28 +379,28 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [x] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera`
-- [x] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`)
-- [x] 1.3 `javap -verbose` pokazuje `major version: 61`
-- [x] 1.4 `master` nietknięty (`git diff master --stat`)
+- [x] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera` — 6dbde31
+- [x] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`) — 6dbde31
+- [x] 1.3 `javap -verbose` pokazuje `major version: 61` — 6dbde31
+- [x] 1.4 `master` nietknięty (`git diff master --stat`) — 6dbde31
 
 #### Manual
 
-- [x] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md`
-- [x] 1.6 Lista błędów nie zawiera już nic od Lomboka
+- [x] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md` — 6dbde31
+- [x] 1.6 Lista błędów nie zawiera już nic od Lomboka — 6dbde31
 
 ### Phase 2: Moduł `data` na zielono
 
 #### Automated
 
-- [ ] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`)
-- [ ] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`)
-- [ ] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8
+- [x] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`)
+- [x] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`)
+- [x] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8
 
 #### Manual
 
-- [ ] 2.4 Podbite wersje wypisane w `change.md` z powodem
-- [ ] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x
+- [x] 2.4 Podbite wersje wypisane w `change.md` z powodem
+- [x] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x
 
 ### Phase 3: Wersja 7.0 i dowód u konsumenta
 

@@ -139,3 +139,25 @@ zależności JAXB, nie podbicie Hibernate — zakres fazy 2 do skorygowania.
 **6.0 z bajtkodem 17**. Dopóki nie odtworzymy tam prawdziwego 6.0 (przebudowa z `mastera`
 na JDK 8), lokalny build `hop`/`portal`/`importer` na ósemce wywali się na
 `UnsupportedClassVersionError`.
+
+## Faza 2 — moduł `data` na zielono (2026-09-08)
+
+Dwie zależności, zero podbić Hibernate. Pełny `mvn clean install` na JDK 17: **BUILD SUCCESS**,
+139 testów (59 `java` / 15 `domain` / 59 `data` / 4 `logging` / 2 `mail`), zero wyciszeń.
+
+| co | z czego | na co | po co |
+|---|---|---|---|
+| JAXB | brak | `javax.xml.bind:jaxb-api` + `org.glassfish.jaxb:jaxb-runtime` **2.3.1** | JEP 320 wyrzucił JAXB z JDK w Javie 11, a Hibernate potrzebuje go do bootstrapu |
+| javassist | 3.18.1-GA (tranzytywnie z Hibernate 5.0.10) | **3.29.2-GA** | 3.18 definiuje klasy przez `ClassLoader.defineClass`, co JPMS blokuje od Javy 16 |
+
+⚠️ **Hibernate ORM (5.0.10), Search (5.5.4) i Lucene (5.3.1) zostały nietknięte.** Plan
+przewidywał ich podbicie — okazało się niepotrzebne, bo problem siedział wyłącznie w javassiście.
+To jest istotne dla konsumentów: 7.0 nie zmienia im wersji Hibernate ani Lucene'a.
+
+JAXB wchodzi w zasięgu `compile` (api) i `runtime` (impl), czyli **jedzie tranzytywnie do
+konsumentów** — decyzja usera 2026-09-08: `commons-data` daje im Hibernate, więc powinno dawać
+też to, czego Hibernate potrzebuje na 17.
+
+**Baseline z JDK 8 na `masterze`: identyczny** — 59/15/59/4/2, BUILD SUCCESS. Liczba testów nie
+spadła. Przy okazji odtworzone w `~/.m2` prawdziwe 6.0 (bajtkod 52), więc lokalne buildy
+`hop`/`portal`/`importera` na ósemce znów działają.
