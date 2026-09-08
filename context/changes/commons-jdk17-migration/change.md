@@ -1,9 +1,9 @@
 ---
 change_id: commons-jdk17-migration
-title: Migracja homeportal.commons z Javy 8 na 17 — biblioteka idzie OSTATNIA, bo konsument na 8 nie odczyta bajtkodu 17; całość na osobnym branchu, bez merge'a
-status: new
+title: Migracja homeportal.commons z Javy 8 na 17 — osobna linia 7.0, bo konsument na 8 nie odczyta bajtkodu 17; wydanie z gałęzi `jdk17`, bez merge'a do mastera
+status: planned
 created: 2026-08-01
-updated: 2026-08-29
+updated: 2026-09-08
 archived_at: null
 ---
 
@@ -18,6 +18,32 @@ artefaktu z tej gałęzi. Przy bibliotece to zastrzeżenie waży więcej niż pr
 artefakt trafia do czterech repozytoriów naraz i nie da się go cofnąć jednym `revert`.
 
 Treść dopisana 2026-08-21 (ticket założony 2026-08-01 jako sam tytuł, bez ustaleń).
+
+## ⚠️ Zmiana decyzji 2026-09-08: artefakt WYDAJEMY, pod podbitą wersją
+
+User: „artefakt wydajemy ale wersje bumped". To znosi zapis „żadnego wydania artefaktu"
+powyżej — zostaje w mocy tylko część o braku merge'a do `mastera`.
+
+- linia **7.0** na JDK 17, linia **6.x** zostaje na `masterze` dla konsumentów na Javie 8;
+- gałąź nazywa się **`jdk17`** (nie `feat/commons-jdk17`) — decyzja usera 2026-09-08,
+  zgodnie z konwencją gałęzi w tym repo (`commons-refactoring`, `development`);
+- wydanie znaczone anotowanym tagiem `v7.0`, bo gałąź nie wchodzi do `mastera`.
+
+**Warunek wejścia z sekcji niżej przestaje obowiązywać.** Nie trzeba czekać, aż wszystkie
+cztery repa będą na 17: każdy konsument pinuje własną właściwość `homeportal.commons.version`
+i nie zobaczy 7.0, dopóki sam jej nie podbije.
+
+**Korekta pomiaru konsumentów (2026-09-08).** Tabela niżej mówi o `commons-java` i
+`commons-logging` — realnie konsumowanych jest **5 z 6 modułów**, a `hac` pinuje **5.0**, nie 6.0:
+
+| repo | pinuje | moduły |
+|---|---|---|
+| `hac` | 5.0 | `java`, `logging` |
+| `hop` | 6.0 | `java`, `data`, `logging` |
+| `portal` | 6.0 | `java`, `data`, `logging`, `mail`, `test` |
+| `importer` | 6.0 | `java`, `data`, `logging`, `mail` |
+
+Plan: `plan.md` (skrót w `plan-brief.md`).
 
 ⚠️ **Przemianowany 2026-08-29 z `jdk17-migration` na `commons-jdk17-migration`** — na życzenie
 usera, dla zgodności z bliźniakami w pozostałych repach (`hp-jdk17-migration`,
