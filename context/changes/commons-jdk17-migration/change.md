@@ -1,7 +1,7 @@
 ---
 change_id: commons-jdk17-migration
 title: Migracja homeportal.commons z Javy 8 na 17 — osobna linia 7.0, bo konsument na 8 nie odczyta bajtkodu 17; wydanie z gałęzi `jdk17`, bez merge'a do mastera
-status: implementing
+status: implemented
 created: 2026-08-01
 updated: 2026-09-08
 archived_at: null
@@ -181,7 +181,7 @@ ticketach. `spy` pominięty — projekt Pythonowy, nie ma artefaktu Mavena.
 
 Numer **7.0 zostaje** — decyzja usera po rozważeniu mylącej zbieżności z „Javą 1.7".
 
-## Faza 4 wstrzymana — decyzja usera 2026-09-08: „wszystko lokalnie"
+## ~~Faza 4 wstrzymana~~ — cofnięte tego samego dnia (patrz „Wydanie" niżej)
 
 Nic nie zostało opublikowane ani wypchnięte z tego repo. Stan:
 
@@ -193,3 +193,23 @@ Nic nie zostało opublikowane ani wypchnięte z tego repo. Stan:
 
 Do wznowienia zostaje sama faza 4 z `plan.md`: deploy, tag `v7.0`, push gałęzi i tagu,
 a potem przeniesienie folderu ticketu na `mastera` (gałąź nie wchodzi do niego merge'em).
+
+## Wydanie 7.0 — 2026-09-08
+
+User cofnął wstrzymanie („mozesz wydac 7.0"). Opublikowane i otagowane:
+
+| co | wartość |
+|---|---|
+| commit wydania | **645f5f0** (gałąź `jdk17`) |
+| tag | **`v7.0`**, anotowany, na origin |
+| artefakty | `homeportal-commons-{java,domain,data,mail,logging,test}:7.0` + `-sources` |
+| repozytorium | `https://maven.pkg.github.com/gwrazen/homeportal.commons` |
+| weryfikacja | `dependency:get` do czystego `maven.repo.local` ściąga jar, `javap` → `major version: 61` |
+
+Podbite zależności w 7.0 wobec 6.0: Lombok 1.16.14 → 1.18.30, javassist 3.18.1-GA → 3.29.2-GA
+(tranzytywny), plus **nowe** `jaxb-api` i `jaxb-runtime` 2.3.1. Hibernate ORM 5.0.10,
+Search 5.5.4 i Lucene 5.3.1 **bez zmian**.
+
+`master` został nietknięty: wersja 6.0, `maven.compiler.source/target` 1.8. Linia 6.x dalej
+obsługuje `hop`, `portal` i `importer`; `hac` stoi na 5.0. Żadne repo konsumujące nie zostało
+podbite do 7.0 — to osobna decyzja, poza tym ticketem.

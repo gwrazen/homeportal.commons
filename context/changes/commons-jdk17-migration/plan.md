@@ -421,14 +421,14 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [ ] 4.1 `mvn dependency:get` ściąga `homeportal-commons-java:7.0`
-- [ ] 4.2 Pobrany jar ma `major version: 61`
-- [ ] 4.3 Tag `v7.0` jest na origin
-- [ ] 4.4 Gałąź `jdk17` jest na origin
-- [ ] 4.5 `master` nadal na wersji 6.0
+- [x] 4.1 `mvn dependency:get` ściąga `homeportal-commons-java:7.0`
+- [x] 4.2 Pobrany jar ma `major version: 61`
+- [x] 4.3 Tag `v7.0` jest na origin
+- [x] 4.4 Gałąź `jdk17` jest na origin
+- [x] 4.5 `master` nadal na wersji 6.0
 
 #### Manual
 
-- [ ] 4.6 Sześć artefaktów widocznych w GitHub Packages
-- [ ] 4.7 `change.md` uzupełniony o sekcję „Wydanie", status `implemented`
-- [ ] 4.8 Zero commitów z tej pracy w `hac`, `hop`, `portal`, `importer`
+- [x] 4.6 Sześć artefaktów widocznych w GitHub Packages — potwierdzone uploadem i pobraniem, nie widokiem w UI
+- [x] 4.7 `change.md` uzupełniony o sekcję „Wydanie", status `implemented`
+- [x] 4.8 Zero commitów z tej pracy w `hac`, `hop`, `portal`, `importer` — poza poprawką akapitu w ich ticketach, zamówioną osobno
