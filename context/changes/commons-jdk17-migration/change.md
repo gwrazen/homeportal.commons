@@ -1,7 +1,7 @@
 ---
 change_id: commons-jdk17-migration
 title: Migracja homeportal.commons z Javy 8 na 17 — osobna linia 7.0, bo konsument na 8 nie odczyta bajtkodu 17; wydanie z gałęzi `jdk17`, bez merge'a do mastera
-status: planned
+status: implemented
 created: 2026-08-01
 updated: 2026-09-08
 archived_at: null
@@ -112,3 +112,104 @@ niezgodności bajtkodu i refleksji wychodzą przy starcie kontekstu, nie przy ko
 
 [[hop-jdk17-migration]], [[hp-jdk17-migration]], [[importer-jdk17-migration]] — trzy aplikacje
 do przeniesienia na 17; ten ticket wchodzi **po nich**, nie przed.
+
+## Zmierzone na 17 — faza 1 (2026-09-08)
+
+Branch `jdk17`, `maven.compiler.release` = 17, Lombok 1.16.14 → **1.18.30**, JDK 17.0.7,
+Maven 3.5.0.
+
+- **Kompilacja: przechodzi w komplecie.** `mvn clean install -DskipTests` — wszystkie sześć
+  modułów SUCCESS, `javap` na wyjściu pokazuje `major version: 61`. Lombok po podbiciu nie
+  zgłasza nic; poza nim nie pękł ani jeden plik. 24 linie `javax.*` nie wymagały ruchu, zgodnie
+  z przewidywaniem.
+- **Testy: 59 uruchomionych, 9 błędów, wszystkie w jednym miejscu** —
+  `FullTextRepositoryIntegrationTest` w module `data`, każdy z tym samym powodem:
+
+  ```
+  java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+      at FullTextRepositoryIntegrationTest.setUp(FullTextRepositoryIntegrationTest.java:83)
+  ```
+
+⚠️ **Przyczyna jest inna, niż zakładał plan.** To nie javassist ani wersja Hibernate, tylko
+**JAXB usunięty z JDK w Javie 11** (JEP 320). Hibernate 5.0 potrzebuje go do bootstrapu
+`EntityManagerFactory`, a na Javie 8 dostawał go z JDK za darmo. Lekarstwem jest dodanie
+zależności JAXB, nie podbicie Hibernate — zakres fazy 2 do skorygowania.
+
+⚠️ **Uboczny skutek do posprzątania:** build na branchu zainstalował do `~/.m2` artefakty
+**6.0 z bajtkodem 17**. Dopóki nie odtworzymy tam prawdziwego 6.0 (przebudowa z `mastera`
+na JDK 8), lokalny build `hop`/`portal`/`importer` na ósemce wywali się na
+`UnsupportedClassVersionError`.
+
+## Faza 2 — moduł `data` na zielono (2026-09-08)
+
+Dwie zależności, zero podbić Hibernate. Pełny `mvn clean install` na JDK 17: **BUILD SUCCESS**,
+139 testów (59 `java` / 15 `domain` / 59 `data` / 4 `logging` / 2 `mail`), zero wyciszeń.
+
+| co | z czego | na co | po co |
+|---|---|---|---|
+| JAXB | brak | `javax.xml.bind:jaxb-api` + `org.glassfish.jaxb:jaxb-runtime` **2.3.1** | JEP 320 wyrzucił JAXB z JDK w Javie 11, a Hibernate potrzebuje go do bootstrapu |
+| javassist | 3.18.1-GA (tranzytywnie z Hibernate 5.0.10) | **3.29.2-GA** | 3.18 definiuje klasy przez `ClassLoader.defineClass`, co JPMS blokuje od Javy 16 |
+
+⚠️ **Hibernate ORM (5.0.10), Search (5.5.4) i Lucene (5.3.1) zostały nietknięte.** Plan
+przewidywał ich podbicie — okazało się niepotrzebne, bo problem siedział wyłącznie w javassiście.
+To jest istotne dla konsumentów: 7.0 nie zmienia im wersji Hibernate ani Lucene'a.
+
+JAXB wchodzi w zasięgu `compile` (api) i `runtime` (impl), czyli **jedzie tranzytywnie do
+konsumentów** — decyzja usera 2026-09-08: `commons-data` daje im Hibernate, więc powinno dawać
+też to, czego Hibernate potrzebuje na 17.
+
+**Baseline z JDK 8 na `masterze`: identyczny** — 59/15/59/4/2, BUILD SUCCESS. Liczba testów nie
+spadła. Przy okazji odtworzone w `~/.m2` prawdziwe 6.0 (bajtkod 52), więc lokalne buildy
+`hop`/`portal`/`importera` na ósemce znów działają.
+
+## Faza 3 — wersja 7.0 i dowód u konsumenta (2026-09-08)
+
+- Reaktor podbity `6.0` → **7.0** (root + sześć modułów), `mvn clean install` na 17 zielony.
+- Sześć artefaktów 7.0 leży w `~/.m2`; `javap` na 7.0 → `major version: 61`, na 6.0 → `52`.
+- **`hac` zbudowany przeciw 7.0 z pełnym kompletem testów: BUILD SUCCESS**, wszystkie moduły,
+  372 testy bez błędu — w tym testy podnoszące kontekst Spring Boota. Zmiana
+  `homeportal.commons.version` 5.0 → 7.0 w `hac/pom.xml` była tymczasowa i została **cofnięta**
+  (`git checkout -- pom.xml`, drzewo haca czyste).
+- Skok 5.0 → 7.0 przeszedł od razu, więc kontrolny build przeciw 6.0 okazał się niepotrzebny.
+
+## Gałęzie `jdk17` w pozostałych repach (2026-09-08)
+
+Na życzenie usera założone gałęzie `jdk17` (odbite od `mastera`, wypchnięte na `origin`)
+w `hac`, `hop`, `portal` i `importer` — **bez podbijania tam wersji**: te repa nie stoją jeszcze
+na 17, więc numer mówiący o platformie byłby nieprawdą. Wersję podbija się w ich własnych
+ticketach. `spy` pominięty — projekt Pythonowy, nie ma artefaktu Mavena.
+
+Numer **7.0 zostaje** — decyzja usera po rozważeniu mylącej zbieżności z „Javą 1.7".
+
+## ~~Faza 4 wstrzymana~~ — cofnięte tego samego dnia (patrz „Wydanie" niżej)
+
+Nic nie zostało opublikowane ani wypchnięte z tego repo. Stan:
+
+- `mvn deploy` **nie padał** — w GitHub Packages nadal jest tylko 5.0 i 6.0;
+- tagu `v7.0` **nie zakładam** — tag wskazywałby wydanie, którego nie ma;
+- gałąź `jdk17` żyje **wyłącznie lokalnie**, z trzema commitami (fazy 1-3);
+- sześć artefaktów 7.0 leży w `~/.m2` i tyle wystarczy, żeby budować przeciw nim lokalnie
+  (`hac` już to zrobił: 372 testy zielone).
+
+Do wznowienia zostaje sama faza 4 z `plan.md`: deploy, tag `v7.0`, push gałęzi i tagu,
+a potem przeniesienie folderu ticketu na `mastera` (gałąź nie wchodzi do niego merge'em).
+
+## Wydanie 7.0 — 2026-09-08
+
+User cofnął wstrzymanie („mozesz wydac 7.0"). Opublikowane i otagowane:
+
+| co | wartość |
+|---|---|
+| commit wydania | **645f5f0** (gałąź `jdk17`) |
+| tag | **`v7.0`**, anotowany, na origin |
+| artefakty | `homeportal-commons-{java,domain,data,mail,logging,test}:7.0` + `-sources` |
+| repozytorium | `https://maven.pkg.github.com/gwrazen/homeportal.commons` |
+| weryfikacja | `dependency:get` do czystego `maven.repo.local` ściąga jar, `javap` → `major version: 61` |
+
+Podbite zależności w 7.0 wobec 6.0: Lombok 1.16.14 → 1.18.30, javassist 3.18.1-GA → 3.29.2-GA
+(tranzytywny), plus **nowe** `jaxb-api` i `jaxb-runtime` 2.3.1. Hibernate ORM 5.0.10,
+Search 5.5.4 i Lucene 5.3.1 **bez zmian**.
+
+`master` został nietknięty: wersja 6.0, `maven.compiler.source/target` 1.8. Linia 6.x dalej
+obsługuje `hop`, `portal` i `importer`; `hac` stoi na 5.0. Żadne repo konsumujące nie zostało
+podbite do 7.0 — to osobna decyzja, poza tym ticketem.

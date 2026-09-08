@@ -379,56 +379,56 @@ nie wpisze go w swoim `pom.xml`. „Rollback" tej zmiany to po prostu niepodbija
 
 #### Automated
 
-- [ ] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera`
-- [ ] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`)
-- [ ] 1.3 `javap -verbose` pokazuje `major version: 61`
-- [ ] 1.4 `master` nietknięty (`git diff master --stat`)
+- [x] 1.1 Gałąź `jdk17` istnieje i wychodzi z `mastera` — 6dbde31
+- [x] 1.2 Kompilacja sześciu modułów na 17 przechodzi (`mvn clean install -DskipTests`) — 6dbde31
+- [x] 1.3 `javap -verbose` pokazuje `major version: 61` — 6dbde31
+- [x] 1.4 `master` nietknięty (`git diff master --stat`) — 6dbde31
 
 #### Manual
 
-- [ ] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md`
-- [ ] 1.6 Lista błędów nie zawiera już nic od Lomboka
+- [x] 1.5 Pełny `mvn clean install` na 17 odpalony, wynik spisany w `change.md` — 6dbde31
+- [x] 1.6 Lista błędów nie zawiera już nic od Lomboka — 6dbde31
 
 ### Phase 2: Moduł `data` na zielono
 
 #### Automated
 
-- [ ] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`)
-- [ ] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`)
-- [ ] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8
+- [x] 2.1 Pełny build z testami przechodzi na 17 (`mvn clean install`) — 6ea9834
+- [x] 2.2 Żaden test nie wyciszony (`grep` na `@Ignore` / `skipTests` / `<excludes>`) — 6ea9834
+- [x] 2.3 Liczba uruchomionych testów nie spadła wobec buildu na JDK 8 — 6ea9834
 
 #### Manual
 
-- [ ] 2.4 Podbite wersje wypisane w `change.md` z powodem
-- [ ] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x
+- [x] 2.4 Podbite wersje wypisane w `change.md` z powodem — 6ea9834
+- [x] 2.5 Potwierdzone, że nie wyszliśmy poza linię Hibernate 5.x — 6ea9834
 
 ### Phase 3: Wersja 7.0 i dowód u konsumenta
 
 #### Automated
 
-- [ ] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/`
-- [ ] 3.2 Build commons zielony po podbiciu wersji
-- [ ] 3.3 Build haca przeciw 7.0 przechodzi
-- [ ] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste)
+- [x] 3.1 Sześć artefaktów 7.0 w `~/.m2/repository/pl/homeportal/` — 66dcb3a
+- [x] 3.2 Build commons zielony po podbiciu wersji — 66dcb3a
+- [x] 3.3 Build haca przeciw 7.0 przechodzi — 66dcb3a
+- [x] 3.4 `hac/pom.xml` wrócił do stanu z repo (`git status --short` puste) — 66dcb3a
 
 #### Manual
 
-- [ ] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku
-- [ ] 3.6 Potwierdzone, że nic nie zostało wydane
-- [ ] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK
+- [x] 3.5 Hac wstaje lokalnie przeciw 7.0 — kontekst bez wyjątku — 66dcb3a
+- [x] 3.6 Potwierdzone, że nic nie zostało wydane — 66dcb3a
+- [x] 3.7 (jeśli hac padł) kontrolny build przeciw 6.0 odróżnił rozjazd API od problemu z JDK — nie dotyczy, hac przeszedł — 66dcb3a
 
 ### Phase 4: Wydanie 7.0 i ślad po nim
 
 #### Automated
 
-- [ ] 4.1 `mvn dependency:get` ściąga `homeportal-commons-java:7.0`
-- [ ] 4.2 Pobrany jar ma `major version: 61`
-- [ ] 4.3 Tag `v7.0` jest na origin
-- [ ] 4.4 Gałąź `jdk17` jest na origin
-- [ ] 4.5 `master` nadal na wersji 6.0
+- [x] 4.1 `mvn dependency:get` ściąga `homeportal-commons-java:7.0`
+- [x] 4.2 Pobrany jar ma `major version: 61`
+- [x] 4.3 Tag `v7.0` jest na origin
+- [x] 4.4 Gałąź `jdk17` jest na origin
+- [x] 4.5 `master` nadal na wersji 6.0
 
 #### Manual
 
-- [ ] 4.6 Sześć artefaktów widocznych w GitHub Packages
-- [ ] 4.7 `change.md` uzupełniony o sekcję „Wydanie", status `implemented`
-- [ ] 4.8 Zero commitów z tej pracy w `hac`, `hop`, `portal`, `importer`
+- [x] 4.6 Sześć artefaktów widocznych w GitHub Packages — potwierdzone uploadem i pobraniem, nie widokiem w UI
+- [x] 4.7 `change.md` uzupełniony o sekcję „Wydanie", status `implemented`
+- [x] 4.8 Zero commitów z tej pracy w `hac`, `hop`, `portal`, `importer` — poza poprawką akapitu w ich ticketach, zamówioną osobno
