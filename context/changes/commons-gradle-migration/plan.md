@@ -615,10 +615,10 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [x] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu — przebieg 34405952456
-- [x] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check` — **nie dotyczy: decyzja o niewydawaniu zniosla wersje kontrolna**
-- [x] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium — **nie dotyczy, jak wyzej**
-- [x] 5.4 W rejestrze nie ma niczego pod `7.1` — rejestr ma 7.0 / 6.0 / 5.0
+- [x] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu — przebieg 34405952456 — 9dce6e4
+- [x] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check` — **nie dotyczy: decyzja o niewydawaniu zniosla wersje kontrolna** — 9dce6e4
+- [x] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium — **nie dotyczy, jak wyzej** — 9dce6e4
+- [x] 5.4 W rejestrze nie ma niczego pod `7.1` — rejestr ma 7.0 / 6.0 / 5.0 — 9dce6e4
 
 #### Manual
 
