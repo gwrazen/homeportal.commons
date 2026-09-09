@@ -1,0 +1,16 @@
+# Baseline testow commons 7.0 (galaz jdk17)
+# Pomiar: 2026-09-09, JDK 17.0.7, mvn -B -o clean test -> BUILD SUCCESS
+# UWAGA: zliczanie z kodu WYLACZNIE przez 'grep -a'. StringUtilsTest.java ma znaki spoza
+#        ASCII, wiec BSD grep bez -a uznaje plik za binarny i cicho go pomija (133 zamiast 139).
+
+modul         klasy    @Test surefire
+java             13       59       59
+domain            3       15       15
+data              9       59       59
+mail              1        2        2
+logging           1        4        4
+test              0        0        0
+
+RAZEM: 27 klas / 139 testow (surefire)
+Rozklad bramkowy: java 59 / domain 15 / data 59 / logging 4 / mail 2 / test 0
+Zero wyciszen: grep -rn '@Ignore\|skipTests\|<excludes>' nie zwraca nic

@@ -1,7 +1,7 @@
 ---
 change_id: commons-gradle-migration
 title: Przejście commons z Mavena na Gradle'a — biblioteka publikowana do GitHub Packages, nie wdrażana
-status: planned
+status: implementing
 created: 2026-08-29
 updated: 2026-09-09
 archived_at: null
@@ -48,3 +48,43 @@ Stąd `/10x-frame` przed `/10x-plan`.
 Prefiks `commons-` jest tu konwencją: tak nazywa się zarchiwizowany `commons-refactoring`
 i tak nazywają się bliźniaki w pozostałych repach. Otwarty ticket migracyjny, który stał bez
 prefiksu, został **przemianowany 2026-08-29 na `commons-jdk17-migration`**.
+
+## Baseline fazy 1 (zmierzony 2026-09-09)
+
+Pomiar wykonany **przed** jakąkolwiek zmianą w buildzie. Pliki referencyjne leżą w
+`context/changes/commons-gradle-migration/baseline/`.
+
+| co | wynik |
+|---|---|
+| `deps-portal.txt` | 1123 linie, 30 wpisów `homeportal-commons-*:7.0`, BUILD SUCCESS |
+| `deps-hac.txt` | 993 linie, 18 wpisów, BUILD SUCCESS |
+| `deps-importer.txt` | 1082 linie, 34 wpisy, BUILD SUCCESS |
+| `jar-paths.txt` | sześć modułów; pliki 34 / 19 / 25 / 21 / 3 / 3, z tego `.class` **32 / 17 / 23 / 8 / 1 / 1** |
+| szablony `mail/*.vm` | **11** |
+| `-sources.jar` | 6 z 6 |
+| `mvn -B -o clean test` (jdk17, JDK 17.0.7) | **BUILD SUCCESS**, **139 testów**: java 59 / domain 15 / data 59 / logging 4 / mail 2 / test 0 |
+| wyciszenia | zero (`@Ignore`, `skipTests`, `<excludes>` — brak trafień) |
+
+Zliczenie z kodu zgadza się z surefire co do modułu (27 klas / 139 metod).
+
+⚠️ **Pułapka pomiarowa potwierdzona empirycznie**: w module `-java` `grep -rc '@Test'` daje **53**,
+a `grep -rac` — **59**. `StringUtilsTest.java` ma znaki spoza ASCII, więc BSD grep uznaje go za plik
+binarny i cicho pomija. Każde zliczanie testów w tym tickecie idzie przez `grep -a`.
+
+### Stan repozytoriów w chwili pomiaru
+
+| repo | gałąź | HEAD | drzewo |
+|---|---|---|---|
+| `portal` | `jdk17` | `7f50f9786` | czyste |
+| `hac` | `commons-7-upgrade` | `0c71a1d` | czyste |
+| `importer` | `jdk17` | `399fa0e` | **4 zmienione pliki `.class` w `target/`** (śledzone przez gita, sprzed tej sesji) |
+
+Cztery pliki `.class` w importerze nie wpływają na `dependency:tree` — to artefakty builda, nie źródła
+ani pomy. Odnotowane, bo baseline ma mówić prawdę o warunkach pomiaru.
+
+### Uwaga o gałęzi
+
+Robota idzie na `jdk17` (decyzja usera 2026-09-09). Dokumenty ticketu przyjechały tu z `mastera`
+przez `cherry-pick` commita `d66bdda` (tutaj `47fbb6f`), więc **istnieją na obu gałęziach** —
+na `masterze` już wypchnięte, tu żyją dalej razem z robotą. Pomiar testów wykonany na `jdk17`
+w tymczasowym worktree, `mvn clean test` bez `install`, więc `~/.m2` pozostało nietknięte.

@@ -551,16 +551,16 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [ ] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0`
-- [ ] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm`
-- [ ] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów
-- [ ] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0
-- [ ] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu
+- [x] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0`
+- [x] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm`
+- [x] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów
+- [x] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0
+- [x] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu
 
 #### Manual
 
-- [ ] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md`
-- [ ] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie
+- [x] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md`
+- [x] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie
 
 ### Phase 2: Build Gradle bez publikacji
 
