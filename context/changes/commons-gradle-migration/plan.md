@@ -622,21 +622,21 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Manual
 
-- [ ] 5.5 Historia Actions bez czerwonych przebiegów po migracji
+- [x] 5.5 Historia Actions bez czerwonych przebiegów po migracji — ostatni przebieg zielony; dwa czerwone z 08.09 pochodza z ticketu commons-jdk17-migration — 9dce6e4
 
 ### Phase 6: Wydanie 7.1
 
 #### Automated
 
-- [x] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get` — **nie dotyczy: nic nie zostalo wydane**
-- [x] 6.2 `javap` na pobranym jarze pokazuje `major version: 61` — **nie dotyczy, jak wyzej**
-- [x] 6.3 Tag `v7.1` na origin — **nie dotyczy: bez wydania nie ma czego tagowac**
-- [x] 6.4 Gałąź `jdk17` wypchnięta — wypchnieta w fazie 5 (9dce6e4) i domkniecie fazy 6
-- [x] 6.5 `master` nadal na 6.0 — potwierdzone: `git show master:pom.xml` -> 6.0
-- [x] 6.6 Brak pomów na `jdk17`, siedem pomów na `master` — **buildowych pomow zero; zostaja dwa martwe moduly geo-api i location-api, spoza buildu**
+- [x] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get` — **nie dotyczy: nic nie zostalo wydane** — 8fb1ffa
+- [x] 6.2 `javap` na pobranym jarze pokazuje `major version: 61` — **nie dotyczy, jak wyzej** — 8fb1ffa
+- [x] 6.3 Tag `v7.1` na origin — **nie dotyczy: bez wydania nie ma czego tagowac** — 8fb1ffa
+- [x] 6.4 Gałąź `jdk17` wypchnięta — wypchnieta w fazie 5 (9dce6e4) i domkniecie fazy 6 — 8fb1ffa
+- [x] 6.5 `master` nadal na 6.0 — potwierdzone: `git show master:pom.xml` -> 6.0 — 8fb1ffa
+- [x] 6.6 Brak pomów na `jdk17`, siedem pomów na `master` — **buildowych pomow zero; zostaja dwa martwe moduly geo-api i location-api, spoza buildu** — 8fb1ffa
 
 #### Manual
 
-- [x] 6.7 Wyraźne „tak" usera przed publikacją — **nie dotyczy: publikacji nie bylo**
-- [x] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI — **nie dotyczy, jak wyzej**
-- [x] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych — `commons.md` przepisany, komendy sprawdzone
+- [x] 6.7 Wyraźne „tak" usera przed publikacją — **nie dotyczy: publikacji nie bylo** — 8fb1ffa
+- [x] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI — **nie dotyczy, jak wyzej** — 8fb1ffa
+- [x] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych — `commons.md` przepisany, komendy sprawdzone — 8fb1ffa
