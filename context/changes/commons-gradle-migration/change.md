@@ -133,3 +133,47 @@ w `build.gradle.kts` (lustro dzisiejszego `dependencyManagement`) plus dwie plat
 `spring-framework-bom:5.2.9.RELEASE` i `spring-data-releasetrain:Moore-SR10`. Trzy nadpisania
 tranzytywne (`javassist:3.29.2-GA`, `commons-io:2.6`, `commons-compress:1.0`) siedzą w tych samych
 `constraints` — ich skutek u konsumenta weryfikuje faza 4.
+
+## Faza 3 — metadane i publikacja do izolowanego stagingu (2026-09-09)
+
+Publikacja do `/tmp/commons-staging` (parametr `-PpublishRepoUrl`), rejestr nietknięty,
+`~/.m2` bez ani jednego pliku 7.1.
+
+| bramka | wynik |
+|---|---|
+| komplet artefaktów | 6 × jar + `-sources.jar` + pom, wersja 7.1 |
+| pliki `.module` | **0** (`GenerateModuleMetadata` wyłączone) |
+| zbiór zależności i scope'y | zgodne z baseline'em we wszystkich sześciu modułach |
+| wersje | zgodne co do numeru: Spring 5.2.9.RELEASE, Spring Data Moore-SR10, Hibernate 5.0.10.Final, Search 5.5.4.Final, Lucene 5.3.1, JAXB 2.3.1, xerces 2.12.2 |
+| nadpisania tranzytywne | `javassist:3.29.2-GA`, `commons-io:2.6`, `commons-compress:1.0` — w DM **każdego** modułu |
+| importy BOM | oba (`spring-framework-bom`, `spring-data-releasetrain`) w DM każdego modułu |
+| wpisy `provided` | `-java`: servlet-api, lombok · `-data`: lombok · `-mail`: commons-email, velocity, lombok · `-test`: spring-webmvc, spring-test |
+
+### Pom wyszedł wierniejszy, niż zakładał plan
+
+Plan mówił o „płaskich pomach z `constraints`". Gradle zapisał **całe `dependencyManagement`** —
+30 wpisów wersji plus **oba importy BOM ze `scope=import`** — do pomu każdego modułu. Mediacja wersji
+jest więc odtworzona co do mechanizmu, tylko samodzielnie: bez `<parent>`, bez potrzeby ściągania
+agregatora. Zależności w `<dependencies>` stoją bez wersji, dokładnie jak dziś.
+
+### ⚠️ `provided` musi być jawne, inaczej znaczy `compile`
+
+W opublikowanych pomach 7.0 `<scope>provided</scope>` widnieje **tylko** w `-mail` i `-test`.
+Lombok i `servlet-api` nie mają tam scope'u wcale — ich „provided" pochodzi z `dependencyManagement`
+rodzica. W pomie bez rodzica brak scope'u znaczy `compile`, więc lombok wjechałby konsumentom
+na runtime classpath. Rozwiązane osobną konfiguracją `provided` w `build.gradle.kts`, która
+wchodzi w `compileOnly` i `testImplementation`, a do pomu trafia przez `pom.withXml` z jawnym
+scope'em i wersją rozwiązaną z compile classpath.
+
+### Odstępstwo przyjęte świadomie: brak zależności testowych w pomie
+
+Gradle nie publikuje `testImplementation` w ogóle, więc w nowych pomach nie ma `junit`,
+`hamcrest-all`, `h2` ani `slf4j-simple` w `<dependencies>` (w `<dependencyManagement>` są).
+Maven **nie propaguje scope'u `test` tranzytywnie**, więc do drzewa portalu, haca ani importera
+te wpisy nigdy nie trafiały — skutek dla konsumenta zerowy. **Kryterium 3.3 obowiązuje dla
+zależności widocznych dla konsumenta** (`compile` / `runtime` / `provided`) — decyzja usera 2026-09-09.
+
+### Drobiazg wyłapany po drodze
+
+`provided("org.projectlombok:lombok")` bez wersji nie rozwiązywał się, bo w lustrze `constraints`
+brakowało wpisu na lomboka — w mavenowym `dependencyManagement` on jest. Dopisany.

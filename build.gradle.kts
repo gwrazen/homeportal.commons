@@ -42,6 +42,15 @@ subprojects {
         mavenCentral()
     }
 
+    // Maven's 'provided' has no Gradle equivalent: compileOnly is not published at all.
+    // This configuration carries those dependencies onto the compile and test classpaths
+    // AND into the published pom with an explicit scope (see pom.withXml below).
+    // The scope must be explicit here: today it is inherited from the parent pom's
+    // dependencyManagement, and a flat pom without it would mean 'compile'.
+    val provided = configurations.create("provided")
+    configurations.named("compileOnly") { extendsFrom(provided) }
+    configurations.named("testImplementation") { extendsFrom(provided) }
+
     extensions.configure<JavaPluginExtension> {
         toolchain {
             languageVersion = JavaLanguageVersion.of(17)
@@ -56,14 +65,15 @@ subprojects {
         add("api", platform("org.springframework:spring-framework-bom:$springBomVersion"))
         add("api", platform("org.springframework.data:spring-data-releasetrain:$springDataReleasetrainVersion"))
 
-        // Lombok is an annotation processor: two declarations, never on the runtime classpath.
-        // Test sources use it too (Maven's 'provided' covered them; Gradle needs its own pair).
-        add("compileOnly", "org.projectlombok:lombok:$lombokVersion")
+        // Lombok runs as an annotation processor everywhere; the modules that actually
+        // use it also declare it in the 'provided' configuration, so it reaches the pom.
+        // Test sources need their own pair - Maven's 'provided' covered both at once.
         add("annotationProcessor", "org.projectlombok:lombok:$lombokVersion")
         add("testCompileOnly", "org.projectlombok:lombok:$lombokVersion")
         add("testAnnotationProcessor", "org.projectlombok:lombok:$lombokVersion")
 
         constraints {
+            add("api", "org.projectlombok:lombok:$lombokVersion")
             add("api", "org.slf4j:slf4j-api:$slf4jVersion")
             add("api", "org.apache.commons:commons-lang3:$commonsLang3Version")
             add("api", "org.apache.velocity:velocity:$velocityVersion")
@@ -102,6 +112,56 @@ subprojects {
             add("api", "commons-io:commons-io:$commonsIoVersion")
             add("api", "org.apache.commons:commons-compress:$commonsCompressVersion")
         }
+    }
+
+    apply(plugin = "maven-publish")
+
+    extensions.configure<PublishingExtension> {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+                pom.withXml {
+                    val providedDeps = provided.allDependencies.filterIsInstance<ExternalDependency>()
+                    if (providedDeps.isNotEmpty()) {
+                        // Versions come from the compile classpath: the modules declare these
+                        // without one, exactly as the poms do.
+                        val resolved = configurations.getByName("compileClasspath")
+                            .incoming.resolutionResult.allComponents
+                            .mapNotNull { it.moduleVersion }
+                            .associate { "${it.group}:${it.name}" to it.version }
+                        val root = asNode()
+                        val depsNode = (root.get("dependencies") as groovy.util.NodeList)
+                            .filterIsInstance<groovy.util.Node>()
+                            .firstOrNull() ?: root.appendNode("dependencies")
+                        providedDeps.forEach { d ->
+                            val key = "${d.group}:${d.name}"
+                            val resolvedVersion = d.version
+                                ?: resolved[key]
+                                ?: error("No resolved version for provided dependency $key in ${project.name}")
+                            val node = depsNode.appendNode("dependency")
+                            node.appendNode("groupId", d.group)
+                            node.appendNode("artifactId", d.name)
+                            node.appendNode("version", resolvedVersion)
+                            node.appendNode("scope", "provided")
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "staging"
+                url = uri(
+                    providers.gradleProperty("publishRepoUrl").getOrElse("file:///tmp/commons-staging")
+                )
+            }
+        }
+    }
+
+    // Consumers are all Maven. A .module file would win over the pom for a Gradle
+    // consumer, so the registry gets exactly what it gets today: jar, sources, pom.
+    tasks.withType<GenerateModuleMetadata>().configureEach {
+        enabled = false
     }
 
     tasks.withType<JavaCompile>().configureEach {

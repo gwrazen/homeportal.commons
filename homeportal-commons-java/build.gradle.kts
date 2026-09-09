@@ -21,9 +21,8 @@ dependencies {
     api("org.glassfish.web:javax.el")
     api("xerces:xercesImpl")
 
-    // Maven scope 'provided': compile and test classpath, never the consumer's runtime.
-    compileOnly("javax.servlet:servlet-api")
-    testImplementation("javax.servlet:servlet-api")
+    provided("javax.servlet:servlet-api")
+    provided("org.projectlombok:lombok")
 
     testImplementation("junit:junit")
 }

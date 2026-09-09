@@ -566,33 +566,33 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [x] 2.1 `./gradlew build` przechodzi na JDK 17
-- [x] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0
-- [x] 2.3 Zero wyciszeń wobec baseline'u
-- [x] 2.4 `javap -verbose` pokazuje `major version: 61`
-- [x] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt` — **z pominięciem `META-INF/maven/**`, których Gradle nie generuje; zero innych różnic**
-- [x] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1
-- [x] 2.7 `mvn -B clean test` nadal zielony ze 139 testami
+- [x] 2.1 `./gradlew build` przechodzi na JDK 17 — a5c3b2b
+- [x] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0 — a5c3b2b
+- [x] 2.3 Zero wyciszeń wobec baseline'u — a5c3b2b
+- [x] 2.4 `javap -verbose` pokazuje `major version: 61` — a5c3b2b
+- [x] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt` — **z pominięciem `META-INF/maven/**`, których Gradle nie generuje; zero innych różnic** — a5c3b2b
+- [x] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1 — a5c3b2b
+- [x] 2.7 `mvn -B clean test` nadal zielony ze 139 testami — a5c3b2b
 
 #### Manual
 
-- [x] 2.8 Porównanie obu buildów odnotowane w `change.md`
+- [x] 2.8 Porównanie obu buildów odnotowane w `change.md` — a5c3b2b
 
 ### Phase 3: Metadane i publikacja do izolowanego stagingu
 
 #### Automated
 
-- [ ] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1
-- [ ] 3.2 Zero plików `.module`
-- [ ] 3.3 Scope'y w sześciu pomach zgodne z baseline'em
-- [ ] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach
-- [ ] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0
-- [ ] 3.6 Rozwiązane wersje zgodne z 7.0
-- [ ] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1
+- [x] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1
+- [x] 3.2 Zero plików `.module`
+- [x] 3.3 Scope'y w sześciu pomach zgodne z baseline'em — **dla zależności widocznych dla konsumenta; `test` Gradle nie publikuje w ogóle**
+- [x] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach
+- [x] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0
+- [x] 3.6 Rozwiązane wersje zgodne z 7.0
+- [x] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1
 
 #### Manual
 
-- [ ] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów
+- [x] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów
 
 ### Phase 4: Bramka u trzech konsumentów
 

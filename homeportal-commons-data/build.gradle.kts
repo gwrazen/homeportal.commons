@@ -15,6 +15,8 @@ dependencies {
     api("javax.xml.bind:jaxb-api")
     runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
 
+    provided("org.projectlombok:lombok")
+
     testImplementation("junit:junit")
     testImplementation("org.hamcrest:hamcrest-all")
     // In-memory database for the index<->query integration test. Loaded through
