@@ -598,27 +598,27 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [x] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi
-- [x] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1)
-- [x] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`)
-- [x] 4.4 javassist u konsumenta to 3.29.2-GA — **bezprzedmiotowe: javassist nie wystepuje w drzewie zadnego konsumenta; zweryfikowane w commons (3.18.1-GA -> 3.29.2-GA)**
-- [x] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta — **velocity w portalu to jego wlasna zaleznosc, compile przed i po; dowodem jest pusty diff**
-- [x] 4.6 Liczba testów u konsumentów nie spadła
-- [x] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów
+- [x] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi — 144791c
+- [x] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1) — 144791c
+- [x] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`) — 144791c
+- [x] 4.4 javassist u konsumenta to 3.29.2-GA — **bezprzedmiotowe: javassist nie wystepuje w drzewie zadnego konsumenta; zweryfikowane w commons (3.18.1-GA -> 3.29.2-GA)** — 144791c
+- [x] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta — **velocity w portalu to jego wlasna zaleznosc, compile przed i po; dowodem jest pusty diff** — 144791c
+- [x] 4.6 Liczba testów u konsumentów nie spadła — 144791c
+- [x] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów — 144791c
 
 #### Manual
 
-- [x] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji
-- [x] 4.9 Wyniki trzech buildów spisane w `change.md`
+- [x] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji — 144791c
+- [x] 4.9 Wyniki trzech buildów spisane w `change.md` — 144791c
 
 ### Phase 5: CI na Gradle'a
 
 #### Automated
 
-- [ ] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu
-- [ ] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check`
-- [ ] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium
-- [ ] 5.4 W rejestrze nie ma niczego pod `7.1`
+- [x] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu — przebieg 34405952456
+- [x] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check` — **nie dotyczy: decyzja o niewydawaniu zniosla wersje kontrolna**
+- [x] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium — **nie dotyczy, jak wyzej**
+- [x] 5.4 W rejestrze nie ma niczego pod `7.1` — rejestr ma 7.0 / 6.0 / 5.0
 
 #### Manual
 
@@ -628,15 +628,15 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [ ] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get`
-- [ ] 6.2 `javap` na pobranym jarze pokazuje `major version: 61`
-- [ ] 6.3 Tag `v7.1` na origin
-- [ ] 6.4 Gałąź `jdk17` wypchnięta
-- [ ] 6.5 `master` nadal na 6.0
-- [ ] 6.6 Brak pomów na `jdk17`, siedem pomów na `master`
+- [x] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get` — **nie dotyczy: nic nie zostalo wydane**
+- [x] 6.2 `javap` na pobranym jarze pokazuje `major version: 61` — **nie dotyczy, jak wyzej**
+- [x] 6.3 Tag `v7.1` na origin — **nie dotyczy: bez wydania nie ma czego tagowac**
+- [x] 6.4 Gałąź `jdk17` wypchnięta — wypchnieta w fazie 5 (9dce6e4) i domkniecie fazy 6
+- [x] 6.5 `master` nadal na 6.0 — potwierdzone: `git show master:pom.xml` -> 6.0
+- [x] 6.6 Brak pomów na `jdk17`, siedem pomów na `master` — **buildowych pomow zero; zostaja dwa martwe moduly geo-api i location-api, spoza buildu**
 
 #### Manual
 
-- [ ] 6.7 Wyraźne „tak" usera przed publikacją
-- [ ] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI
-- [ ] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych
+- [x] 6.7 Wyraźne „tak" usera przed publikacją — **nie dotyczy: publikacji nie bylo**
+- [x] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI — **nie dotyczy, jak wyzej**
+- [x] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych — `commons.md` przepisany, komendy sprawdzone

@@ -246,3 +246,87 @@ potwierdził `/tmp/m2-phase4`. Znacznik `_remote.repositories` datuje je na 22:5
 samo**. Sześć katalogów `7.1` usunięte, `7.0` nietknięte. To ten sam kształt awarii, który przy
 migracji na JDK 17 położył lokalne buildy trzech repozytoriów — i argument za tym, żeby pomów
 konsumentów nie ruszać w ogóle, co jest teraz stanem docelowym tej fazy.
+
+## Faza 5 — CI na Gradle'a (2026-09-09)
+
+Oba workflowy przepisane, przebieg **zielony** na gałęzi `jdk17`: `BUILD SUCCESSFUL in 54s`,
+a bramka wypisała `Tests run: 139`. Przebieg `34405952456`, commit `9dce6e4`.
+
+### Co się zmieniło w `build.yml`
+
+- wrapper zamiast `mvn`, `cache: gradle`,
+- **walidacja wrappera** (`gradle/actions/wrapper-validation`) — wrapper jar jest binarny i siedzi
+  w repo, więc CI sprawdza, że to oryginalna dystrybucja Gradle'a,
+- **twarda bramka liczby testów**: krok liczy `tests="…"` z raportów i przerywa build, gdy suma
+  nie wynosi 139. To jest odpowiedź na pułapkę z fazy 2 — `BUILD SUCCESSFUL` nie dowodzi, że testy
+  się wykonały,
+- raporty testów wrzucane jako artefakt przebiegu.
+
+### Co się zmieniło w `publish.yml`
+
+`./gradlew publishAllPublicationsToGithubPackagesRepository`, poświadczenia ze **środowiska**
+(`GITHUB_ACTOR` / `GITHUB_TOKEN`) — Gradle nie czyta `~/.m2/settings.xml`, więc `setup-java`
+z `server-id` przestało cokolwiek dawać. Testy lecą przed publikacją, bo artefaktu z rejestru
+nie da się cofnąć. Repozytorium `githubPackages` dodane w `build.gradle.kts` obok stagingowego.
+
+### ⚠️ Ścieżka publikacji pozostaje niesprawdzona w boju
+
+Plan przewidywał przećwiczenie uwierzytelnienia na wersji kontrolnej (`7.1-ci-check`). Po decyzji
+„commons zostaje na 7.0, nic nie wydajemy" ten krok **wypadł** — kryteria 5.2 i 5.3 są
+bezprzedmiotowe. Skutek: `publish.yml` jest napisany, ale **nigdy nie uruchomiony**; pierwsze
+prawdziwe wydanie linii 7.x Gradle'em będzie zarazem pierwszym testem tej ścieżki. Świadomy koszt
+decyzji o niewydawaniu — zapisany tutaj, żeby nikt się nie zdziwił.
+
+Stan rejestru potwierdzony: `7.0`, `6.0`, `5.0` — nic pod `7.1`.
+
+### Historia Actions
+
+Ostatni przebieg zielony. Dwa czerwone w historii gałęzi są z 2026-09-08 i pochodzą z ticketu
+`commons-jdk17-migration` (tag `v7.0` wskazywał commit sprzed poprawki CI) — nie z tej migracji.
+
+## Faza 6 — domknięcie (2026-09-09)
+
+Faza skurczyła się do dokumentacji: wydania nie ma (decyzja z fazy 4), a pomy i `gradlew.bat`
+zniknęły już w fazie 4. Zostało uzgodnienie `commons.md` ze stanem faktycznym.
+
+### `commons.md` przepisany na gałęzi `jdk17`
+
+- **nagłówek**: 7.0 / Java 17 / Gradle, plus tabela dwóch linii i zapis, że merge do `mastera`
+  jest zakazany — plik opisuje **tę** gałąź, `master` żyje inaczej (6.0 / JDK 8 / Maven),
+- **Build & test**: komendy `./gradlew`, wymóg JDK 17, wrapper zamiast systemowego Gradle'a,
+  skille `gb` / `gd` / `gbd` zamiast `mb` / `md` / `mbd` (te ostatnie **nie działają tu od migracji**),
+- **ostrzeżenie o zielonym buildzie bez testów** wraz z liczbą bramkową 139 i rozkładem per moduł,
+- **CI**: `./gradlew build`, walidacja wrappera, twarda bramka liczby testów,
+- **Konwencje**: wersje w `constraints` zamiast `dependencyManagement`, trzy nadpisania tranzytywne
+  i czym grozi ich usunięcie, `api` zamiast `implementation`, osobna konfiguracja `provided`,
+- **moduły**: `settings.gradle.kts` zamiast root `<modules>`.
+
+Komendy z dokumentu sprawdzone, nie przepisane z pamięci: `./gradlew :homeportal-commons-java:test
+--tests StringUtilsTest` uruchamia 6 testów, `:homeportal-commons-data:build` przechodzi.
+
+### Stan końcowy
+
+| co | jdk17 | master |
+|---|---|---|
+| build | **Gradle 9.7.1** (wrapper) | Maven |
+| wersja | 7.0 | 6.0 |
+| JDK | 17 | 8 |
+| pomy w buildzie | **0** | 7 |
+| CI | `./gradlew build` + bramka 139 | `mvn verify` |
+
+⚠️ Na `jdk17` zostają dwa pomy: `homeportal-commons-geo-api` i `homeportal-commons-location-api`.
+To martwe moduły spoza buildu (obcy parent `pl.homeportal-platform`, ostatni commit 2020-06-29,
+zero konsumentów) — świadomie poza zakresem tego ticketu, tak samo jak były poza reaktorem Mavena.
+
+### Czego ten ticket NIE zrobił
+
+- **Nie wydał niczego** — w rejestrze dalej 7.0 / 6.0 / 5.0, zbudowane Mavenem. Artefakt z Gradle'a
+  istniał wyłącznie w katalogu stagingowym na dysku.
+- **Nie sprawdził ścieżki publikacji w boju** — `publish.yml` jest napisany i nigdy nieuruchomiony.
+  Pierwsze wydanie linii 7.x Gradle'em będzie zarazem pierwszym testem uwierzytelnienia
+  do GitHub Packages.
+- **Nie ruszył `mastera`** ani linii 6.0 — hop dalej konsumuje 6.0 zbudowane Mavenem.
+- **Nie tknął pomów konsumentów** — portal, hac i importer mają je bit w bit takie jak przed fazą 4.
+- **Nie naprawił skilli mavenowych** — `mb`/`md`/`mbd` przestały działać w tym repo; odpowiedniki
+  `gb`/`gd`/`gbd` powstały w `homeportal.ai.registry`, ale poprawka samych mavenowych (żeby mówiły,
+  że w commons ich nie ma) należy do osobnego ticketu.
