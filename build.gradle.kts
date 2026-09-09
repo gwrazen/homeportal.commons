@@ -149,11 +149,23 @@ subprojects {
             }
         }
         repositories {
+            // Podglad przed wydaniem: komplet artefaktow ladzie w katalogu na dysku,
+            // rejestr pozostaje nietkniety.
             maven {
                 name = "staging"
                 url = uri(
                     providers.gradleProperty("publishRepoUrl").getOrElse("file:///tmp/commons-staging")
                 )
+            }
+            // Wydanie. Rejestr przyjmuje wersje RAZ — poprawka po wydaniu to kolejny numer.
+            // Poswiadczenia ze srodowiska: Gradle nie czyta ~/.m2/settings.xml.
+            maven {
+                name = "githubPackages"
+                url = uri("https://maven.pkg.github.com/gwrazen/homeportal.commons")
+                credentials {
+                    username = providers.environmentVariable("GITHUB_ACTOR").orNull
+                    password = providers.environmentVariable("GITHUB_TOKEN").orNull
+                }
             }
         }
     }
