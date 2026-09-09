@@ -1,10 +1,10 @@
 ---
 change_id: commons-gradle-migration
 title: Przejście commons z Mavena na Gradle'a — biblioteka publikowana do GitHub Packages, nie wdrażana
-status: implemented
+status: archived
 created: 2026-08-29
 updated: 2026-09-09
-archived_at: null
+archived_at: 2026-09-09T21:29:17Z
 ---
 
 ## Notes
