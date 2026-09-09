@@ -1,5 +1,5 @@
 group = "pl.homeportal"
-version = "7.1"
+version = "7.0"
 
 // Single source of versions, mirroring the <dependencyManagement> of the Maven build.
 // Modules declare dependencies without versions; the constraints below supply them.

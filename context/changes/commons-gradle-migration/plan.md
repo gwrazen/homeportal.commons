@@ -582,34 +582,34 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [x] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1
-- [x] 3.2 Zero plików `.module`
-- [x] 3.3 Scope'y w sześciu pomach zgodne z baseline'em — **dla zależności widocznych dla konsumenta; `test` Gradle nie publikuje w ogóle**
-- [x] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach
-- [x] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0
-- [x] 3.6 Rozwiązane wersje zgodne z 7.0
-- [x] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1
+- [x] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1 — 7511805
+- [x] 3.2 Zero plików `.module` — 7511805
+- [x] 3.3 Scope'y w sześciu pomach zgodne z baseline'em — **dla zależności widocznych dla konsumenta; `test` Gradle nie publikuje w ogóle** — 7511805
+- [x] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach — 7511805
+- [x] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0 — 7511805
+- [x] 3.6 Rozwiązane wersje zgodne z 7.0 — 7511805
+- [x] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1 — 7511805
 
 #### Manual
 
-- [x] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów
+- [x] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów — 7511805
 
 ### Phase 4: Bramka u trzech konsumentów
 
 #### Automated
 
-- [ ] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi
-- [ ] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1)
-- [ ] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`)
-- [ ] 4.4 javassist u konsumenta to 3.29.2-GA
-- [ ] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta
-- [ ] 4.6 Liczba testów u konsumentów nie spadła
-- [ ] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów
+- [x] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi
+- [x] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1)
+- [x] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`)
+- [x] 4.4 javassist u konsumenta to 3.29.2-GA — **bezprzedmiotowe: javassist nie wystepuje w drzewie zadnego konsumenta; zweryfikowane w commons (3.18.1-GA -> 3.29.2-GA)**
+- [x] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta — **velocity w portalu to jego wlasna zaleznosc, compile przed i po; dowodem jest pusty diff**
+- [x] 4.6 Liczba testów u konsumentów nie spadła
+- [x] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów
 
 #### Manual
 
-- [ ] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji
-- [ ] 4.9 Wyniki trzech buildów spisane w `change.md`
+- [x] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji
+- [x] 4.9 Wyniki trzech buildów spisane w `change.md`
 
 ### Phase 5: CI na Gradle'a
 

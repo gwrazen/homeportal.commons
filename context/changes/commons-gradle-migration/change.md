@@ -177,3 +177,72 @@ zależności widocznych dla konsumenta** (`compile` / `runtime` / `provided`) �
 
 `provided("org.projectlombok:lombok")` bez wersji nie rozwiązywał się, bo w lustrze `constraints`
 brakowało wpisu na lomboka — w mavenowym `dependencyManagement` on jest. Dopisany.
+
+## Faza 4 — bramka u trzech konsumentów (2026-09-09)
+
+### Zmiana zakresu: commons zostaje na 7.0, nic nie wydajemy
+
+Decyzja usera 2026-09-09, w trakcie fazy 4. Build deklaruje `version = 7.0`, a ticket kończy się
+na zielonej bramce i CI — **bez publikacji do rejestru**. Powód: migracja narzędzia nie zmienia
+zawartości biblioteki, więc nie ma czego wydawać ani czego podbijać u konsumentów. Numer pójdzie
+w górę przy pierwszej realnej zmianie kodu.
+
+Skutki dla planu: faza 5 traci publikację wersji kontrolnej (ścieżka Gradle → GitHub Packages
+zostaje **niesprawdzona w boju**, świadomie), faza 6 traci wydanie i tag.
+
+### Bramka zrobiona lepiej, niż zakładał plan: bez dotykania pomów konsumentów
+
+Plan przewidywał tymczasową podmianę `homeportal.commons.version` i wpisanie repozytorium
+stagingowego do pomu każdego konsumenta. Zamiast tego repozytorium podane jest przez **własny
+`settings.xml`** (`-s`), a wersja się nie zmienia — więc **żaden pom konsumenta nie został
+tknięty**. Izolacja: `localRepository` wskazuje na klon `~/.m2` zrobiony przez APFS
+copy-on-write (53 s, zero dodatkowego miejsca), z którego usunięto commons 7.0, żeby rozwiązanie
+**musiało** pójść ze stagingu. Potwierdzone: `_remote.repositories` w klonie mówi `commons-staging`.
+
+### Wynik
+
+| repo | build | testy | diff drzewa zależności |
+|---|---|---|---|
+| `portal` | BUILD SUCCESS | 1444 w 174 klasach | **pusty** (982 = 982 wpisy) |
+| `hac` | BUILD SUCCESS | 372 w 60 klasach | **pusty** (862 = 862) |
+| `importer` | BUILD SUCCESS | 28 w 9 klasach | **pusty** (971 = 971) |
+
+Diff jest pusty **dosłownie**, nie „po odfiltrowaniu numeru wersji" — artefakt zbudowany Gradle'em
+stoi pod tą samą współrzędną co mavenowy i rozwiązuje się identycznie. 372 testy haca zgadzają się
+co do jednego z liczbą zapisaną przy migracji na JDK 17.
+
+⚠️ `git status` w portalu, hacu i importerze: **zero zmian** po całej fazie (w importerze zostają
+cztery pliki `.class` w `target/` sprzed tej sesji).
+
+### Nadpisanie tranzytywne — udowodnione, nie założone
+
+`./gradlew :homeportal-commons-data:dependencies --configuration runtimeClasspath` pokazuje
+`org.javassist:javassist:3.18.1-GA -> 3.29.2-GA` i wpis `(c)` od constraintu. Bez tego kontekst EMF
+padłby na JDK 17 w runtime, a kompilacja niczego by nie zgłosiła.
+
+⚠️ Kryterium 4.4 („javassist u konsumenta to 3.29.2-GA") okazało się **bezprzedmiotowe**:
+javassist nie występuje w drzewie żadnego z trzech konsumentów — ani przed podmianą, ani po.
+U nich wygrywa własna linia Hibernate'a. Zweryfikowane więc na poziomie commons, gdzie ma znaczenie.
+
+Kryterium 4.5 (velocity poza runtime classpath konsumenta): w portalu velocity jest w `compile`
+i **przed, i po** — to jego własna zależność, nie tranzytywa z commons. Pusty diff jest tu mocniejszym
+dowodem niż samo sprawdzenie scope'u.
+
+### Pomy Mavena usunięte z gałęzi (przeniesione z fazy 6)
+
+Siedem pomów i `gradlew.bat` usunięte na życzenie usera już teraz — skoro wydania nie ma, warunek
+„po zielonym wydaniu" stracił sens. `./gradlew build` bez pomów: **139 testów**, zielono.
+`master` nietknięty: dalej siedem pomów i wersja 6.0.
+
+⚠️ Od tego commita `mb`, `md` i `mbd` **nie działają w tym repo**. Powstały odpowiedniki gradle'owe:
+`/gb`, `/gd`, `/gbd` (rejestr `homeportal.ai.registry`).
+
+### ⚠️ Uboczny skutek wyłapany i posprzątany: 7.1 w `~/.m2`
+
+Przy pierwszym podejściu (jeszcze z podmienionym pomem portalu i wersją 7.1) w `~/.m2` wylądowały
+**42 pliki commons 7.1**, mimo że buildy z konsoli szły do izolowanego klonu — `help:evaluate`
+potwierdził `/tmp/m2-phase4`. Znacznik `_remote.repositories` datuje je na 22:55:34 i wskazuje
+`commons-staging`, czyli najprawdopodobniej **IDE przeczytało w tle podmieniony pom i ściągnęło je
+samo**. Sześć katalogów `7.1` usunięte, `7.0` nietknięte. To ten sam kształt awarii, który przy
+migracji na JDK 17 położył lokalne buildy trzech repozytoriów — i argument za tym, żeby pomów
+konsumentów nie ruszać w ogóle, co jest teraz stanem docelowym tej fazy.

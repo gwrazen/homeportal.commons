@@ -1,0 +1,1147 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-resources:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-configuration:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-model:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-repository:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-mail:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-service:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-management:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal:[unknown-version], /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/homeportal-portal/pom.xml, line 99, column 21
+[WARNING] The expression ${version} is deprecated. Please use ${project.version} instead.
+[WARNING] The expression ${version} is deprecated. Please use ${project.version} instead.
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-application:jar:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ pl.homeportal:homeportal-portal-parent:7.0, /Users/grzegorz/Work/git-repositories/homeportal/homeportal.portal/pom.xml, line 289, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for pl.homeportal:homeportal-portal-parent:pom:7.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ line 301, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ line 289, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] homeportal-portal-parent
+[INFO] homeportal-portal-resources
+[INFO] homeportal-portal-configuration
+[INFO] homeportal-portal-model
+[INFO] homeportal-portal-repository
+[INFO] homeportal-portal-mail
+[INFO] homeportal-portal-service
+[INFO] homeportal-portal-management
+[INFO] homeportal-portal
+[INFO] homeportal-portal-application
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-parent 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-parent ---
+[INFO] pl.homeportal:homeportal-portal-parent:pom:7.0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-resources 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-resources ---
+[INFO] pl.homeportal:homeportal-portal-resources:jar:7.0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-configuration 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-java/7.0/homeportal-commons-java-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-java/7.0/homeportal-commons-java-7.0.pom (8.9 kB at 526 kB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-logging/7.0/homeportal-commons-logging-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-logging/7.0/homeportal-commons-logging-7.0.pom (6.6 kB at 2.2 MB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-domain/7.0/homeportal-commons-domain-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-domain/7.0/homeportal-commons-domain-7.0.pom (6.3 kB at 1.6 MB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-java/7.0/homeportal-commons-java-7.0.jar
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-logging/7.0/homeportal-commons-logging-7.0.jar
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-domain/7.0/homeportal-commons-domain-7.0.jar
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-logging/7.0/homeportal-commons-logging-7.0.jar (4.1 kB at 1.0 MB/s)
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-domain/7.0/homeportal-commons-domain-7.0.jar (21 kB at 2.9 MB/s)
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-java/7.0/homeportal-commons-java-7.0.jar (42 kB at 4.6 MB/s)
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-configuration ---
+[INFO] pl.homeportal:homeportal-portal-configuration:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-logging:jar:7.0:compile
+[INFO] |  \- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] +- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] \- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO]    +- commons-lang:commons-lang:jar:2.6:compile
+[INFO]    \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-model 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-data/7.0/homeportal-commons-data-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-data/7.0/homeportal-commons-data-7.0.pom (8.6 kB at 2.9 MB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-data/7.0/homeportal-commons-data-7.0.jar
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-data/7.0/homeportal-commons-data-7.0.jar (35 kB at 12 MB/s)
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-model ---
+[INFO] pl.homeportal:homeportal-portal-model:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  |     \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |     +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |     +- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |     \- com.sun.activation:jakarta.activation:jar:1.2.2:runtime
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |     +- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |     |  \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |     |     \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] +- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] +- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] \- junit:junit:jar:4.12:test
+[INFO]    \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO]       \- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-repository 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-repository ---
+[INFO] pl.homeportal:homeportal-portal-repository:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |     +- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |     \- com.sun.activation:jakarta.activation:jar:1.2.2:runtime
+[INFO] +- pl.homeportal:homeportal-portal-model:jar:7.0:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |  |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] |  +- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] |  \- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-data-jpa:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:2.7.18:compile
+[INFO] |  |  +- com.zaxxer:HikariCP:jar:4.0.3:compile
+[INFO] |  |  \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO] |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:compile
+[INFO] |  +- jakarta.persistence:jakarta.persistence-api:jar:2.2.3:compile
+[INFO] |  \- org.springframework:spring-aspects:jar:5.3.31:compile
+[INFO] +- mysql:mysql-connector-java:jar:8.0.15:runtime
+[INFO] |  \- com.google.protobuf:protobuf-java:jar:3.6.1:runtime
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.7.18:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.7.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |     \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |        \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:compile
+[INFO] |  +- org.assertj:assertj-core:jar:3.22.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.8.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:1.8.2:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.8.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.8.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:3.1.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.12.23:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:2.6:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:4.5.1:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-test:jar:5.3.31:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.9.1:test
+[INFO] \- com.h2database:h2:jar:1.4.200:test
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-mail 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-mail/7.0/homeportal-commons-mail-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-mail/7.0/homeportal-commons-mail-7.0.pom (7.4 kB at 2.5 MB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-mail/7.0/homeportal-commons-mail-7.0.jar
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-mail/7.0/homeportal-commons-mail-7.0.jar (18 kB at 9.1 MB/s)
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-mail ---
+[INFO] pl.homeportal:homeportal-portal-mail:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-mail:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-logging:jar:7.0:compile
+[INFO] |  |  \- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] |  \- com.sun.mail:javax.mail:jar:1.5.6:compile
+[INFO] |     \- javax.activation:activation:jar:1.1:compile
+[INFO] +- pl.homeportal:homeportal-portal-resources:jar:7.0:compile
+[INFO] +- pl.homeportal:homeportal-portal-configuration:jar:7.0:compile
+[INFO] |  +- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] |  \- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |     \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] +- pl.homeportal:homeportal-portal-model:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |  |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |  |     \- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |  |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] |  +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] |  +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] |  \- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-mail:jar:2.7.18:compile
+[INFO] |  +- org.springframework:spring-context-support:jar:5.3.31:compile
+[INFO] |  \- com.sun.mail:jakarta.mail:jar:1.6.7:compile
+[INFO] |     \- com.sun.activation:jakarta.activation:jar:1.2.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-web:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-json:jar:2.7.18:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.13.5:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.5:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.13.5:compile
+[INFO] |  |  \- org.springframework.boot:spring-boot-starter-tomcat:jar:2.7.18:compile
+[INFO] |  |     +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.83:compile
+[INFO] |  |     +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.83:compile
+[INFO] |  |     \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.83:compile
+[INFO] |  +- commons-beanutils:commons-beanutils:jar:1.9.3:compile
+[INFO] |  +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  +- commons-digester:commons-digester:jar:2.1:compile
+[INFO] |  \- org.apache.velocity:velocity-tools:jar:2.0:compile
+[INFO] |     +- commons-chain:commons-chain:jar:1.1:compile
+[INFO] |     +- commons-validator:commons-validator:jar:1.3.1:compile
+[INFO] |     +- dom4j:dom4j:jar:1.1:compile
+[INFO] |     +- oro:oro:jar:2.0.8:compile
+[INFO] |     +- sslext:sslext:jar:1.2-0:compile
+[INFO] |     +- org.apache.struts:struts-core:jar:1.3.8:compile
+[INFO] |     +- org.apache.struts:struts-taglib:jar:1.3.8:compile
+[INFO] |     \- org.apache.struts:struts-tiles:jar:1.3.8:compile
+[INFO] +- org.apache.velocity:velocity:jar:1.7:compile
+[INFO] |  \- commons-lang:commons-lang:jar:2.4:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] +- commons-io:commons-io:jar:2.1:compile
+[INFO] +- org.apache.commons:commons-email:jar:1.5:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.7.18:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.7.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |     \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |        \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:compile
+[INFO] |  +- org.assertj:assertj-core:jar:3.22.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.8.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:1.8.2:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.8.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.8.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:3.1.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.12.23:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:2.6:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:4.5.1:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-test:jar:5.3.31:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.9.1:test
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO] \- pl.homeportal:homeportal-portal-repository:test-jar:tests:7.0:test
+[INFO]    +- org.springframework.boot:spring-boot-starter-data-jpa:jar:2.7.18:test
+[INFO]    |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.18:test
+[INFO]    |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:2.7.18:test
+[INFO]    |  |  +- com.zaxxer:HikariCP:jar:4.0.3:test
+[INFO]    |  |  \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO]    |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:test
+[INFO]    |  +- jakarta.persistence:jakarta.persistence-api:jar:2.2.3:test
+[INFO]    |  \- org.springframework:spring-aspects:jar:5.3.31:test
+[INFO]    \- mysql:mysql-connector-java:jar:8.0.15:test
+[INFO]       \- com.google.protobuf:protobuf-java:jar:3.6.1:test
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-service 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-service ---
+[INFO] pl.homeportal:homeportal-portal-service:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-logging:jar:7.0:compile
+[INFO] |  \- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  |     \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |     +- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |     \- com.sun.activation:jakarta.activation:jar:1.2.2:compile
+[INFO] +- pl.homeportal:homeportal-commons-mail:jar:7.0:compile
+[INFO] |  \- com.sun.mail:javax.mail:jar:1.5.6:compile
+[INFO] |     \- javax.activation:activation:jar:1.1:compile
+[INFO] +- pl.homeportal:homeportal-hop-client:jar:7.0:compile
+[INFO] |  +- com.sun.jersey:jersey-client:jar:1.8:compile
+[INFO] |  |  \- com.sun.jersey:jersey-core:jar:1.8:compile
+[INFO] |  \- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] +- pl.homeportal:homeportal-portal-configuration:jar:7.0:compile
+[INFO] |  \- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |     +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |     \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] +- pl.homeportal:homeportal-portal-model:jar:7.0:compile
+[INFO] |  \- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] +- pl.homeportal:homeportal-portal-repository:jar:7.0:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-data-jpa:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:2.7.18:compile
+[INFO] |  |  |  \- com.zaxxer:HikariCP:jar:4.0.3:compile
+[INFO] |  |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:compile
+[INFO] |  |  +- jakarta.persistence:jakarta.persistence-api:jar:2.2.3:compile
+[INFO] |  |  \- org.springframework:spring-aspects:jar:5.3.31:compile
+[INFO] |  \- mysql:mysql-connector-java:jar:8.0.15:runtime
+[INFO] |     \- com.google.protobuf:protobuf-java:jar:3.6.1:runtime
+[INFO] +- pl.homeportal:homeportal-portal-mail:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-portal-resources:jar:7.0:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-web:jar:2.7.18:compile
+[INFO] |  |  |  +- org.springframework.boot:spring-boot-starter-json:jar:2.7.18:compile
+[INFO] |  |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.13.5:compile
+[INFO] |  |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.5:compile
+[INFO] |  |  |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.13.5:compile
+[INFO] |  |  |  \- org.springframework.boot:spring-boot-starter-tomcat:jar:2.7.18:compile
+[INFO] |  |  |     +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.83:compile
+[INFO] |  |  |     +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.83:compile
+[INFO] |  |  |     \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.83:compile
+[INFO] |  |  +- commons-beanutils:commons-beanutils:jar:1.9.3:compile
+[INFO] |  |  +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  +- commons-digester:commons-digester:jar:2.1:compile
+[INFO] |  |  \- org.apache.velocity:velocity-tools:jar:2.0:compile
+[INFO] |  |     +- commons-chain:commons-chain:jar:1.1:compile
+[INFO] |  |     +- commons-validator:commons-validator:jar:1.3.1:compile
+[INFO] |  |     +- dom4j:dom4j:jar:1.1:compile
+[INFO] |  |     +- oro:oro:jar:2.0.8:compile
+[INFO] |  |     +- sslext:sslext:jar:1.2-0:compile
+[INFO] |  |     +- org.apache.struts:struts-core:jar:1.3.8:compile
+[INFO] |  |     +- org.apache.struts:struts-taglib:jar:1.3.8:compile
+[INFO] |  |     \- org.apache.struts:struts-tiles:jar:1.3.8:compile
+[INFO] |  +- org.apache.velocity:velocity:jar:1.7:compile
+[INFO] |  \- org.apache.commons:commons-email:jar:1.5:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-mail:jar:2.7.18:compile
+[INFO] |  +- org.springframework:spring-context-support:jar:5.3.31:compile
+[INFO] |  \- com.sun.mail:jakarta.mail:jar:1.6.7:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] +- commons-io:commons-io:jar:2.1:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.7.18:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.7.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |     \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |        \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:compile
+[INFO] |  +- org.assertj:assertj-core:jar:3.22.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.8.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:1.8.2:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.8.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.8.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:3.1.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.12.23:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:2.6:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:4.5.1:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-test:jar:5.3.31:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.9.1:test
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO] \- pl.homeportal:homeportal-portal-repository:test-jar:tests:7.0:test
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-management 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-management ---
+[INFO] pl.homeportal:homeportal-portal-management:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-logging:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] |  |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |  |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] |  \- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] +- pl.homeportal:homeportal-portal-configuration:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] |  \- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |     \- commons-lang:commons-lang:jar:2.6:compile
+[INFO] +- pl.homeportal:homeportal-portal-service:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  |  |     \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO] |  |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  |  +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] |  |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  |  |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] |  |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |  |     +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |  |     +- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |  |     \- com.sun.activation:jakarta.activation:jar:1.2.2:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-mail:jar:7.0:compile
+[INFO] |  |  \- com.sun.mail:javax.mail:jar:1.5.6:compile
+[INFO] |  |     \- javax.activation:activation:jar:1.1:compile
+[INFO] |  +- pl.homeportal:homeportal-hop-client:jar:7.0:compile
+[INFO] |  |  \- com.sun.jersey:jersey-client:jar:1.8:compile
+[INFO] |  |     \- com.sun.jersey:jersey-core:jar:1.8:compile
+[INFO] |  +- pl.homeportal:homeportal-portal-model:jar:7.0:compile
+[INFO] |  |  \- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] |  +- pl.homeportal:homeportal-portal-repository:jar:7.0:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-data-jpa:jar:2.7.18:compile
+[INFO] |  |  |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.18:compile
+[INFO] |  |  |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:2.7.18:compile
+[INFO] |  |  |  |  \- com.zaxxer:HikariCP:jar:4.0.3:compile
+[INFO] |  |  |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:compile
+[INFO] |  |  |  +- jakarta.persistence:jakarta.persistence-api:jar:2.2.3:compile
+[INFO] |  |  |  \- org.springframework:spring-aspects:jar:5.3.31:compile
+[INFO] |  |  \- mysql:mysql-connector-java:jar:8.0.15:runtime
+[INFO] |  |     \- com.google.protobuf:protobuf-java:jar:3.6.1:runtime
+[INFO] |  +- pl.homeportal:homeportal-portal-mail:jar:7.0:compile
+[INFO] |  |  +- pl.homeportal:homeportal-portal-resources:jar:7.0:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:compile
+[INFO] |  |  |  +- org.springframework.boot:spring-boot-starter-web:jar:2.7.18:compile
+[INFO] |  |  |  |  +- org.springframework.boot:spring-boot-starter-json:jar:2.7.18:compile
+[INFO] |  |  |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.13.5:compile
+[INFO] |  |  |  |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.5:compile
+[INFO] |  |  |  |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.13.5:compile
+[INFO] |  |  |  |  \- org.springframework.boot:spring-boot-starter-tomcat:jar:2.7.18:compile
+[INFO] |  |  |  |     +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.83:compile
+[INFO] |  |  |  |     +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.83:compile
+[INFO] |  |  |  |     \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.83:compile
+[INFO] |  |  |  +- commons-beanutils:commons-beanutils:jar:1.9.3:compile
+[INFO] |  |  |  +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  |  |  +- commons-digester:commons-digester:jar:2.1:compile
+[INFO] |  |  |  \- org.apache.velocity:velocity-tools:jar:2.0:compile
+[INFO] |  |  |     +- commons-chain:commons-chain:jar:1.1:compile
+[INFO] |  |  |     +- commons-validator:commons-validator:jar:1.3.1:compile
+[INFO] |  |  |     +- dom4j:dom4j:jar:1.1:compile
+[INFO] |  |  |     +- oro:oro:jar:2.0.8:compile
+[INFO] |  |  |     +- sslext:sslext:jar:1.2-0:compile
+[INFO] |  |  |     +- org.apache.struts:struts-core:jar:1.3.8:compile
+[INFO] |  |  |     +- org.apache.struts:struts-taglib:jar:1.3.8:compile
+[INFO] |  |  |     \- org.apache.struts:struts-tiles:jar:1.3.8:compile
+[INFO] |  |  +- org.apache.velocity:velocity:jar:1.7:compile
+[INFO] |  |  \- org.apache.commons:commons-email:jar:1.5:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |  |     +- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |  |     |  \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |  |     |     \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |  |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-mail:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework:spring-context-support:jar:5.3.31:compile
+[INFO] |  |  \- com.sun.mail:jakarta.mail:jar:1.6.7:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] |  \- commons-io:commons-io:jar:2.1:compile
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] +- commons-codec:commons-codec:jar:1.15:test
+[INFO] +- org.apache.httpcomponents:httpclient:jar:4.5.13:compile
+[INFO] |  +- org.apache.httpcomponents:httpcore:jar:4.4.16:compile
+[INFO] |  \- commons-logging:commons-logging:jar:1.2:compile
+[INFO] +- org.jsoup:jsoup:jar:1.7.2:compile
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO] |     \- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] \- org.mockito:mockito-all:jar:1.10.19:test
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-test/7.0/homeportal-commons-test-7.0.pom
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-test/7.0/homeportal-commons-test-7.0.pom (6.7 kB at 2.2 MB/s)
+[INFO] Downloading: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-test/7.0/homeportal-commons-test-7.0.jar
+[INFO] Downloaded: file:///tmp/commons-staging/pl/homeportal/homeportal-commons-test/7.0/homeportal-commons-test-7.0.jar (1.8 kB at 612 kB/s)
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal ---
+[INFO] pl.homeportal:homeportal-portal:jar:7.0
+[INFO] +- pl.homeportal:homeportal-commons-java:jar:7.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-webmvc:jar:5.3.31:compile
+[INFO] |  +- jakarta.validation:jakarta.validation-api:jar:2.0.2:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  +- org.imgscalr:imgscalr-lib:jar:4.2:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.2.5.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.4.3.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.5.1:compile
+[INFO] |  +- com.google.guava:guava:jar:27.0.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.5.2:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.2.0:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.17:compile
+[INFO] |  +- org.aspectj:aspectjrt:jar:1.9.2:compile
+[INFO] |  +- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  +- javax.el:javax.el-api:jar:3.0.0:compile
+[INFO] |  +- org.glassfish.web:javax.el:jar:2.2.4:compile
+[INFO] |  \- xerces:xercesImpl:jar:2.8.1:compile
+[INFO] |     \- xml-apis:xml-apis:jar:1.3.03:compile
+[INFO] +- pl.homeportal:homeportal-commons-data:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-domain:jar:7.0:compile
+[INFO] |  +- org.springframework.data:spring-data-commons:jar:2.7.18:compile
+[INFO] |  +- org.springframework.data:spring-data-jpa:jar:2.7.18:compile
+[INFO] |  |  \- org.springframework:spring-orm:jar:5.3.31:compile
+[INFO] |  |     \- org.springframework:spring-jdbc:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-tx:jar:5.3.31:compile
+[INFO] |  +- org.hibernate:hibernate-core:jar:5.6.15.Final:compile
+[INFO] |  |  +- javax.persistence:javax.persistence-api:jar:2.2:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.23:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:compile
+[INFO] |  |  +- org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.1.1.Final:compile
+[INFO] |  |  +- org.jboss:jandex:jar:2.4.2.Final:compile
+[INFO] |  |  +- javax.activation:javax.activation-api:jar:1.2.0:compile
+[INFO] |  |  \- org.hibernate.common:hibernate-commons-annotations:jar:5.1.2.Final:compile
+[INFO] |  +- org.hibernate:hibernate-entitymanager:jar:5.6.15.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-orm:jar:5.11.12.Final:compile
+[INFO] |  +- org.hibernate:hibernate-search-engine:jar:5.11.12.Final:compile
+[INFO] |  |  +- org.apache.lucene:lucene-core:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-misc:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-analyzers-common:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-facet:jar:5.5.5:compile
+[INFO] |  +- org.apache.lucene:lucene-queryparser:jar:5.5.5:compile
+[INFO] |  |  +- org.apache.lucene:lucene-queries:jar:5.5.5:compile
+[INFO] |  |  \- org.apache.lucene:lucene-sandbox:jar:5.5.5:compile
+[INFO] |  +- javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[INFO] |  \- org.glassfish.jaxb:jaxb-runtime:jar:2.3.9:compile
+[INFO] |     +- org.glassfish.jaxb:txw2:jar:2.3.9:compile
+[INFO] |     +- com.sun.istack:istack-commons-runtime:jar:3.0.12:compile
+[INFO] |     \- com.sun.activation:jakarta.activation:jar:1.2.2:compile
+[INFO] +- pl.homeportal:homeportal-portal-resources:jar:7.0:compile
+[INFO] +- pl.homeportal:homeportal-portal-configuration:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-logging:jar:7.0:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.18:compile
+[INFO] |  |  |  +- ch.qos.logback:logback-classic:jar:1.2.12:compile
+[INFO] |  |  |  |  \- ch.qos.logback:logback-core:jar:1.2.12:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] |  \- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |     +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |     \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] +- pl.homeportal:homeportal-portal-model:jar:7.0:compile
+[INFO] |  \- org.apache.lucene:lucene-backward-codecs:jar:5.5.5:compile
+[INFO] +- pl.homeportal:homeportal-portal-service:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-commons-mail:jar:7.0:compile
+[INFO] |  |  \- com.sun.mail:javax.mail:jar:1.5.6:compile
+[INFO] |  |     \- javax.activation:activation:jar:1.1:compile
+[INFO] |  +- pl.homeportal:homeportal-hop-client:jar:7.0:compile
+[INFO] |  |  \- com.sun.jersey:jersey-client:jar:1.8:compile
+[INFO] |  |     \- com.sun.jersey:jersey-core:jar:1.8:compile
+[INFO] |  +- pl.homeportal:homeportal-portal-repository:jar:7.0:compile
+[INFO] |  +- pl.homeportal:homeportal-portal-mail:jar:7.0:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:compile
+[INFO] |  |  +- org.apache.velocity:velocity:jar:1.7:compile
+[INFO] |  |  \- org.apache.commons:commons-email:jar:1.5:compile
+[INFO] |  \- org.springframework.boot:spring-boot-starter-mail:jar:2.7.18:compile
+[INFO] |     +- org.springframework:spring-context-support:jar:5.3.31:compile
+[INFO] |     \- com.sun.mail:jakarta.mail:jar:1.6.7:compile
+[INFO] +- pl.homeportal:homeportal-portal-management:jar:7.0:compile
+[INFO] |  +- org.apache.httpcomponents:httpclient:jar:4.5.13:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.15:test
+[INFO] |  \- org.jsoup:jsoup:jar:1.7.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-actuator:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:2.7.18:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-actuator:jar:2.7.18:compile
+[INFO] |  |  \- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.5:compile
+[INFO] |  \- io.micrometer:micrometer-core:jar:1.9.17:compile
+[INFO] |     +- org.hdrhistogram:HdrHistogram:jar:2.1.12:compile
+[INFO] |     \- org.latencyutils:LatencyUtils:jar:2.0.3:runtime
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:2.7.18:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:2.7.18:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.13.5:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.13.5:compile
+[INFO] |  \- org.springframework.boot:spring-boot-starter-tomcat:jar:2.7.18:compile
+[INFO] |     +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.83:compile
+[INFO] |     +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.83:compile
+[INFO] |     \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.83:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-oauth2-client:jar:2.7.18:compile
+[INFO] |  +- org.springframework.security:spring-security-config:jar:5.7.11:compile
+[INFO] |  +- org.springframework.security:spring-security-core:jar:5.7.11:compile
+[INFO] |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.11:compile
+[INFO] |  +- org.springframework.security:spring-security-oauth2-client:jar:5.7.11:compile
+[INFO] |  |  +- org.springframework.security:spring-security-oauth2-core:jar:5.7.11:compile
+[INFO] |  |  \- com.nimbusds:oauth2-oidc-sdk:jar:9.35:compile
+[INFO] |  |     +- com.github.stephenc.jcip:jcip-annotations:jar:1.0-1:compile
+[INFO] |  |     +- com.nimbusds:content-type:jar:2.2:compile
+[INFO] |  |     \- com.nimbusds:lang-tag:jar:1.6:compile
+[INFO] |  \- org.springframework.security:spring-security-oauth2-jose:jar:5.7.11:compile
+[INFO] |     \- com.nimbusds:nimbus-jose-jwt:jar:9.22:compile
+[INFO] +- com.google.api-client:google-api-client:jar:1.33.0:compile
+[INFO] |  +- com.google.oauth-client:google-oauth-client:jar:1.32.1:compile
+[INFO] |  +- com.google.http-client:google-http-client-gson:jar:1.41.0:compile
+[INFO] |  |  \- com.google.code.gson:gson:jar:2.9.1:compile
+[INFO] |  +- com.google.http-client:google-http-client-apache-v2:jar:1.41.0:compile
+[INFO] |  +- org.apache.httpcomponents:httpcore:jar:4.4.16:compile
+[INFO] |  \- com.google.http-client:google-http-client:jar:1.41.0:compile
+[INFO] |     +- io.opencensus:opencensus-api:jar:0.28.0:compile
+[INFO] |     |  \- io.grpc:grpc-context:jar:1.27.2:compile
+[INFO] |     \- io.opencensus:opencensus-contrib-http-util:jar:0.28.0:compile
+[INFO] +- com.google.api-client:google-api-client-jackson2:jar:1.20.0:compile
+[INFO] |  \- com.google.http-client:google-http-client-jackson2:jar:1.20.0:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-security:jar:2.7.18:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.3.31:compile
+[INFO] |  \- org.springframework.security:spring-security-web:jar:5.7.11:compile
+[INFO] +- com.alibaba.spring:spring-webmvc-velocity:jar:1.4.3.18.RELEASE:compile
+[INFO] |  +- org.apache.velocity:velocity-tools:jar:2.0:compile
+[INFO] |  |  +- commons-beanutils:commons-beanutils:jar:1.7.0:compile
+[INFO] |  |  +- commons-digester:commons-digester:jar:1.8:compile
+[INFO] |  |  +- commons-chain:commons-chain:jar:1.1:compile
+[INFO] |  |  +- commons-collections:commons-collections:jar:3.2:compile
+[INFO] |  |  +- commons-validator:commons-validator:jar:1.3.1:compile
+[INFO] |  |  +- dom4j:dom4j:jar:1.1:compile
+[INFO] |  |  +- oro:oro:jar:2.0.8:compile
+[INFO] |  |  +- sslext:sslext:jar:1.2-0:compile
+[INFO] |  |  +- org.apache.struts:struts-core:jar:1.3.8:compile
+[INFO] |  |  +- org.apache.struts:struts-taglib:jar:1.3.8:compile
+[INFO] |  |  \- org.apache.struts:struts-tiles:jar:1.3.8:compile
+[INFO] |  \- com.alibaba.spring:spring-context-velocity:jar:1.4.3.18.RELEASE:compile
+[INFO] +- org.projectlombok:lombok:jar:1.18.36:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-core:jar:2.13.5:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.5:compile
+[INFO] +- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.5:compile
+[INFO] +- org.apache.commons:commons-lang3:jar:3.8.1:compile
+[INFO] +- commons-io:commons-io:jar:2.1:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.7.18:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.7.18:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.7.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.4.11:compile
+[INFO] |  |     \- net.minidev:accessors-smart:jar:2.4.11:compile
+[INFO] |  |        \- org.ow2.asm:asm:jar:9.3:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:compile
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:compile
+[INFO] |  +- org.assertj:assertj-core:jar:3.22.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.8.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:1.8.2:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.8.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.8.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:3.1.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.12.23:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:2.6:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:4.5.1:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-core:jar:5.3.31:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.31:compile
+[INFO] |  +- org.springframework:spring-test:jar:5.3.31:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.9.1:test
+[INFO] +- org.springframework.security:spring-security-test:jar:5.7.11:test
+[INFO] +- junit:junit:jar:4.12:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:2.2:test
+[INFO] +- org.mockito:mockito-all:jar:1.10.19:test
+[INFO] +- com.h2database:h2:jar:1.4.200:test
+[INFO] +- pl.homeportal:homeportal-commons-test:jar:7.0:compile
+[INFO] \- pl.homeportal:homeportal-portal-repository:test-jar:tests:7.0:test
+[INFO]    +- org.springframework.boot:spring-boot-starter-data-jpa:jar:2.7.18:compile
+[INFO]    |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.18:compile
+[INFO]    |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:2.7.18:compile
+[INFO]    |  |  \- com.zaxxer:HikariCP:jar:4.0.3:compile
+[INFO]    |  +- jakarta.transaction:jakarta.transaction-api:jar:1.3.3:compile
+[INFO]    |  +- jakarta.persistence:jakarta.persistence-api:jar:2.2.3:compile
+[INFO]    |  \- org.springframework:spring-aspects:jar:5.3.31:compile
+[INFO]    \- mysql:mysql-connector-java:jar:8.0.15:runtime
+[INFO]       \- com.google.protobuf:protobuf-java:jar:3.6.1:runtime
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Building homeportal-portal-application 7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ homeportal-portal-application ---
+[INFO] pl.homeportal:homeportal-portal-application:jar:7.0
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] homeportal-portal-parent ........................... SUCCESS [  0.569 s]
+[INFO] homeportal-portal-resources ........................ SUCCESS [  0.028 s]
+[INFO] homeportal-portal-configuration .................... SUCCESS [  0.270 s]
+[INFO] homeportal-portal-model ............................ SUCCESS [  0.253 s]
+[INFO] homeportal-portal-repository ....................... SUCCESS [  0.146 s]
+[INFO] homeportal-portal-mail ............................. SUCCESS [  0.207 s]
+[INFO] homeportal-portal-service .......................... SUCCESS [  0.110 s]
+[INFO] homeportal-portal-management ....................... SUCCESS [  0.086 s]
+[INFO] homeportal-portal .................................. SUCCESS [  0.305 s]
+[INFO] homeportal-portal-application ...................... SUCCESS [  0.003 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.708 s
+[INFO] Finished at: 2026-09-09T23:01:23+02:00
+[INFO] Final Memory: 42M/216M
+[INFO] ------------------------------------------------------------------------
