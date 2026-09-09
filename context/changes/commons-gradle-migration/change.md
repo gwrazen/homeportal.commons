@@ -88,3 +88,48 @@ Robota idzie na `jdk17` (decyzja usera 2026-09-09). Dokumenty ticketu przyjecha�
 przez `cherry-pick` commita `d66bdda` (tutaj `47fbb6f`), więc **istnieją na obu gałęziach** —
 na `masterze` już wypchnięte, tu żyją dalej razem z robotą. Pomiar testów wykonany na `jdk17`
 w tymczasowym worktree, `mvn clean test` bez `install`, więc `~/.m2` pozostało nietknięte.
+
+## Faza 2 — build Gradle bez publikacji (2026-09-09)
+
+Gradle **9.7.1** (bieżąca stabilna), wrapper przypięty w repo, toolchain 17. Maven zostaje nietknięty
+obok — oba buildy przechodzą.
+
+| bramka | wynik |
+|---|---|
+| `./gradlew build` | BUILD SUCCESSFUL |
+| testy | **139**: java 59 / domain 15 / data 59 / mail 2 / logging 4 / test 0 — zgodne z baseline co do modułu |
+| wyciszenia | zero |
+| bajtkod | `major version: 61` |
+| klasy per moduł | 32 / 17 / 23 / 8 / 1 / 1 — zgodne |
+| `mail/*.vm` | 11, na tych samych ścieżkach |
+| `-sources.jar` | 6 z 6 (`withSourcesJar()`) |
+| `mvn -B -o clean test` obok | BUILD SUCCESS, 139 testów |
+
+### ⚠️ Lombok działa też w źródłach testowych
+
+Pierwszy build padł na `PageItemsTest` (`package lombok does not exist`). W Mavenie scope `provided`
+obejmuje **test classpath razem z przetwarzaniem adnotacji**; w Gradle `compileOnly` +
+`annotationProcessor` dotyczą wyłącznie `main`. Potrzebna jest osobna para
+`testCompileOnly` + `testAnnotationProcessor` — czego nie dało się wyczytać z pomów, bo tam
+ta zależność jest niewidoczna.
+
+### Odstępstwo przyjęte świadomie: brak `META-INF/maven/**`
+
+Zbiory ścieżek w sześciu jarach różnią się od baseline'u **dokładnie o dwa wpisy na moduł**:
+`META-INF/maven/pl.homeportal/<artifactId>/pom.xml` i `pom.properties`. Maven wkłada je
+automatycznie, Gradle nie generuje ich w ogóle. Poza nimi zbiory są identyczne, zero wpisów
+nadmiarowych po stronie Gradle'a.
+
+Sprawdzone przed decyzją: `grep` po źródłach wszystkich pięciu repozytoriów daje **zero** trafień
+na `META-INF/maven` i `pom.properties`, zero na `getImplementationVersion` i `Implementation-Version`.
+Nikt w homixie tych metadanych nie czyta, a po fazie 6 pomy znikają z gałęzi, więc odtwarzanie ich
+w jarze byłoby atrapą. **Kryterium 2.5 obowiązuje z pominięciem `META-INF/maven/**`** — decyzja
+usera 2026-09-09.
+
+### Wersje zależności
+
+Moduły deklarują zależności **bez wersji**, tak jak w pomach. Wersje daje 30 `constraints`
+w `build.gradle.kts` (lustro dzisiejszego `dependencyManagement`) plus dwie platformy:
+`spring-framework-bom:5.2.9.RELEASE` i `spring-data-releasetrain:Moore-SR10`. Trzy nadpisania
+tranzytywne (`javassist:3.29.2-GA`, `commons-io:2.6`, `commons-compress:1.0`) siedzą w tych samych
+`constraints` — ich skutek u konsumenta weryfikuje faza 4.

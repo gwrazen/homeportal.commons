@@ -551,32 +551,32 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [x] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0`
-- [x] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm`
-- [x] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów
-- [x] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0
-- [x] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu
+- [x] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0` — 7beda13
+- [x] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm` — 7beda13
+- [x] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów — 7beda13
+- [x] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0 — 7beda13
+- [x] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu — 7beda13
 
 #### Manual
 
-- [x] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md`
-- [x] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie
+- [x] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md` — 7beda13
+- [x] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie — 7beda13
 
 ### Phase 2: Build Gradle bez publikacji
 
 #### Automated
 
-- [ ] 2.1 `./gradlew build` przechodzi na JDK 17
-- [ ] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0
-- [ ] 2.3 Zero wyciszeń wobec baseline'u
-- [ ] 2.4 `javap -verbose` pokazuje `major version: 61`
-- [ ] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt`
-- [ ] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1
-- [ ] 2.7 `mvn -B clean test` nadal zielony ze 139 testami
+- [x] 2.1 `./gradlew build` przechodzi na JDK 17
+- [x] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0
+- [x] 2.3 Zero wyciszeń wobec baseline'u
+- [x] 2.4 `javap -verbose` pokazuje `major version: 61`
+- [x] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt` — **z pominięciem `META-INF/maven/**`, których Gradle nie generuje; zero innych różnic**
+- [x] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1
+- [x] 2.7 `mvn -B clean test` nadal zielony ze 139 testami
 
 #### Manual
 
-- [ ] 2.8 Porównanie obu buildów odnotowane w `change.md`
+- [x] 2.8 Porównanie obu buildów odnotowane w `change.md`
 
 ### Phase 3: Metadane i publikacja do izolowanego stagingu
 
