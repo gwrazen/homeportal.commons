@@ -1,8 +1,8 @@
 package pl.homeportal.commons.datetime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TimerTest
 {
@@ -36,6 +36,6 @@ public class TimerTest
         Thread.sleep(10);
 
         // then — brak wyjatku i sensowny format
-        org.junit.Assert.assertTrue(timer.summary().endsWith("s"));
+        org.junit.jupiter.api.Assertions.assertTrue(timer.summary().endsWith("s"));
     }
 }

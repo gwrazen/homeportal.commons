@@ -16,7 +16,9 @@ dependencies {
 
     provided("org.projectlombok:lombok")
 
-    testImplementation("junit:junit")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Gradle 9 nie dokłada juz launchera sam - bez tego test task nie startuje wcale.
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.hamcrest:hamcrest-all")
     // In-memory database for the index<->query integration test. Loaded through
     // src/test/resources/META-INF/persistence.xml, not through any import.

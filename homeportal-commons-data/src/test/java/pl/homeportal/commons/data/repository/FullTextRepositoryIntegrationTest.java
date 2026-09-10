@@ -1,8 +1,8 @@
 package pl.homeportal.commons.data.repository;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.data.search.QueryParameter;
 import pl.homeportal.commons.data.search.SearchQuery;
 import pl.homeportal.commons.data.search.encoding.ValueEncoder;
@@ -14,8 +14,8 @@ import jakarta.persistence.Persistence;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test end-to-end na bazie w pamieci (H2) i indeksie Lucene w pamieci.
@@ -77,7 +77,7 @@ public class FullTextRepositoryIntegrationTest
     private EntityManager entityManager;
     private FullTextRepositoryImpl<IndexedThing> repository;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         factory = Persistence.createEntityManagerFactory("commons-it");
@@ -95,7 +95,7 @@ public class FullTextRepositoryIntegrationTest
         entityManager.getTransaction().commit();
     }
 
-    @After
+    @AfterEach
     public void tearDown()
     {
         if (entityManager != null && entityManager.isOpen())
@@ -176,8 +176,8 @@ public class FullTextRepositoryIntegrationTest
 
         assertEquals(1, first.size());
         assertEquals(1, second.size());
-        assertTrue("Kolejne strony musza zwracac rozne wyniki",
-                   !first.get(0).getId().equals(second.get(0).getId()));
+        assertTrue(
+                   !first.get(0).getId().equals(second.get(0).getId()),"Kolejne strony musza zwracac rozne wyniki");
     }
 
     @Test
@@ -205,7 +205,7 @@ public class FullTextRepositoryIntegrationTest
         repository.indexedSave(thing);
         entityManager.getTransaction().commit();
 
-        assertTrue("Przekazany obiekt musi dostac identyfikator", thing.isPersisted());
+        assertTrue( thing.isPersisted(),"Przekazany obiekt musi dostac identyfikator");
     }
 
     /**

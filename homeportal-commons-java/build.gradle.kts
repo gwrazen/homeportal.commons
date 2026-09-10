@@ -23,5 +23,9 @@ dependencies {
     provided("jakarta.servlet:jakarta.servlet-api")
     provided("org.projectlombok:lombok")
 
-    testImplementation("junit:junit")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // hamcrest przychodzil tranzytywnie z junit:junit; Jupiter go nie wnosi.
+    testImplementation("org.hamcrest:hamcrest-all")
+    // Gradle 9 nie dokłada juz launchera sam - bez tego test task nie startuje wcale.
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

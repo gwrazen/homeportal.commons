@@ -2,25 +2,30 @@ package pl.homeportal.commons.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.exception.HomeportalValidationException;
 
 import jakarta.validation.constraints.NotNull;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ObjectValidatorTest
 {
 
     public static final Integer ONE = 1;
 
-    @Test(expected = HomeportalValidationException.class)
+    @Test
     public void validateWithNullObjectNull()
     {
-        final TestObject objectNull = null;
-        ObjectValidator.validateWithNull(TestObject.class, objectNull);
+        assertThrows(HomeportalValidationException.class, () ->
+        {
+            final TestObject objectNull = null;
+            ObjectValidator.validateWithNull(TestObject.class, objectNull);
+
+        });
     }
 
     @Test

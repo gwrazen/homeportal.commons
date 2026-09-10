@@ -9,5 +9,7 @@ dependencies {
     provided("org.apache.velocity:velocity")
     provided("org.projectlombok:lombok")
 
-    testImplementation("junit:junit")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Gradle 9 nie dokłada juz launchera sam - bez tego test task nie startuje wcale.
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

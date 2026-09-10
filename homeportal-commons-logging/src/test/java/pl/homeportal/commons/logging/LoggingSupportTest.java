@@ -1,10 +1,10 @@
 package pl.homeportal.commons.logging;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static pl.homeportal.commons.logging.LoggingSupport.logger;
 import static pl.homeportal.commons.logging.LoggingSupport.shortName;
 

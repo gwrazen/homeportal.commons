@@ -1,6 +1,6 @@
 package pl.homeportal.commons.data.search;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.data.search.bridge.DateBridge;
 import pl.homeportal.commons.data.search.bridge.FeatureBridge;
 import pl.homeportal.commons.data.search.bridge.NumericBridge;
@@ -12,10 +12,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Kontrakt: dla kazdej wartosci brzegowej strona indeksu (bridge) i strona zapytania
@@ -41,9 +41,9 @@ public class EncodingContractTest
         final PropertyTypeBridge bridge = new PropertyTypeBridge();
         for (String value : EDGE_CASES)
         {
-            assertEquals("Rozjazd kodowania dla: '" + value + "'",
+            assertEquals(
                          bridge.toIndexedValue(value, null),
-                         ValueEncoders.TEXT.encode(value));
+                         ValueEncoders.TEXT.encode(value),"Rozjazd kodowania dla: '" + value + "'");
         }
     }
 
@@ -57,7 +57,7 @@ public class EncodingContractTest
             final String indexed = bridge.toIndexedValue("|MARKET:" + value + "|", null);
             final String queried = ValueEncoders.FEATURE.encode(value);
 
-            assertEquals("Rozjazd kodowania cechy dla: '" + value + "'", indexed, queried);
+            assertEquals( indexed, queried,"Rozjazd kodowania cechy dla: '" + value + "'");
         }
     }
 
@@ -78,9 +78,9 @@ public class EncodingContractTest
         final NumericBridge bridge = new NumericBridge();
         for (long value : new long[]{0L, 1L, -1L, 120000L, Integer.MAX_VALUE, 3_000_000_000L, Long.MIN_VALUE, Long.MAX_VALUE})
         {
-            assertEquals("Rozjazd kodowania liczby: " + value,
+            assertEquals(
                          bridge.toIndexedValue(value, null),
-                         ValueEncoders.NUMERIC.encode(String.valueOf(value)));
+                         ValueEncoders.NUMERIC.encode(String.valueOf(value)),"Rozjazd kodowania liczby: " + value);
         }
     }
 
@@ -102,7 +102,7 @@ public class EncodingContractTest
         final String encoded = ValueEncoders.NUMERIC.encode(3_000_000_000L);
 
         assertNotNull(encoded);
-        assertTrue("Kodowanie musi zachowac porzadek", encoded.compareTo(ValueEncoders.NUMERIC.encode(2_000_000_000L)) > 0);
+        assertTrue( encoded.compareTo(ValueEncoders.NUMERIC.encode(2_000_000_000L)) > 0,"Kodowanie musi zachowac porzadek");
     }
 
     /**
@@ -116,8 +116,8 @@ public class EncodingContractTest
         final String minusFive = ValueEncoders.NUMERIC.encode(-5);
         final String zero = ValueEncoders.NUMERIC.encode(0);
 
-        assertTrue("-9 < -5", minusNine.compareTo(minusFive) < 0);
-        assertTrue("-5 < 0", minusFive.compareTo(zero) < 0);
+        assertTrue( minusNine.compareTo(minusFive) < 0,"-9 < -5");
+        assertTrue( minusFive.compareTo(zero) < 0,"-5 < 0");
     }
 
     @Test

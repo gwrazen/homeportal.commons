@@ -1,13 +1,14 @@
 package pl.homeportal.commons.data.model.feature;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FeatureTypeProviderTest
 {
@@ -58,10 +59,14 @@ public class FeatureTypeProviderTest
      * Gettery oddawaly zywa, mutowalna statyczna liste — jeden konsument mogl
      * trwale zmienic zestaw cech widziany przez wszystkich pozostalych.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void listsAreNotModifiable()
     {
-        FeatureTypeProvider.forSaleApartment().add(FeatureType.MARKET);
+        assertThrows(UnsupportedOperationException.class, () ->
+        {
+            FeatureTypeProvider.forSaleApartment().add(FeatureType.MARKET);
+
+        });
     }
 
     @Test

@@ -21,7 +21,6 @@ val jakartaServletVersion = "6.0.0"
 val jakartaMailVersion = "2.0.1"
 val jakartaElVersion = "5.0.0"
 val guavaVersion = "27.0.1-jre"
-val junitVersion = "4.11"
 val hamcrestVersion = "1.3"
 val h2Version = "1.4.200"
 val jakartaXmlBindVersion = "4.0.2"
@@ -98,7 +97,6 @@ subprojects {
             add("api", "jakarta.servlet:jakarta.servlet-api:$jakartaServletVersion")
             add("api", "org.glassfish.expressly:expressly:$jakartaElVersion")
             add("api", "xerces:xercesImpl:$xercesVersion")
-            add("api", "junit:junit:$junitVersion")
             add("api", "org.hamcrest:hamcrest-all:$hamcrestVersion")
             add("api", "com.h2database:h2:$h2Version")
             add("api", "org.slf4j:slf4j-simple:$slf4jVersion")
@@ -179,7 +177,9 @@ subprojects {
     }
 
     tasks.withType<Test>().configureEach {
-        useJUnit()
+        // ⚠️ Gdy silnik nie znajdzie ani jednego testu, Gradle konczy build SUKCESEM z zerem
+        // uruchomionych, a to repo nie ma bramki liczacej testy - sprawdzaj recznie po zmianach.
+        useJUnitPlatform()
         systemProperty("file.encoding", "UTF-8")
         testLogging {
             events("failed")

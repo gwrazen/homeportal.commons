@@ -1,10 +1,10 @@
 package pl.homeportal.commons.data.index;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IndexerMonitorTest
 {
@@ -18,7 +18,7 @@ public class IndexerMonitorTest
         final IndexerMonitor monitor = new IndexerMonitor();
 
         assertTrue(monitor.acquireLock("scheduler"));
-        assertFalse("Drugie pozyskanie musi zostac odrzucone", monitor.acquireLock("jmx"));
+        assertFalse( monitor.acquireLock("jmx"),"Drugie pozyskanie musi zostac odrzucone");
         assertEquals("scheduler", monitor.getLockOwner());
         assertTrue(monitor.isRunning());
     }

@@ -2,15 +2,16 @@ package pl.homeportal.commons.data.search;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.data.search.encoding.ValueEncoder;
 import pl.homeportal.commons.data.search.encoding.ValueEncoders;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SearchQueryTest
 {
@@ -117,10 +118,14 @@ public class SearchQueryTest
         assertEquals(expected, query.getQueryString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void rangeRejectsNonNumericBound()
     {
-        new SearchQuery().addRangeParameter(TestParameter.PRICE, "sto", "200");
+        assertThrows(IllegalArgumentException.class, () ->
+        {
+            new SearchQuery().addRangeParameter(TestParameter.PRICE, "sto", "200");
+
+        });
     }
 
     @Test
