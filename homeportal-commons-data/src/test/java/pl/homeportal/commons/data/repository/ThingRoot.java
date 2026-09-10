@@ -6,9 +6,9 @@ import org.hibernate.search.annotations.Store;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.bridge.PropertyTypeBridge;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 /**
  * Nadklasa **bez** {@code @Indexed} — zaindeksowane sa wylacznie jej podtypy.

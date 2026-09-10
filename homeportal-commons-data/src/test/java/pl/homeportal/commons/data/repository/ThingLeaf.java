@@ -2,7 +2,7 @@ package pl.homeportal.commons.data.repository;
 
 import org.hibernate.search.annotations.Indexed;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 /** Jedyny zaindeksowany typ w hierarchii {@link ThingRoot}. */
 @Entity

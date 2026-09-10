@@ -5,7 +5,7 @@ import lombok.Data;
 import org.junit.Test;
 import pl.homeportal.commons.exception.HomeportalValidationException;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;

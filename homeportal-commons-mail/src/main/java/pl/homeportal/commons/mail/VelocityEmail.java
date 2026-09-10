@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
-import javax.mail.Session;
+import jakarta.mail.Session;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;

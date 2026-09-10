@@ -9,7 +9,7 @@ import pl.homeportal.commons.data.search.bridge.FeatureBridge;
 import pl.homeportal.commons.data.search.bridge.NumericBridge;
 import pl.homeportal.commons.data.search.bridge.PropertyTypeBridge;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 /**
  * Encja wylacznie na potrzeby testu integracyjnego: kazde pole jest indeksowane

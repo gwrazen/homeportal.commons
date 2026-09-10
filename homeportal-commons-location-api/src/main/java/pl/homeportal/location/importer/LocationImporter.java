@@ -9,8 +9,8 @@ import pl.homeportal.model.entities.State;
 import pl.homeportal.model.entities.Street;
 import pl.homeportal.service.LocationService;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

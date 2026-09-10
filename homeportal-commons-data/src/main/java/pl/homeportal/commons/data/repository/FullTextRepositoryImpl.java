@@ -24,8 +24,8 @@ import pl.homeportal.commons.data.search.SearchQuery;
 import pl.homeportal.commons.data.search.SortSpec;
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -151,7 +151,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
                 .append(getSort(pageable.getSort()))
                 .toString();
 
-        javax.persistence.Query query = entityManager.createQuery(stringQuery);
+        jakarta.persistence.Query query = entityManager.createQuery(stringQuery);
         query.setMaxResults(pageable.getPageSize());
         query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 
