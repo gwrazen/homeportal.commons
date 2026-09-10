@@ -5,7 +5,6 @@ import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
 import org.hibernate.search.backend.lucene.LuceneExtension;
 import org.hibernate.search.backend.lucene.index.LuceneIndexManager;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.homeportal.commons.data.SortFieldAware;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.SearchQuery;
 import pl.homeportal.commons.data.search.SortSpec;
@@ -171,7 +169,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
             return findAll(createPageable(sQuery), t);
         }
 
-        return createQuery(sQuery.getQueryString(), toLuceneSortFields(sQuery), sQuery.isKeywordAnalyser(), t)
+        return createQuery(sQuery.getQueryString(), sQuery.getSortSpecs(), sQuery.isKeywordAnalyser(), t)
                 .fetch(sQuery.getPageNumber() * sQuery.getPageSize(), sQuery.getPageSize())
                 .hits();
     }
@@ -221,19 +219,6 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
         searchSession().workspace().mergeSegments();
     }
 
-    private SortField[] toLuceneSortFields(SortFieldAware query)
-    {
-        final List<SortSpec> specs = query.getSortSpecs();
-        final SortField[] sortFields = new SortField[specs.size()];
-        for (int index = 0; index < specs.size(); index++)
-        {
-            final SortSpec spec = specs.get(index);
-            sortFields[index] = new SortField(spec.getField(), SortField.Type.STRING, spec.isReverse());
-        }
-
-        return sortFields;
-    }
-
     /**
      * Szczegol implementacji — typy Lucene i Hibernate Search nie wychodza poza ta klase.
      *
@@ -247,7 +232,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
      * zapytania z flaga keywordAnalyser musza byc sprawdzone osobno.
      */
     org.hibernate.search.engine.search.query.SearchQuery<T> createQuery(
-            String queryString, SortField[] sortFields, boolean keywordAnalyser, Class<T> t)
+            String queryString, List<SortSpec> sortSpecs, boolean keywordAnalyser, Class<T> t)
     {
         try
         {
@@ -258,11 +243,22 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
                             .extension(LuceneExtension.get())
                             .where(f -> f.fromLuceneQuery(luceneQuery));
 
-            if (sortFields != null && sortFields.length > 0)
+            if (sortSpecs != null && !sortSpecs.isEmpty())
             {
-                return step.sort(f -> f.extension(LuceneExtension.get())
-                                       .fromLuceneSort(new org.apache.lucene.search.Sort(sortFields)))
-                           .toQuery();
+                // ⚠️ NIE natywny org.apache.lucene.search.Sort. Search 6/7 zapisuje pole sortowalne
+                // jako docvalues SORTED_SET (bo dopuszcza wielowartosciowosc), a SortField.Type.STRING
+                // z Lucene'a zada SORTED i wywala sie komunikatem "unexpected docvalues type".
+                // DSL Search dobiera wlasciwy typ sam.
+                return step.sort(f -> {
+                    final var composite = f.composite();
+                    for (SortSpec spec : sortSpecs)
+                    {
+                        composite.add(spec.isReverse()
+                                              ? f.field(spec.getField()).desc()
+                                              : f.field(spec.getField()).asc());
+                    }
+                    return composite;
+                }).toQuery();
             }
 
             return step.toQuery();
