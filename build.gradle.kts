@@ -25,7 +25,6 @@ val junitVersion = "4.11"
 val hamcrestVersion = "1.3"
 val h2Version = "1.4.200"
 val jakartaXmlBindVersion = "4.0.2"
-val aspectjVersion = "1.9.2"
 val jacksonVersion = "2.9.8"
 
 
@@ -94,8 +93,8 @@ subprojects {
             add("api", "com.google.guava:guava:$guavaVersion")
             add("api", "com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
             add("api", "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-            add("api", "org.aspectj:aspectjrt:$aspectjVersion")
-            add("api", "org.aspectj:aspectjweaver:$aspectjVersion")
+            // ⚠️ Piny aspectj zdjete przy przejsciu na Boota 3: 1.9.2 odtwarzalo stan sprzed
+            // migracji, a Spring 6 wymaga nowszego weavera. Wersje daje BOM Boota (1.9.22.1).
             add("api", "jakarta.servlet:jakarta.servlet-api:$jakartaServletVersion")
             add("api", "org.glassfish.expressly:expressly:$jakartaElVersion")
             add("api", "xerces:xercesImpl:$xercesVersion")
