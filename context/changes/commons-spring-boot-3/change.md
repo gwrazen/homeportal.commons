@@ -14,10 +14,14 @@ Zgłoszone przez usera **2026-09-10** jako rozszerzenie trójki `hp-spring-boot-
 **jest wejściem tego tematu** — dokładnie tak samo, jak przy migracji na Gradle'a
 (decyzja usera z 2026-09-09: „commons idzie pierwszy"), gdzie okazał się poligonem.
 
-Priorytet: 🟡 — **ocena własna.** Nic nie jest zepsute i nic tego nie wymusza **dziś**.
-⚠️ Podnieś do 🟠 w dniu, w którym zapadnie decyzja o Boocie 3 w którymkolwiek z trzech repozytoriów —
-ten ticket jest wtedy pierwszym krokiem, a nie równoległym. Ta sama konwencja, co
-w `hop-hibernate-search-6`.
+Priorytet: 🟢 — **ODŁOŻONY 2026-09-10 decyzją usera: „zostaw to na wersji 7".**
+🟢 to poziom PONIŻEJ 🟡: bierzemy dopiero, gdy nie ma nic wyżej. Commons **zostaje na 7.0**,
+wydania 8.0 nie ma. Poprzednia ocena (🟡) nadal aktualna merytorycznie, tylko nieaktywna.
+
+⚠️ **Odłożenie jest tu tanie i tym się różni od `homix-network-hardening`** — nic nie tyka,
+nic nie rośnie, żaden dzień zwłoki nic nie kosztuje. Jedyny koszt to niezamknięta bomba
+opisana niżej: `commons-java` w linii 7.0 nadal niesie `javax.servlet` w trzech klasach,
+których hac na Boocie 3 **nie wolno zawołać**.
 
 ## Stan zmierzony 2026-09-10 (gałąź `jdk17`, wersja 7.0)
 
@@ -99,3 +103,82 @@ się o zmianie). Plan musi powiedzieć, **jak długo obie linie żyją i kto pil
 - `hop-hibernate-search-6` (repo `hop`) — Search 5.5.4 w `commons-data` idzie razem z tamtą migracją
 - `homeportal-commons-java/build.gradle.kts:24` — `provided("javax.servlet:servlet-api")`
 - `context/archive/2026-08-29-commons-gradle-migration/` — metoda i pułapki wydawnicze tego repo
+
+---
+
+# Próba na gałęzi `boot3` (2026-09-10) — zmierzone, gdzie jest ściana
+
+Gałąź `boot3` odbita od `jdk17`. Zrobione **mechanicznie**: jeden BOM Boota **3.3.5** zamiast
+`spring-framework-bom` 5.2.9 + `spring-data-releasetrain` (ten drugi nie istnieje po Springu 5),
+współrzędne jakartowe w miejsce javaxowych, `javax.*` → `jakarta.*` w **17 plikach**, wersja 8.0.
+
+## Wynik: 7 modułów z 8 kompiluje się na jakarcie od pierwszego podejścia
+
+| moduł | stan |
+|---|---|
+| `-java`, `-domain`, `-geo-api`, `-location-api`, `-logging`, `-mail`, `-test` | **kompilują się** |
+| `-data` | **nie kompiluje się** — wyłącznie Hibernate Search |
+
+Cała reszta migracji — Spring 5.2.9 → 6.1, Hibernate 5.0.10 → 6.5, `jakarta.validation` 2.0 → 3.0,
+`javax.servlet` → `jakarta.servlet`, `javax.mail` → `jakarta.mail`, JAXB 2.3 → 4.0 — **przeszła bez
+ani jednej poprawki w kodzie poza zamianą importów**. Trzy drobiazgi wyszły po drodze i są już
+naprawione: `hibernate-entitymanager` nie istnieje w 6.x (wchłonął go `hibernate-core`, który
+zmienił groupId na `org.hibernate.orm`), Jakarta EL 5.0 to `org.glassfish.expressly:expressly`,
+a Hibernate Search zmienił współrzędne na `org.hibernate.search:hibernate-search-mapper-orm`
++ `-backend-lucene`.
+
+## Ściana: pięć plików, jedno API
+
+```
+FullTextRepositoryImpl   — FullTextEntityManager, FullTextQuery, SearchFactory (org.hibernate.search.jpa.*)
+FeatureBridge            — org.hibernate.search.bridge.StringBridge
+NumericBridge            — j.w.
+DateBridge               — j.w.
+PropertyTypeBridge       — j.w.
+```
+
+W Hibernate Search 6/7 **cały ten pakiet nie istnieje**: `FullTextEntityManager` zastąpiła
+`SearchSession`, `StringBridge` — `ValueBridge`, a DSL zapytań przepisano od zera.
+
+## ⚠️ Korekta do łańcucha zapisanego w tym tickecie po południu
+
+Ticket mówi, że commons wychodzi jako 8.0, a konsumenci podbijają pin **każdy wtedy, kiedy jest
+gotowy**. Dla jakarty to prawda. **Dla Hibernate Search jest fałszem** — i to jest najważniejsze
+znalezisko tej próby.
+
+Mostki i `FullTextRepository` z commons obsługują adnotacje, które siedzą **w encjach konsumentów**:
+**225** wystąpień `@Field`/`@Indexed`/`@FieldBridge` w `portal-model` i **122** w `hop-model`.
+Search 6/7 wymienił te adnotacje wszystkie naraz (`@FullTextField`, `@GenericField`,
+`@ValueBridgeRef`), więc **`commons-data` + `portal-model` + `hop-model` muszą przejść jednym
+ruchem** — a do tego dochodzi przeindeksowanie (4,45 mln ofert w hopie, ~16,6 tys. w portalu).
+
+To nie unieważnia wydania 8.0 dla siedmiu pozostałych modułów: one mogą wyjść na jakarcie
+i odblokować konsumentów, którzy nie dotykają wyszukiwarki. Rozstrzygnięcie, czy `-data` idzie
+w tym samym wydaniu, czy w osobnym, należy do planu.
+
+## Czego ta próba NIE zrobiła
+
+Nie tknęła Hibernate Search API (5 plików nadal się nie kompiluje), nie uruchomiła testów,
+nie opublikowała niczego do rejestru ani do `~/.m2`, nie ruszyła portalu ani hopa.
+Gałąź `boot3` jest **eksperymentem pomiarowym**, nie kandydatem do wydania.
+
+---
+
+# 🟢 Decyzja 2026-09-10: zostajemy na 7.0
+
+Polecenie usera po zobaczeniu pomiaru z gałęzi `boot3`: *„zostaw to na wersji 7"*.
+Wydania 8.0 **nie ma i nie planujemy go**. Gałąź `boot3` zostaje w repozytorium jako **zapis
+pomiaru**, nie jako kandydat do wydania — commit `a6e730f`.
+
+Co to znaczy dla tematu Boota 3 w całym homixie: **stoi w miejscu na wejściu**. Trzy tickety
+konsumentów (`hp-spring-boot-3`, `hop-spring-boot-3`, `importer-spring-boot-3`) czekają na linię
+jakartową, której nie będzie, więc one też są odłożone — nie z braku pomysłu, tylko dlatego,
+że wejście łańcucha zostało świadomie zamknięte.
+
+**Czego nie trzeba robić drugi raz, gdy temat wróci** (to jest cała wartość tej gałęzi):
+
+- jakarta w commons **jest zrobiona i skompilowana** — 7 modułów z 8, plus trzy rozbrojone
+  pułapki wersji (`hibernate-entitymanager`, `expressly`, nowe współrzędne Search);
+- wiadomo, że ściana ma **pięć plików**, nie kilkanaście;
+- wiadomo, że Search **nie da się przejść samym commons** — wymusza ruch razem z `portal-model`
+  (225 adnotacji) i `hop-model` (122).
