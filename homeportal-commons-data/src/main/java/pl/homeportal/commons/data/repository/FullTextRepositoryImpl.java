@@ -43,6 +43,13 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
 
     private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 100;
     private static final int THREADS_TO_LOAD_OBJECTS = 10;
+
+    /**
+     * ⚠️ Integer.MIN_VALUE to jedyna wartosc, przy ktorej sterownik MySQL-a strumieniuje wynik
+     * zamiast wczytac go w calosci do pamieci. Bez tego przebudowa indeksu konczy sie
+     * OutOfMemoryError w sterowniku, a nie w Lucene — i wyglada na za maly heap.
+     */
+    private static final int ID_FETCH_SIZE_STREAMING = Integer.MIN_VALUE;
     private static final String ID = "id";
 
     /** Bezstanowy i wspoldzielony — inaczej niz poprzednia alokacja na kazde zapytanie. */
@@ -189,6 +196,7 @@ public class FullTextRepositoryImpl<T extends AbstractEntity> implements FullTex
                     .massIndexer(t)
                     .batchSizeToLoadObjects(batchSize)
                     .threadsToLoadObjects(threads)
+                    .idFetchSize(ID_FETCH_SIZE_STREAMING)
                     .cacheMode(CacheMode.IGNORE)
                     .mergeSegmentsOnFinish(true)
                     .startAndWait();
