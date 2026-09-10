@@ -178,7 +178,8 @@ subprojects {
 
     tasks.withType<Test>().configureEach {
         // ⚠️ Gdy silnik nie znajdzie ani jednego testu, Gradle konczy build SUKCESEM z zerem
-        // uruchomionych, a to repo nie ma bramki liczacej testy - sprawdzaj recznie po zmianach.
+        // uruchomionych, a to repo JAKO JEDYNE nie ma bramki assertTestCount - po zmianach
+        // w testach porownaj liczbe recznie.
         useJUnitPlatform()
         systemProperty("file.encoding", "UTF-8")
         testLogging {

@@ -26,6 +26,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     // hamcrest przychodzil tranzytywnie z junit:junit; Jupiter go nie wnosi.
     testImplementation("org.hamcrest:hamcrest-all")
-    // Gradle 9 nie dokłada juz launchera sam - bez tego test task nie startuje wcale.
+    // Jawnie: Gradle 8 dokłada launcher sam, Gradle 9 juz nie i test task nie startuje
+    // wcale (TestFrameworkNotAvailableException). Ta linia uniezaleznia build od wersji.
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
