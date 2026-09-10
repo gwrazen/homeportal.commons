@@ -42,7 +42,7 @@ public class EncodingContractTest
         for (String value : EDGE_CASES)
         {
             assertEquals("Rozjazd kodowania dla: '" + value + "'",
-                         bridge.objectToString(value),
+                         bridge.toIndexedValue(value, null),
                          ValueEncoders.TEXT.encode(value));
         }
     }
@@ -54,7 +54,7 @@ public class EncodingContractTest
         for (String value : EDGE_CASES)
         {
             // bridge dostaje caly blob |NAZWA:wartosc|, encoder — sama wartosc
-            final String indexed = bridge.objectToString("|MARKET:" + value + "|");
+            final String indexed = bridge.toIndexedValue("|MARKET:" + value + "|", null);
             final String queried = ValueEncoders.FEATURE.encode(value);
 
             assertEquals("Rozjazd kodowania cechy dla: '" + value + "'", indexed, queried);
@@ -79,7 +79,7 @@ public class EncodingContractTest
         for (long value : new long[]{0L, 1L, -1L, 120000L, Integer.MAX_VALUE, 3_000_000_000L, Long.MIN_VALUE, Long.MAX_VALUE})
         {
             assertEquals("Rozjazd kodowania liczby: " + value,
-                         bridge.objectToString(value),
+                         bridge.toIndexedValue(value, null),
                          ValueEncoders.NUMERIC.encode(String.valueOf(value)));
         }
     }
@@ -89,7 +89,7 @@ public class EncodingContractTest
     {
         final Date date = new Date(1_754_000_000_000L);
 
-        assertEquals(new DateBridge().objectToString(date), ValueEncoders.DATE.encode(date));
+        assertEquals(new DateBridge().toIndexedValue(date, null), ValueEncoders.DATE.encode(date));
     }
 
     /**

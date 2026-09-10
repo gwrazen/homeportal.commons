@@ -1,5 +1,5 @@
 group = "pl.homeportal"
-version = "8.0"
+version = "7.0"
 
 // Single source of versions, mirroring the <dependencyManagement> of the Maven build.
 // Modules declare dependencies without versions; the constraints below supply them.
@@ -8,7 +8,7 @@ val commonsLang3Version = "3.8.1"
 val commonsIoVersion = "2.6"
 val velocityVersion = "1.7"
 val imgscalrVersion = "4.2"
-val commonsEmailVersion = "1.2"
+val commonsEmailVersion = "2.0.0-M1"
 
 val lombokVersion = "1.18.30"
 
@@ -80,7 +80,7 @@ subprojects {
             add("api", "org.apache.commons:commons-lang3:$commonsLang3Version")
             add("api", "org.apache.velocity:velocity:$velocityVersion")
             add("api", "org.imgscalr:imgscalr-lib:$imgscalrVersion")
-            add("api", "org.apache.commons:commons-email:$commonsEmailVersion")
+            add("api", "org.apache.commons:commons-email2-jakarta:$commonsEmailVersion")
             // Must be com.sun.mail:javax.mail, never javax.mail:mail - the latter stopped
             // at 1.4.7 (2013) and negotiates SSLv3/TLSv1, both disabled in newer JDKs.
             add("api", "com.sun.mail:jakarta.mail:$jakartaMailVersion")

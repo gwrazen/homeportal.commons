@@ -20,14 +20,14 @@ public class NumericBridgeTest
     @Test
     public void testObjectToString()
     {
-        assertEquals("09223372036854895808", numericBridge.objectToString(120000d));
+        assertEquals("09223372036854895808", numericBridge.toIndexedValue(120000d, null));
     }
 
     @Test
     public void keepsNumericOrderAsLexicographicOrder()
     {
-        final String small = numericBridge.objectToString(120000);
-        final String big = numericBridge.objectToString(3_000_000_000L);
+        final String small = numericBridge.toIndexedValue(120000, null);
+        final String big = numericBridge.toIndexedValue(3_000_000_000L, null);
 
         assertTrue(small.compareTo(big) < 0);
     }
@@ -35,7 +35,7 @@ public class NumericBridgeTest
     @Test
     public void truncatesFractionToMatchIntegerRangeQueries()
     {
-        assertEquals(numericBridge.objectToString(45), numericBridge.objectToString(45.9d));
+        assertEquals(numericBridge.toIndexedValue(45, null), numericBridge.toIndexedValue(45.9d, null));
     }
 
     @Test
@@ -48,6 +48,6 @@ public class NumericBridgeTest
     @Test
     public void nullSafe()
     {
-        assertNull(numericBridge.objectToString(null));
+        assertNull(numericBridge.toIndexedValue(null, null));
     }
 }

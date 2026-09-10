@@ -1,15 +1,16 @@
 package pl.homeportal.commons.data.search.bridge;
 
+import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
+import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
 import java.util.Date;
 
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.DateTools.Resolution;
-import org.hibernate.search.bridge.builtin.StringBridge;
 
-public class DateBridge extends StringBridge
+public class DateBridge implements ValueBridge<Object, String>
 {
     @Override
-    public String objectToString(Object object)
+    public String toIndexedValue(Object object, ValueBridgeToIndexedValueContext context)
     {
         if (object != null)
         {

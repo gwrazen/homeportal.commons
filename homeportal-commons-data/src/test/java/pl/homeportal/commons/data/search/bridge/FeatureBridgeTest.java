@@ -13,28 +13,28 @@ public class FeatureBridgeTest
     @Test
     public void testObjectToStringCorrect()
     {
-        String features = featureBridge.objectToString(before());
+        String features = featureBridge.toIndexedValue(before(), null);
         assertEquals(after(), features);
     }
 
     @Test
     public void testObjectToStringNull()
     {
-        String features = featureBridge.objectToString(null);
+        String features = featureBridge.toIndexedValue(null, null);
         assertNull(features);
     }
 
     @Test
     public void testObjectToStringEmptyString()
     {
-        String features = featureBridge.objectToString(Constants.SPACE);
+        String features = featureBridge.toIndexedValue(Constants.SPACE, null);
         assertNull(features);
     }
 
     @Test
     public void testObjectToStringSpecialCharacters()
     {
-        String features = featureBridge.objectToString(Constants.DOT);
+        String features = featureBridge.toIndexedValue(Constants.DOT, null);
         assertNull(features);
     }
 

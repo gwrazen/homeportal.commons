@@ -1,6 +1,7 @@
 package pl.homeportal.commons.data.search.bridge;
 
-import org.hibernate.search.bridge.StringBridge;
+import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
+import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.homeportal.commons.data.search.encoding.ValueEncoders;
@@ -16,12 +17,12 @@ import pl.homeportal.commons.data.search.encoding.ValueEncoders;
  *
  * @author gwrazen
  */
-public class NumericBridge implements StringBridge
+public class NumericBridge implements ValueBridge<Object, String>
 {
     private static final Logger LOG = LoggerFactory.getLogger(NumericBridge.class);
 
     @Override
-    public String objectToString(Object o)
+    public String toIndexedValue(Object o, ValueBridgeToIndexedValueContext context)
     {
         final String encoded = ValueEncoders.NUMERIC.encode(o);
         if (encoded == null && o != null)

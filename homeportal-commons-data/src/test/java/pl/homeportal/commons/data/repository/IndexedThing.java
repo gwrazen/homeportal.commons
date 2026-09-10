@@ -1,9 +1,9 @@
 package pl.homeportal.commons.data.repository;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBridgeRef;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.bridge.FeatureBridge;
 import pl.homeportal.commons.data.search.bridge.NumericBridge;
@@ -20,16 +20,13 @@ import jakarta.persistence.Entity;
 @Indexed
 public class IndexedThing extends AbstractEntity<Integer>
 {
-    @Field(store = Store.YES)
-    @FieldBridge(impl = PropertyTypeBridge.class)
+    @FullTextField(projectable = Projectable.YES, valueBridge = @ValueBridgeRef(type = PropertyTypeBridge.class))
     private String city;
 
-    @Field(store = Store.YES)
-    @FieldBridge(impl = FeatureBridge.class)
+    @FullTextField(projectable = Projectable.YES, valueBridge = @ValueBridgeRef(type = FeatureBridge.class))
     private String features;
 
-    @Field(store = Store.YES)
-    @FieldBridge(impl = NumericBridge.class)
+    @FullTextField(projectable = Projectable.YES, valueBridge = @ValueBridgeRef(type = NumericBridge.class))
     private Long price;
 
     public IndexedThing()

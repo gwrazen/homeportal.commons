@@ -1,6 +1,6 @@
 package pl.homeportal.commons.data.repository;
 
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import jakarta.persistence.Entity;
 

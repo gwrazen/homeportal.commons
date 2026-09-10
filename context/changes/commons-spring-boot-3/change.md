@@ -157,3 +157,61 @@ w tym samym wydaniu, czy w osobnym, należy do planu.
 Nie tknęła Hibernate Search API (5 plików nadal się nie kompiluje), nie uruchomiła testów,
 nie opublikowała niczego do rejestru ani do `~/.m2`, nie ruszyła portalu ani hopa.
 Gałąź `boot3` jest **eksperymentem pomiarowym**, nie kandydatem do wydania.
+
+---
+
+# ✅ Commons przechodzi na Boota 3 — build zielony, **wersja zostaje 7.0** (2026-09-10)
+
+Decyzja usera: *„rob teraz całość na 7"* — nie ma linii 8.0, commons migruje **w miejscu**.
+Gałąź `boot3`, build zielony, **139 testów** przechodzi, w tym cały `FullTextRepositoryIntegrationTest`.
+
+## Co zostało przepisane
+
+| obszar | z | na |
+|---|---|---|
+| platforma | `spring-framework-bom` 5.2.9 + `spring-data-releasetrain` | `spring-boot-dependencies` **3.3.5** |
+| przestrzeń nazw | `javax.*` | `jakarta.*` (17 plików) |
+| Hibernate | Core 5.0.10 + `hibernate-entitymanager` | Core 6.5 (`org.hibernate.orm`, entitymanager wchłonięty) |
+| Hibernate Search | 5.5.4 (`hibernate-search-orm`) | **7.1.1** (`hibernate-search-mapper-orm` + `-backend-lucene`) |
+| sesja wyszukiwania | `FullTextEntityManager` | `SearchSession` |
+| mostki | `StringBridge#objectToString` | `ValueBridge<Object,String>#toIndexedValue` |
+| adnotacje encji | `@Field(store) + @FieldBridge(impl)` | `@FullTextField(projectable, valueBridge = @ValueBridgeRef(type))` |
+| poczta | `commons-email` 1.2 (javax) | `commons-email2-jakarta` **2.0.0-M1** |
+| EL | `javax.el` + `org.glassfish.web:javax.el` | `org.glassfish.expressly:expressly` 5.0 |
+
+**To jest wzorzec dla `portal-model` (225 adnotacji) i `hop-model` (122)** — tam czeka dokładnie
+ta sama zamiana, tylko w większej skali.
+
+## Pięć pułapek, które kosztowały tu czas i policzą się u konsumentów
+
+1. **Właściwości Hibernate Search zmieniły nazwy.** `hibernate.search.default.directory_provider = ram`
+   → `hibernate.search.backend.directory.type = local-heap`; `hibernate.search.lucene_version` znika.
+   Search 7 **odmawia startu** przy starych kluczach (HSEARCH000573), więc produkcyjne
+   `application.yml` portalu i hopa wymagają tej samej korekty.
+2. **Identyfikator nie jest polem indeksu.** Idiom z 5.x — `(id:[0 TO 999999999])` jako „wszystkie
+   dokumenty" — trafia dziś w **nic** i licznik oddaje zero przy niepustym indeksie. Zastąpione
+   przez `matchAll()`. ⚠️ Każde zapytanie konsumenta odwołujące się do pola `id` ma ten sam problem.
+3. **`Pageable` dostał w Spring Data 3 metodę `withPage(int)`** — `Page` z commons implementuje ten
+   interfejs, więc bez niej nie kompiluje się nic. Uwaga: argument jest 0-based, a nasza klasa
+   liczy strony od 1.
+4. **`parser.setLowercaseExpandedTerms(true)` zniknęło w Lucene 7.** Rozwijane termy (wildcard,
+   zakresy) nie są już obniżane do małych liter przez parser. Dla pól analizowanych bez zmian,
+   **dla pól `keywordAnalyser` zachowanie się różni** i wymaga sprawdzenia po stronie portalu.
+5. **`EmailException` mieszka w `commons-email2-core`**, a nie w `-jakarta`.
+
+## ⚠️ Dwa ryzyka, których ten build NIE zamyka
+
+- **Sortowanie jest niesprawdzone.** `FullTextRepositoryIntegrationTest` **nie ma ani jednego testu
+  sortowania** (sprawdzone), a Search 6/7 wymaga `sortable = Sortable.YES` na polu, żeby natywny
+  `Sort` Lucene'a miał po czym sortować. Portal sortuje po cenie, dacie i metrażu — **to jest
+  najpoważniejsza niewiadoma przy migracji `portal-model`**.
+- **`commons-email2-jakarta 2.0.0-M1` to wydanie milestone** w bibliotece obsługującej całą pocztę
+  wychodzącą czterech aplikacji. Alternatywa (przepisanie `VelocityEmail` na `MimeMessageHelper`
+  Springa) jest czystsza zależnościowo, ale rusza logikę wysyłki. Do rozstrzygnięcia przed wydaniem.
+
+## ⚠️ Czego NIE wolno teraz zrobić
+
+**Nie publikować tego artefaktu** — ani do `~/.m2`, ani do rejestru. Wersja została **7.0**, więc
+nadpisanie zastąpiłoby javaxową bibliotekę jakartową pod tym samym numerem i **portal, hop
+i importer przestałyby się budować w tej samej chwili**. Dopóki konsumenci nie przejdą na Boota 3,
+ta gałąź jest wyłącznie lokalna. `publishToMavenLocal` na niej to awaria trzech repozytoriów naraz.
