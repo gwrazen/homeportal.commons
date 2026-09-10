@@ -3,7 +3,7 @@ package pl.homeportal.commons.mail;
 import org.slf4j.Logger;
 import org.springframework.context.MessageSource;
 
-import javax.mail.Session;
+import jakarta.mail.Session;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

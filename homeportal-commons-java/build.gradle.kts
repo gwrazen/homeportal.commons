@@ -13,15 +13,14 @@ dependencies {
     api("org.aspectj:aspectjrt")
     api("org.aspectj:aspectjweaver")
 
-    // javax.el has no import anywhere in the code but IS needed at runtime: Hibernate
+    // jakarta.el has no import anywhere in the code but IS needed at runtime: Hibernate
     // Validator interpolates messages through Expression Language. Without these two
     // ObjectValidator dies on startup (NoClassDefFoundError: javax/el/ELManager).
     // Do not drop them based on an import scan or on dependency:analyze.
-    api("javax.el:javax.el-api")
-    api("org.glassfish.web:javax.el")
+    api("org.glassfish.expressly:expressly")
     api("xerces:xercesImpl")
 
-    provided("javax.servlet:servlet-api")
+    provided("jakarta.servlet:jakarta.servlet-api")
     provided("org.projectlombok:lombok")
 
     testImplementation("junit:junit")

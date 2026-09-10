@@ -1,7 +1,7 @@
 ---
 change_id: commons-spring-boot-3
 title: Linia commons na jakarcie jako wersja 8.0 — warunek wstępny Boota 3 w portalu, hopie i importerze, a przy okazji jedyne miejsce, gdzie hac już dziś nosi bombę z opóźnionym zapłonem
-status: new
+status: implementing
 created: 2026-09-10
 updated: 2026-09-10
 archived_at: null
@@ -14,14 +14,10 @@ Zgłoszone przez usera **2026-09-10** jako rozszerzenie trójki `hp-spring-boot-
 **jest wejściem tego tematu** — dokładnie tak samo, jak przy migracji na Gradle'a
 (decyzja usera z 2026-09-09: „commons idzie pierwszy"), gdzie okazał się poligonem.
 
-Priorytet: 🟢 — **ODŁOŻONY 2026-09-10 decyzją usera: „zostaw to na wersji 7".**
-🟢 to poziom PONIŻEJ 🟡: bierzemy dopiero, gdy nie ma nic wyżej. Commons **zostaje na 7.0**,
-wydania 8.0 nie ma. Poprzednia ocena (🟡) nadal aktualna merytorycznie, tylko nieaktywna.
-
-⚠️ **Odłożenie jest tu tanie i tym się różni od `homix-network-hardening`** — nic nie tyka,
-nic nie rośnie, żaden dzień zwłoki nic nie kosztuje. Jedyny koszt to niezamknięta bomba
-opisana niżej: `commons-java` w linii 7.0 nadal niesie `javax.servlet` w trzech klasach,
-których hac na Boocie 3 **nie wolno zawołać**.
+Priorytet: 🟡 — **ocena własna.** Nic nie jest zepsute i nic tego nie wymusza **dziś**.
+⚠️ Podnieś do 🟠 w dniu, w którym zapadnie decyzja o Boocie 3 w którymkolwiek z trzech repozytoriów —
+ten ticket jest wtedy pierwszym krokiem, a nie równoległym. Ta sama konwencja, co
+w `hop-hibernate-search-6`.
 
 ## Stan zmierzony 2026-09-10 (gałąź `jdk17`, wersja 7.0)
 
@@ -164,21 +160,58 @@ Gałąź `boot3` jest **eksperymentem pomiarowym**, nie kandydatem do wydania.
 
 ---
 
-# 🟢 Decyzja 2026-09-10: zostajemy na 7.0
+# ✅ Commons przechodzi na Boota 3 — build zielony, **wersja zostaje 7.0** (2026-09-10)
 
-Polecenie usera po zobaczeniu pomiaru z gałęzi `boot3`: *„zostaw to na wersji 7"*.
-Wydania 8.0 **nie ma i nie planujemy go**. Gałąź `boot3` zostaje w repozytorium jako **zapis
-pomiaru**, nie jako kandydat do wydania — commit `a6e730f`.
+Decyzja usera: *„rob teraz całość na 7"* — nie ma linii 8.0, commons migruje **w miejscu**.
+Gałąź `boot3`, build zielony, **139 testów** przechodzi, w tym cały `FullTextRepositoryIntegrationTest`.
 
-Co to znaczy dla tematu Boota 3 w całym homixie: **stoi w miejscu na wejściu**. Trzy tickety
-konsumentów (`hp-spring-boot-3`, `hop-spring-boot-3`, `importer-spring-boot-3`) czekają na linię
-jakartową, której nie będzie, więc one też są odłożone — nie z braku pomysłu, tylko dlatego,
-że wejście łańcucha zostało świadomie zamknięte.
+## Co zostało przepisane
 
-**Czego nie trzeba robić drugi raz, gdy temat wróci** (to jest cała wartość tej gałęzi):
+| obszar | z | na |
+|---|---|---|
+| platforma | `spring-framework-bom` 5.2.9 + `spring-data-releasetrain` | `spring-boot-dependencies` **3.3.5** |
+| przestrzeń nazw | `javax.*` | `jakarta.*` (17 plików) |
+| Hibernate | Core 5.0.10 + `hibernate-entitymanager` | Core 6.5 (`org.hibernate.orm`, entitymanager wchłonięty) |
+| Hibernate Search | 5.5.4 (`hibernate-search-orm`) | **7.1.1** (`hibernate-search-mapper-orm` + `-backend-lucene`) |
+| sesja wyszukiwania | `FullTextEntityManager` | `SearchSession` |
+| mostki | `StringBridge#objectToString` | `ValueBridge<Object,String>#toIndexedValue` |
+| adnotacje encji | `@Field(store) + @FieldBridge(impl)` | `@FullTextField(projectable, valueBridge = @ValueBridgeRef(type))` |
+| poczta | `commons-email` 1.2 (javax) | `commons-email2-jakarta` **2.0.0-M1** |
+| EL | `javax.el` + `org.glassfish.web:javax.el` | `org.glassfish.expressly:expressly` 5.0 |
 
-- jakarta w commons **jest zrobiona i skompilowana** — 7 modułów z 8, plus trzy rozbrojone
-  pułapki wersji (`hibernate-entitymanager`, `expressly`, nowe współrzędne Search);
-- wiadomo, że ściana ma **pięć plików**, nie kilkanaście;
-- wiadomo, że Search **nie da się przejść samym commons** — wymusza ruch razem z `portal-model`
-  (225 adnotacji) i `hop-model` (122).
+**To jest wzorzec dla `portal-model` (225 adnotacji) i `hop-model` (122)** — tam czeka dokładnie
+ta sama zamiana, tylko w większej skali.
+
+## Pięć pułapek, które kosztowały tu czas i policzą się u konsumentów
+
+1. **Właściwości Hibernate Search zmieniły nazwy.** `hibernate.search.default.directory_provider = ram`
+   → `hibernate.search.backend.directory.type = local-heap`; `hibernate.search.lucene_version` znika.
+   Search 7 **odmawia startu** przy starych kluczach (HSEARCH000573), więc produkcyjne
+   `application.yml` portalu i hopa wymagają tej samej korekty.
+2. **Identyfikator nie jest polem indeksu.** Idiom z 5.x — `(id:[0 TO 999999999])` jako „wszystkie
+   dokumenty" — trafia dziś w **nic** i licznik oddaje zero przy niepustym indeksie. Zastąpione
+   przez `matchAll()`. ⚠️ Każde zapytanie konsumenta odwołujące się do pola `id` ma ten sam problem.
+3. **`Pageable` dostał w Spring Data 3 metodę `withPage(int)`** — `Page` z commons implementuje ten
+   interfejs, więc bez niej nie kompiluje się nic. Uwaga: argument jest 0-based, a nasza klasa
+   liczy strony od 1.
+4. **`parser.setLowercaseExpandedTerms(true)` zniknęło w Lucene 7.** Rozwijane termy (wildcard,
+   zakresy) nie są już obniżane do małych liter przez parser. Dla pól analizowanych bez zmian,
+   **dla pól `keywordAnalyser` zachowanie się różni** i wymaga sprawdzenia po stronie portalu.
+5. **`EmailException` mieszka w `commons-email2-core`**, a nie w `-jakarta`.
+
+## ⚠️ Dwa ryzyka, których ten build NIE zamyka
+
+- **Sortowanie jest niesprawdzone.** `FullTextRepositoryIntegrationTest` **nie ma ani jednego testu
+  sortowania** (sprawdzone), a Search 6/7 wymaga `sortable = Sortable.YES` na polu, żeby natywny
+  `Sort` Lucene'a miał po czym sortować. Portal sortuje po cenie, dacie i metrażu — **to jest
+  najpoważniejsza niewiadoma przy migracji `portal-model`**.
+- **`commons-email2-jakarta 2.0.0-M1` to wydanie milestone** w bibliotece obsługującej całą pocztę
+  wychodzącą czterech aplikacji. Alternatywa (przepisanie `VelocityEmail` na `MimeMessageHelper`
+  Springa) jest czystsza zależnościowo, ale rusza logikę wysyłki. Do rozstrzygnięcia przed wydaniem.
+
+## ⚠️ Czego NIE wolno teraz zrobić
+
+**Nie publikować tego artefaktu** — ani do `~/.m2`, ani do rejestru. Wersja została **7.0**, więc
+nadpisanie zastąpiłoby javaxową bibliotekę jakartową pod tym samym numerem i **portal, hop
+i importer przestałyby się budować w tej samej chwili**. Dopóki konsumenci nie przejdą na Boota 3,
+ta gałąź jest wyłącznie lokalna. `publishToMavenLocal` na niej to awaria trzech repozytoriów naraz.

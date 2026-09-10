@@ -7,12 +7,11 @@ dependencies {
     api("org.springframework.data:spring-data-commons")
     api("org.springframework.data:spring-data-jpa")
     api("org.springframework:spring-tx")
-    api("org.hibernate:hibernate-core")
-    api("org.hibernate:hibernate-entitymanager")
-    api("org.hibernate:hibernate-search-orm")
-    api("org.hibernate:hibernate-search-engine")
-    api("org.apache.lucene:lucene-queryparser")
-    api("javax.xml.bind:jaxb-api")
+    // hibernate-entitymanager nie istnieje w 6.x — wchlonelo je hibernate-core.
+    api("org.hibernate.orm:hibernate-core")
+    api("org.hibernate.search:hibernate-search-mapper-orm")
+    api("org.hibernate.search:hibernate-search-backend-lucene")
+    api("jakarta.xml.bind:jakarta.xml.bind-api")
     runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
 
     provided("org.projectlombok:lombok")

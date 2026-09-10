@@ -1,14 +1,14 @@
 package pl.homeportal.commons.data.repository;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBridgeRef;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import pl.homeportal.commons.data.entity.AbstractEntity;
 import pl.homeportal.commons.data.search.bridge.PropertyTypeBridge;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 /**
  * Nadklasa **bez** {@code @Indexed} — zaindeksowane sa wylacznie jej podtypy.
@@ -20,8 +20,7 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ThingRoot extends AbstractEntity<Integer>
 {
-    @Field(store = Store.YES)
-    @FieldBridge(impl = PropertyTypeBridge.class)
+    @FullTextField(projectable = Projectable.YES, valueBridge = @ValueBridgeRef(type = PropertyTypeBridge.class))
     private String city;
 
     public ThingRoot()
