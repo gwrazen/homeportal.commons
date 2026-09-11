@@ -1,10 +1,10 @@
 ---
 change_id: commons-spring-boot-3
 title: Linia commons na jakarcie jako wersja 8.0 — warunek wstępny Boota 3 w portalu, hopie i importerze, a przy okazji jedyne miejsce, gdzie hac już dziś nosi bombę z opóźnionym zapłonem
-status: implementing
+status: archived
 created: 2026-09-10
-updated: 2026-09-10
-archived_at: null
+updated: 2026-09-11
+archived_at: 2026-09-11T07:45:00Z
 ---
 
 ## Notes
@@ -215,3 +215,10 @@ ta sama zamiana, tylko w większej skali.
 nadpisanie zastąpiłoby javaxową bibliotekę jakartową pod tym samym numerem i **portal, hop
 i importer przestałyby się budować w tej samej chwili**. Dopóki konsumenci nie przejdą na Boota 3,
 ta gałąź jest wyłącznie lokalna. `publishToMavenLocal` na niej to awaria trzech repozytoriów naraz.
+
+---
+
+# ✅ ZAMKNIETE 2026-09-11
+
+Spring Boot 2.7.18 -> 3.3.5 wykonane i **wdrozone na produkcje 2026-09-11**. Testy: **139**.
+Szczegoly znalezisk w tresci powyzej.
