@@ -1,12 +1,12 @@
 package pl.homeportal.commons.mail;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.i18n.Language;
 
 import java.util.Collections;
 
 import static java.util.Collections.singleton;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Kontrakt {@link NotifierAdapter#notifyChecked(BaseDTO)}: metoda ma ZWRACAC wynik zamiast go

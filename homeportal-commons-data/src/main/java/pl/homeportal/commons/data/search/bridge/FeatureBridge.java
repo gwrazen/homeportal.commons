@@ -1,6 +1,7 @@
 package pl.homeportal.commons.data.search.bridge;
 
-import org.hibernate.search.bridge.builtin.StringBridge;
+import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
+import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
 import pl.homeportal.commons.data.model.feature.FeatureConstants;
 import pl.homeportal.commons.data.search.encoding.ValueEncoders;
 
@@ -13,10 +14,10 @@ import static pl.homeportal.commons.text.Constants.SPACE;
  * {@link ValueEncoders#FEATURE} — to samo kodowanie stosuje strona zapytania dla
  * parametrow zadeklarowanych jako cechy.
  */
-public class FeatureBridge extends StringBridge
+public class FeatureBridge implements ValueBridge<Object, String>
 {
     @Override
-    public String objectToString(Object object)
+    public String toIndexedValue(Object object, ValueBridgeToIndexedValueContext context)
     {
         if (null == object)
         {

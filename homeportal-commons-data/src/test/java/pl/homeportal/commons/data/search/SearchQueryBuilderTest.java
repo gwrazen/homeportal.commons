@@ -1,9 +1,9 @@
 package pl.homeportal.commons.data.search;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.data.pageable.Page;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Kontrakt przeliczenia strony: formularz jest 1-based, indeks liczy od zera.

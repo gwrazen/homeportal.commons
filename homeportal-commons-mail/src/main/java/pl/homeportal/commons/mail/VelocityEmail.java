@@ -1,8 +1,8 @@
 package pl.homeportal.commons.mail;
 
 import lombok.Getter;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail2.core.EmailException;
+import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
-import javax.mail.Session;
+import jakarta.mail.Session;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;

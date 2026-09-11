@@ -1,11 +1,12 @@
 package pl.homeportal.commons.datetime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DateFormatsTest
 {
@@ -16,7 +17,7 @@ public class DateFormatsTest
         SimpleDateFormat format = DateFormats.timeWithSecondPrecision();
         String time = format.format(new Date());
         assertEquals(DateFormats.TIME_WITH_SECOND, format.toPattern());
-        assertTrue("Unexpected time format: " + time, time.matches("\\d{2}:\\d{2}:\\d{2}"));
+        assertTrue( time.matches("\\d{2}:\\d{2}:\\d{2}"),"Unexpected time format: " + time);
     }
 
     @Test
@@ -25,7 +26,7 @@ public class DateFormatsTest
         SimpleDateFormat format = DateFormats.timeWithMinutePrecision();
         String time = format.format(new Date());
         assertEquals(DateFormats.TIME_WITH_MINUTE, format.toPattern());
-        assertTrue("Unexpected time format: " + time, time.matches("\\d{2}:\\d{2}"));
+        assertTrue( time.matches("\\d{2}:\\d{2}"),"Unexpected time format: " + time);
     }
 
     @Test
@@ -34,12 +35,16 @@ public class DateFormatsTest
         SimpleDateFormat format = DateFormats.datetimeWithDayPrecision();
         String date = format.format(new Date());
         assertEquals(DateFormats.DATE_WITH_DAY, format.toPattern());
-        assertTrue("Unexpected date format: " + date, date.matches("\\d{2}-\\d{2}-\\d{4}"));
+        assertTrue( date.matches("\\d{2}-\\d{2}-\\d{4}"),"Unexpected date format: " + date);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void sdfTimeRejectsDayPrecision()
     {
-        DateFormats.sdfTime(DateFormats.Precision.DAY);
+        assertThrows(IllegalArgumentException.class, () ->
+        {
+            DateFormats.sdfTime(DateFormats.Precision.DAY);
+
+        });
     }
 }

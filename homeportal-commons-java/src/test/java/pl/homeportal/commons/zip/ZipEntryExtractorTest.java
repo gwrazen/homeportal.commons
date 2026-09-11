@@ -1,8 +1,7 @@
 package pl.homeportal.commons.zip;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import pl.homeportal.commons.exception.HomeportalServiceException;
 
 import java.io.File;
@@ -13,17 +12,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ZipEntryExtractorTest
 {
     private static final String ENTRY = "oferty.xml";
     private static final String CONTENT = "<?xml version=\"1.0\"?><offers/>";
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public File folder;
 
     @Test
     public void extractsEntryContent() throws Exception
@@ -57,14 +57,18 @@ public class ZipEntryExtractorTest
         assertTrue(archive.delete());
     }
 
-    @Test(expected = HomeportalServiceException.class)
+    @Test
     public void throwsWhenEntryIsMissing() throws Exception
     {
-        // given
-        final File archive = archiveWith(ENTRY, CONTENT);
+        assertThrows(HomeportalServiceException.class, () ->
+        {
+            // given
+            final File archive = archiveWith(ENTRY, CONTENT);
 
-        // when
-        ZipEntryExtractor.extract("nieistniejacy.xml", archive.getAbsolutePath());
+            // when
+            ZipEntryExtractor.extract("nieistniejacy.xml", archive.getAbsolutePath());
+
+        });
     }
 
     @Test
@@ -82,7 +86,7 @@ public class ZipEntryExtractorTest
     public void isNotAvailableForPlainTextFile() throws Exception
     {
         // given
-        final File notAnArchive = folder.newFile("notes.txt");
+        final File notAnArchive = newFile(folder, "notes.txt");
         try (FileOutputStream out = new FileOutputStream(notAnArchive))
         {
             out.write("to nie jest zip".getBytes(StandardCharsets.UTF_8));
@@ -95,12 +99,12 @@ public class ZipEntryExtractorTest
     @Test
     public void isNotAvailableForMissingFile()
     {
-        assertFalse(ZipEntryExtractor.isAvailable(new File(folder.getRoot(), "brak.zip").getAbsolutePath()));
+        assertFalse(ZipEntryExtractor.isAvailable(new File(folder, "brak.zip").getAbsolutePath()));
     }
 
     private File archiveWith(String entryName, String content) throws IOException
     {
-        final File archive = folder.newFile(entryName.hashCode() + "-archive.zip");
+        final File archive = newFile(folder, entryName.hashCode() + "-archive.zip");
         try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(archive)))
         {
             zip.putNextEntry(new ZipEntry(entryName));
@@ -122,5 +126,13 @@ public class ZipEntryExtractorTest
         }
 
         return new String(buffer.toByteArray(), StandardCharsets.UTF_8);
+    }
+
+    /** Odpowiednik TemporaryFolder.newFile - @TempDir daje sam katalog, bez API do tworzenia. */
+    private static File newFile(final File root, final String name) throws IOException
+    {
+        final File file = new File(root, name);
+        file.createNewFile();
+        return file;
     }
 }

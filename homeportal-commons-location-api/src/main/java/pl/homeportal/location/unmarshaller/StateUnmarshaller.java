@@ -8,7 +8,7 @@ import pl.homeportal.location.model.LocationDocument;
 import pl.homeportal.location.model.Row;
 import pl.homeportal.model.entities.State;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.InputStream;
 import java.util.LinkedList;

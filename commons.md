@@ -1,32 +1,52 @@
 # commons — baza wiedzy (single file)
 
-**homeportal.commons** — współdzielona biblioteka Maven (`pl.homeportal:homeportal-commons:6.0`,
-packaging `pom`, Java 8) narzędzi dla platformy Homeportal; **biblioteka, nie aplikacja** (brak `main`) —
-budowana, instalowana do lokalnego repo i konsumowana przez pozostałe repa homixa. Uwaga: **buduje się
-wyłącznie na JDK 8** (Lombok 1.16.14 pada na JDK 16+), a konsumenci budują na JDK 17 wobec gotowego jara.
+**homeportal.commons** — współdzielona biblioteka (`pl.homeportal:homeportal-commons:7.0`, Java 17)
+narzędzi dla platformy Homeportal; **biblioteka, nie aplikacja** (brak `main`) — budowana, publikowana
+do GitHub Packages i konsumowana przez pozostałe repa homixa.
+
+⚠️ **To repo prowadzi dwie linie na dwóch gałęziach i ten plik opisuje gałąź `jdk17`:**
+
+| gałąź | wersja | JDK | build | konsumenci |
+|---|---|---|---|---|
+| `jdk17` (ta) | **7.0** | 17 | **Gradle** | portal, hac, importer |
+| `master` | 6.0 | 8 | Maven | hop |
+
+Merge `jdk17` → `master` jest **zakazany** (decyzja z ticketu `commons-jdk17-migration`): konsument
+na Javie 8 nie odczyta bajtkodu 17. Poprawki do linii 6.x robi się na `masterze`. Wersja jednej linii
+nie mówi nic o drugiej.
 
 Ten plik jest jedynym źródłem wiedzy o repo — obowiązuje też agentów AI pracujących w tym katalogu.
 
 ## Build & test
 
 ```bash
-mvn clean install                                    # wszystkie moduły + testy
-mvn -pl homeportal-commons-data -am clean install    # jeden moduł wraz z zależnościami
-mvn -pl homeportal-commons-java test -Dtest=StringUtilsTest           # pojedyncza klasa testowa
-mvn -pl homeportal-commons-java test -Dtest=StringUtilsTest#someCase  # pojedynczy test
-mvn deploy -Dmaven.test.skip=true                    # deploy artefaktów (testy pominięte)
+./gradlew build                                      # wszystkie moduły + testy
+./gradlew :homeportal-commons-data:build             # jeden moduł wraz z zależnościami
+./gradlew :homeportal-commons-java:test --tests StringUtilsTest            # pojedyncza klasa testowa
+./gradlew :homeportal-commons-java:test --tests 'StringUtilsTest.someCase' # pojedynczy test
+./gradlew publishAllPublicationsToStagingRepository -PpublishRepoUrl=file:///tmp/commons-staging
 ```
 
-Lokalnie build wymaga JDK 8: `JAVA_HOME=$(/usr/libexec/java_home -v 1.8) mvn clean install`.
-Skille: `mb` (build), `md` (deploy), `mbd` (build + deploy). Testy: JUnit 4 + Hamcrest.
+Build wymaga JDK 17: `JAVA_HOME=$(/usr/libexec/java_home -v 17) ./gradlew build`.
+Zawsze przez **wrapper** (`./gradlew`) — systemowego `gradle` nie ma i nie jest potrzebny, wersja
+jest przypięta w `gradle/wrapper/`. Skille: `gb` (build), `gd` (publish), `gbd` (build + publish).
+Mavenowe `mb`/`md`/`mbd` **nie działają w tym repo od migracji** — pomów tu nie ma.
+Testy: JUnit 4 + Hamcrest (`useJUnit()` w buildzie).
 
-CI: `.github/workflows/build.yml` uruchamia `mvn verify` na każdy push i pull request (JDK 8).
-Publikacja jest osobnym, ręcznym workflow (`publish.yml`) — GitHub Packages nie pozwala nadpisać
-wydanej wersji, więc **każda zmiana wymaga podbicia `<version>` przed publikacją**.
+⚠️ **`BUILD SUCCESSFUL` nie dowodzi, że testy się wykonały.** Gradle kończy się zielono także przy
+zerze uruchomionych testów — przy JUnit 4 wystarczy brak `useJUnit()`. Liczbę czytaj z raportów
+(`build/test-results/test/TEST-*.xml`); ma wynosić **139**, w rozkładzie 59 / 15 / 59 / 4 / 2 / 0
+(java / domain / data / logging / mail / test). CI ma na to twardą bramkę.
+
+CI: `.github/workflows/build.yml` uruchamia `./gradlew build` na każdy push i pull request (JDK 17),
+waliduje wrapper i **przerywa build, gdy liczba testów ≠ 139**. Publikacja jest osobnym, ręcznym
+workflow (`publish.yml`) — GitHub Packages nie pozwala nadpisać wydanej wersji, więc **każda zmiana
+wymaga podbicia `version` w `build.gradle.kts` przed publikacją**. Poświadczenia idą przez zmienne
+środowiskowe; Gradle nie czyta `~/.m2/settings.xml`.
 
 ## Układ modułów i kolejność zależności
 
-Do agregatora należy tych sześć modułów (deklaracja w root `pom.xml`); buduj i edytuj w tej kolejności:
+Do buildu należy tych sześć modułów (deklaracja w `settings.gradle.kts`); buduj i edytuj w tej kolejności:
 
 1. **homeportal-commons-java** — fundament, bez zależności wewnętrznych. Narzędzia w `pl.homeportal.commons.*`:
    text, datetime, file, image, zip, json, security, validation, reflection, i18n, exceptions, scheduler,
@@ -43,9 +63,9 @@ Do agregatora należy tych sześć modułów (deklaracja w root `pom.xml`); budu
 5. **homeportal-commons-mail** — zależy od `-java` i `-logging`. Maile szablonowane Velocity.
 6. **homeportal-commons-test** — helpery testowe Spring MVC.
 
-> Katalogi `homeportal-commons-geo-api` i `homeportal-commons-location-api` **nie** są w root `<modules>`
-> i mają innego parenta (`pl.homeportal-platform`). `mvn install` ich nie buduje — pomijaj je, chyba że
-> pracujesz nad nimi wprost.
+> Katalogi `homeportal-commons-geo-api` i `homeportal-commons-location-api` **nie** są w `settings.gradle.kts`
+> i mają własne, mavenowe pomy z obcym parentem (`pl.homeportal-platform`). Build ich nie dotyka —
+> pomijaj je, chyba że pracujesz nad nimi wprost.
 
 ## Konwencje
 
@@ -53,9 +73,18 @@ Do agregatora należy tych sześć modułów (deklaracja w root `pom.xml`); budu
   w runtime i nie ma ani jednego `import`: `javax.el-api` + `glassfish javax.el` (interpolacja komunikatów
   Hibernate Validatora), `hibernate-entitymanager` (provider JPA), H2 w testach (ładowany przez
   `persistence.xml`). `mvn dependency:analyze` zgłasza je jako nieużywane — to fałszywy alarm.
-- **Wersje zależności są scentralizowane.** Wszystkie wersje żyją w root `pom.xml` w `<dependencyManagement>`.
-  POM-y modułów deklarują zależności *bez* `<version>`. Wersje artefaktów `spring-*` i `spring-data-*`
-  pochodzą z zaimportowanych BOM-ów — nie pinuj ich pojedynczo.
+- **Wersje zależności są scentralizowane.** Wszystkie żyją w root `build.gradle.kts` jako `constraints`;
+  buildy modułów deklarują zależności *bez* wersji. Wersje `spring-*` i `spring-data-*` pochodzą
+  z dwóch platform (`spring-framework-bom`, `spring-data-releasetrain`) — nie pinuj ich pojedynczo.
+  Trzy wpisy (`javassist`, `commons-io`, `commons-compress`) nie są przez nikogo deklarowane wprost —
+  **przykrywają wersje tranzytywne** i ich usunięcie wywala się dopiero w runtime u konsumenta
+  (javassist 3.18 nie działa na JDK 17).
+- **`api`, nie `implementation`.** Zależności widoczne dla konsumenta muszą iść przez `api`, bo
+  `implementation` publikuje je w pomie ze scope'em `runtime` — a portal, hop i importer kompilują się
+  przeciw klasom `-domain`, którego **nie deklarują wprost**.
+- **`provided` ma osobną konfigurację.** Gradle nie ma odpowiednika mavenowego `provided`: `compileOnly`
+  w ogóle nie trafia do metadanych. Konfiguracja `provided` w root buildzie wchodzi w `compileOnly`
+  i `testImplementation`, a do pomu jest dopisywana przez `pom.withXml` z jawnym scope'em.
 - **Lombok** (`@Getter`/`@Setter`/`@NoArgsConstructor` itd.) w encjach i DTO.
 - Cały kod produkcyjny pod pakietem `pl.homeportal.commons`.
 - Wyjątki: hierarchia `Homeportal*Exception` (`HomeportalServiceException`, `HomeportalValidationException`,
@@ -105,5 +134,6 @@ aplikacyjnego. Bieżące zmiany: `context/changes/<change-id>/`.
 ## Skille AI (rejestr)
 
 Skille AI homixa mają wspólne, wersjonowane źródło — sibling repo **`homeportal.ai.registry`**;
-globalne `mb/mbd/md/itest` są tam symlinkowane do `~/.claude/skills`, a `install.js` je synchronizuje.
+globalne `gb/gd/gbd` (Gradle), `mb/mbd/md/itest` (Maven) są tam symlinkowane do `~/.claude/skills`,
+a `install.js` je synchronizuje. W tym repo działają wyłącznie gradle'owe.
 Pełny model scope/origin/wersji i lista repów homixa: `homeportal.hac/hac.md` §11.

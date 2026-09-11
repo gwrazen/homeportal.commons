@@ -1,10 +1,10 @@
 package pl.homeportal.commons.data.search.bridge;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pl.homeportal.commons.text.Constants;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class FeatureBridgeTest
 {
@@ -13,28 +13,28 @@ public class FeatureBridgeTest
     @Test
     public void testObjectToStringCorrect()
     {
-        String features = featureBridge.objectToString(before());
+        String features = featureBridge.toIndexedValue(before(), null);
         assertEquals(after(), features);
     }
 
     @Test
     public void testObjectToStringNull()
     {
-        String features = featureBridge.objectToString(null);
+        String features = featureBridge.toIndexedValue(null, null);
         assertNull(features);
     }
 
     @Test
     public void testObjectToStringEmptyString()
     {
-        String features = featureBridge.objectToString(Constants.SPACE);
+        String features = featureBridge.toIndexedValue(Constants.SPACE, null);
         assertNull(features);
     }
 
     @Test
     public void testObjectToStringSpecialCharacters()
     {
-        String features = featureBridge.objectToString(Constants.DOT);
+        String features = featureBridge.toIndexedValue(Constants.DOT, null);
         assertNull(features);
     }
 

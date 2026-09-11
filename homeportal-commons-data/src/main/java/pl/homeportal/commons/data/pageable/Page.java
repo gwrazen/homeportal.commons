@@ -136,6 +136,19 @@ public class Page implements Pageable
         return new Page(FIRST_PAGE, size, getSort());
     }
 
+    /**
+     * Dolozone przez Spring Data 3 (interfejs {@link Pageable}) — w 2.x tej metody nie bylo.
+     *
+     * ⚠️ Argument jest **0-based**, tak jak cale Spring Data, a ta klasa liczy strony od 1
+     * (patrz javadoc klasy). Przeliczenie jest wiec konieczne, inaczej {@code withPage(0)}
+     * dalby formularz wskazujacy na strone zerowa, ktora w publicznym API hop-a nie istnieje.
+     */
+    @Override
+    public Pageable withPage(int pageNumber)
+    {
+        return new Page(pageNumber + 1, size, getSort());
+    }
+
     @Override
     public boolean equals(Object other)
     {

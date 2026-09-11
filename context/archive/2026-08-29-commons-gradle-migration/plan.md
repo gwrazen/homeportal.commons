@@ -551,92 +551,92 @@ istotny koszt czasowy to faza 4: trzy pełne buildy aplikacji, kilkanaście minu
 
 #### Automated
 
-- [ ] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0`
-- [ ] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm`
-- [ ] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów
-- [ ] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0
-- [ ] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu
+- [x] 1.1 Trzy pliki `deps-*.txt` istnieją i zawierają `homeportal-commons-java:jar:7.0` — 7beda13
+- [x] 1.2 `jar-paths.txt` obejmuje sześć modułów, `-mail` ma 11 wpisów `mail/*.vm` — 7beda13
+- [x] 1.3 `mvn -B clean test` na `jdk17` daje BUILD SUCCESS i 139 testów — 7beda13
+- [x] 1.4 `grep -ac '@Test'` daje rozkład 59 / 15 / 59 / 4 / 2 / 0 — 7beda13
+- [x] 1.5 `git status --short` pokazuje wyłącznie pliki z folderu ticketu — 7beda13
 
 #### Manual
 
-- [ ] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md`
-- [ ] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie
+- [x] 1.6 Stan trzech repozytoriów konsumenckich w chwili pomiaru odnotowany w `change.md` — 7beda13
+- [x] 1.7 Baseline zacommitowany przed pierwszą zmianą w buildzie — 7beda13
 
 ### Phase 2: Build Gradle bez publikacji
 
 #### Automated
 
-- [ ] 2.1 `./gradlew build` przechodzi na JDK 17
-- [ ] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0
-- [ ] 2.3 Zero wyciszeń wobec baseline'u
-- [ ] 2.4 `javap -verbose` pokazuje `major version: 61`
-- [ ] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt`
-- [ ] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1
-- [ ] 2.7 `mvn -B clean test` nadal zielony ze 139 testami
+- [x] 2.1 `./gradlew build` przechodzi na JDK 17 — a5c3b2b
+- [x] 2.2 139 testów w rozkładzie 59 / 15 / 59 / 4 / 2 / 0 — a5c3b2b
+- [x] 2.3 Zero wyciszeń wobec baseline'u — a5c3b2b
+- [x] 2.4 `javap -verbose` pokazuje `major version: 61` — a5c3b2b
+- [x] 2.5 Zbiór ścieżek w sześciu jarach zgodny z `baseline/jar-paths.txt` — **z pominięciem `META-INF/maven/**`, których Gradle nie generuje; zero innych różnic** — a5c3b2b
+- [x] 2.6 Liczba plików `.class`: 32 / 17 / 23 / 8 / 1 / 1 — a5c3b2b
+- [x] 2.7 `mvn -B clean test` nadal zielony ze 139 testami — a5c3b2b
 
 #### Manual
 
-- [ ] 2.8 Porównanie obu buildów odnotowane w `change.md`
+- [x] 2.8 Porównanie obu buildów odnotowane w `change.md` — a5c3b2b
 
 ### Phase 3: Metadane i publikacja do izolowanego stagingu
 
 #### Automated
 
-- [ ] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1
-- [ ] 3.2 Zero plików `.module`
-- [ ] 3.3 Scope'y w sześciu pomach zgodne z baseline'em
-- [ ] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach
-- [ ] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0
-- [ ] 3.6 Rozwiązane wersje zgodne z 7.0
-- [ ] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1
+- [x] 3.1 Staging ma jar + sources + pom dla sześciu modułów w wersji 7.1 — 7511805
+- [x] 3.2 Zero plików `.module` — 7511805
+- [x] 3.3 Scope'y w sześciu pomach zgodne z baseline'em — **dla zależności widocznych dla konsumenta; `test` Gradle nie publikuje w ogóle** — 7511805
+- [x] 3.4 Pięć wpisów `provided` obecnych we właściwych modułach — 7511805
+- [x] 3.5 `<dependencyManagement>` niesie javassist 3.29.2-GA, commons-io 2.6, commons-compress 1.0 — 7511805
+- [x] 3.6 Rozwiązane wersje zgodne z 7.0 — 7511805
+- [x] 3.7 `~/.m2` nie zawiera niczego w wersji 7.1 — 7511805
 
 #### Manual
 
-- [ ] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów
+- [x] 3.8 Pomy `-mail` i `-data` przejrzane ręcznie pod kątem scope'ów — 7511805
 
 ### Phase 4: Bramka u trzech konsumentów
 
 #### Automated
 
-- [ ] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi
-- [ ] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1)
-- [ ] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`)
-- [ ] 4.4 javassist u konsumenta to 3.29.2-GA
-- [ ] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta
-- [ ] 4.6 Liczba testów u konsumentów nie spadła
-- [ ] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów
+- [x] 4.1 `mvn -B clean install` zielony w portal, hac i importer przeciw stagingowi — 144791c
+- [x] 4.2 Diff drzew zależności pusty dla wszystkich trzech (po podmianie 7.0→7.1) — 144791c
+- [x] 4.3 Portal kompiluje klasy z `commons.data.model` (tranzytywny `-domain`) — 144791c
+- [x] 4.4 javassist u konsumenta to 3.29.2-GA — **bezprzedmiotowe: javassist nie wystepuje w drzewie zadnego konsumenta; zweryfikowane w commons (3.18.1-GA -> 3.29.2-GA)** — 144791c
+- [x] 4.5 `velocity` nie wchodzi na runtime classpath konsumenta — **velocity w portalu to jego wlasna zaleznosc, compile przed i po; dowodem jest pusty diff** — 144791c
+- [x] 4.6 Liczba testów u konsumentów nie spadła — 144791c
+- [x] 4.7 `git status --short` czysty w trzech repozytoriach po przywróceniu pomów — 144791c
 
 #### Manual
 
-- [ ] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji
-- [ ] 4.9 Wyniki trzech buildów spisane w `change.md`
+- [x] 4.8 Kontekst Spring Boota w hacu podnosi się bez regresji — 144791c
+- [x] 4.9 Wyniki trzech buildów spisane w `change.md` — 144791c
 
 ### Phase 5: CI na Gradle'a
 
 #### Automated
 
-- [ ] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu
-- [ ] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check`
-- [ ] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium
-- [ ] 5.4 W rejestrze nie ma niczego pod `7.1`
+- [x] 5.1 `build.yml` zielony na `jdk17`, 139 testów w logu — przebieg 34405952456 — 9dce6e4
+- [x] 5.2 `publish.yml` zielony dla wersji `7.1-ci-check` — **nie dotyczy: decyzja o niewydawaniu zniosla wersje kontrolna** — 9dce6e4
+- [x] 5.3 `dependency:get` ściąga wersję kontrolną do czystego repozytorium — **nie dotyczy, jak wyzej** — 9dce6e4
+- [x] 5.4 W rejestrze nie ma niczego pod `7.1` — rejestr ma 7.0 / 6.0 / 5.0 — 9dce6e4
 
 #### Manual
 
-- [ ] 5.5 Historia Actions bez czerwonych przebiegów po migracji
+- [x] 5.5 Historia Actions bez czerwonych przebiegów po migracji — ostatni przebieg zielony; dwa czerwone z 08.09 pochodza z ticketu commons-jdk17-migration — 9dce6e4
 
 ### Phase 6: Wydanie 7.1
 
 #### Automated
 
-- [ ] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get`
-- [ ] 6.2 `javap` na pobranym jarze pokazuje `major version: 61`
-- [ ] 6.3 Tag `v7.1` na origin
-- [ ] 6.4 Gałąź `jdk17` wypchnięta
-- [ ] 6.5 `master` nadal na 6.0
-- [ ] 6.6 Brak pomów na `jdk17`, siedem pomów na `master`
+- [x] 6.1 Sześć modułów 7.1 do pobrania przez `dependency:get` — **nie dotyczy: nic nie zostalo wydane** — 8fb1ffa
+- [x] 6.2 `javap` na pobranym jarze pokazuje `major version: 61` — **nie dotyczy, jak wyzej** — 8fb1ffa
+- [x] 6.3 Tag `v7.1` na origin — **nie dotyczy: bez wydania nie ma czego tagowac** — 8fb1ffa
+- [x] 6.4 Gałąź `jdk17` wypchnięta — wypchnieta w fazie 5 (9dce6e4) i domkniecie fazy 6 — 8fb1ffa
+- [x] 6.5 `master` nadal na 6.0 — potwierdzone: `git show master:pom.xml` -> 6.0 — 8fb1ffa
+- [x] 6.6 Brak pomów na `jdk17`, siedem pomów na `master` — **buildowych pomow zero; zostaja dwa martwe moduly geo-api i location-api, spoza buildu** — 8fb1ffa
 
 #### Manual
 
-- [ ] 6.7 Wyraźne „tak" usera przed publikacją
-- [ ] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI
-- [ ] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych
+- [x] 6.7 Wyraźne „tak" usera przed publikacją — **nie dotyczy: publikacji nie bylo** — 8fb1ffa
+- [x] 6.8 Sześć artefaktów potwierdzonych pobraniem, nie widokiem w UI — **nie dotyczy, jak wyzej** — 8fb1ffa
+- [x] 6.9 `change.md` i `commons.md` opisują stan po migracji, w tym utratę skilli mavenowych — `commons.md` przepisany, komendy sprawdzone — 8fb1ffa
