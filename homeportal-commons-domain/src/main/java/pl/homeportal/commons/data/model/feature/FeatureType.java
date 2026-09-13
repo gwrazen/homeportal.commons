@@ -32,6 +32,14 @@ public enum FeatureType
     LEASE_TERM("LEASE_TERM", true, String.class),
     PLACEMENT("PLACEMENT", true, String.class),
     SEWERAGE_SYSTEM("SEWERAGE_SYSTEM", true, String.class),
+    // ⚠️ Catalog rows 2003-2014 (added for HAC, 2026-09-12). FeatureTranslation maps Type as this enum,
+    // so a catalog row without a constant breaks every translation load. Catalog type = constant here.
+    CABLE_TV("CABLE_TV", true, String.class),
+    INTERNET("INTERNET", true, String.class),
+    POWER("POWER", true, String.class),
+    WATER("WATER", true, String.class),
+    GAS("GAS", true, String.class),
+    PHONE_LINE("PHONE_LINE", true, String.class),
 
     // APARTMENTS
     APARTMENT("APARTMENT", true, String.class),
