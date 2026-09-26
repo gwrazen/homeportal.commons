@@ -1,9 +1,9 @@
 ---
 change_id: commons-hot-reload-properties
 title: Właściwości zmieniane bez restartu — jeden mechanizm w commons dla całego homixa
-status: new
+status: implementing
 created: 2026-09-23
-updated: 2026-09-23
+updated: 2026-09-26
 archived_at: null
 ---
 

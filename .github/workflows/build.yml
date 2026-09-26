@@ -33,14 +33,14 @@ jobs:
         run: ./gradlew build --no-daemon
 
       # "BUILD SUCCESSFUL" nie dowodzi, ze testy sie wykonaly — Gradle konczy sie
-      # zielono takze przy zerze uruchomionych testow. Bramka jest liczba: 139.
+      # zielono takze przy zerze uruchomionych testow. Bramka jest liczba: 149.
       - name: Assert test count
         run: |
           COUNT=$(find . -path '*/build/test-results/test/TEST-*.xml' -print0 \
             | xargs -0 grep -ho 'tests="[0-9]*"' \
             | sed 's/[^0-9]//g' | awk '{s+=$1} END {print s+0}')
           echo "Tests run: $COUNT"
-          test "$COUNT" -eq 139 || { echo "Oczekiwano 139 testow, jest $COUNT"; exit 1; }
+          test "$COUNT" -eq 149 || { echo "Oczekiwano 149 testow, jest $COUNT"; exit 1; }
 
       - name: Upload test results
         if: always()
