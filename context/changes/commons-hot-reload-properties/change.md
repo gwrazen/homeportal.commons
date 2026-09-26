@@ -90,6 +90,14 @@ Zmiana wartości z białej listy na produkcji **działa bez restartu** i widać 
 w odpowiedzi JMX: np. podniesienie limitu dobiegu zwiększa liczbę ofert w kolejnym przebiegu
 (`/scheduls`), a zmiana `geo.blocking.mode` zmienia kod odpowiedzi dla adresu z blokowanego kraju.
 
+## Stan per aplikacja
+
+| aplikacja | stan | gdzie |
+|---|---|---|
+| portal | fazy 2–3 zaimplementowane (`25c304566`, `edba81dee`) | ten ticket, `plan.md` |
+| importer | ✅ wdrożony i potwierdzony na produkcji 2026-09-26: 8 kluczy, reload 25 → 26 → 25 timerem bez restartu | `homeportal.importer`: `context/changes/importer-hot-reload-properties/` (`b97d541`) |
+| hac, hop | nie zaczęte | — |
+
 ## Powiązane
 
 - `homeportal.portal`: `context/changes/hp-valuation-label-from-hac/` — tam wypadł przypadek,
