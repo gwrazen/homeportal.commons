@@ -267,9 +267,9 @@ przed restartem. Wycofanie: `configuration.reload.enabled = false` + restart alb
 
 #### Automated
 
-- [ ] 3.1 test: przełączenie `off → block` przez przeładowanie wczytuje obszary
-- [ ] 3.2 `./gradlew build` portalu przechodzi
+- [x] 3.1 test: przełączenie `off → block` przez przeładowanie wczytuje obszary — portal edba81dee
+- [x] 3.2 `./gradlew build` portalu przechodzi — portal edba81dee
 
 #### Manual
 
-- [ ] 3.3 lokalnie: `geo.blocking.mode = off → log`, po ≤ 5 min linie `[GEO]` bez restartu
+- [x] 3.3 lokalnie: `geo.blocking.mode = off → log`, po ≤ 5 min linie `[GEO]` bez restartu — portal edba81dee
