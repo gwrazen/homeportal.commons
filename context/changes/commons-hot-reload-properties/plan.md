@@ -242,26 +242,26 @@ przed restartem. Wycofanie: `configuration.reload.enabled = false` + restart alb
 
 #### Automated
 
-- [x] 1.1 `./gradlew build` w commons przechodzi, nowe testy zielone
-- [x] 1.2 bramka liczby testów w CI zgodna z nową liczbą
-- [x] 1.3 `./gradlew publishToMavenLocal` publikuje 7.0
+- [x] 1.1 `./gradlew build` w commons przechodzi, nowe testy zielone — f58640f
+- [x] 1.2 bramka liczby testów w CI zgodna z nową liczbą — f58640f
+- [x] 1.3 `./gradlew publishToMavenLocal` publikuje 7.0 — f58640f
 
 #### Manual
 
-- [x] 1.4 raport `toString()` czytelny na przykładowym przeładowaniu z testu
+- [x] 1.4 raport `toString()` czytelny na przykładowym przeładowaniu z testu — f58640f
 
 ### Phase 2: portal — proste pokrętła, timer i JMX
 
 #### Automated
 
-- [ ] 2.1 `./gradlew build` portalu przechodzi (testy slice bez zmian)
-- [ ] 2.2 test jednostkowy `ConfigurationManager`: zmiana pliku → zmiana gettera `ApplicationConfiguration`
+- [x] 2.1 `./gradlew build` portalu przechodzi (testy slice bez zmian) — portal 25c304566
+- [x] 2.2 test jednostkowy `ConfigurationManager`: zmiana pliku → zmiana gettera `ApplicationConfiguration` — portal 25c304566
 
 #### Manual
 
-- [ ] 2.3 lokalnie: zmiana limitu dobiegu → po ≤ 5 min linia w logu i nowy limit w następnym przebiegu
-- [ ] 2.4 lokalnie: zmiana klucza spoza listy → `WARN` „wymaga restartu”
-- [ ] 2.5 JMX `reload()` zwraca raport
+- [x] 2.3 lokalnie: zmiana limitu dobiegu → po ≤ 5 min linia w logu i nowy limit w następnym przebiegu — portal 25c304566
+- [x] 2.4 lokalnie: zmiana klucza spoza listy → `WARN` „wymaga restartu” — portal 25c304566
+- [x] 2.5 JMX `reload()` zwraca raport — portal 25c304566
 
 ### Phase 3: portal — `geo.blocking.mode` w locie
 
