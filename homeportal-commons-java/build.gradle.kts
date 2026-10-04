@@ -5,6 +5,7 @@ dependencies {
     api("jakarta.validation:jakarta.validation-api")
     api("org.slf4j:slf4j-api")
     api("org.imgscalr:imgscalr-lib")
+    implementation("com.github.usefulness:webp-imageio")
     api("org.hibernate.validator:hibernate-validator")
     api("org.apache.commons:commons-lang3")
     api("com.google.guava:guava")

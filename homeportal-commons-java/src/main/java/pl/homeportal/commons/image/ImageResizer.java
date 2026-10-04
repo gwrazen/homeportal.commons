@@ -12,7 +12,7 @@ import java.io.File;
  */
 public class ImageResizer
 {
-    public static void resizeUnproportionally(BufferedImage originalImage, File destinationImage, int width, int height, String extension) throws Exception
+    public static BufferedImage resizeUnproportionally(BufferedImage originalImage, File destinationImage, int width, int height, String extension) throws Exception
     {
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
         BufferedImage resizedImage = new BufferedImage(width, height, type);
@@ -24,5 +24,6 @@ public class ImageResizer
         {
             throw new HomeportalServiceException("No image writer for extension: '" + extension + "'");
         }
+        return resizedImage;
     }
 }

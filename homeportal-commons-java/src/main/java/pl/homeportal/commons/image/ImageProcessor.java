@@ -117,8 +117,8 @@ class ImageProcessorTask implements Callable<Void>
                 throw new HomeportalServiceException(format("Unsupported image format: '%s'", extension));
             }
 
-            String smallLink = destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + extension;
-            ImageResizer.resizeUnproportionally(originalImage, new File(smallLink), SMALL_WIDTH, SMALL_HEIGHT, extension);
+            File smallFile = new File(destinationDir.getAbsolutePath() + SLASH + name + SMALL + DOT + extension);
+            writeWebp(ImageResizer.resizeUnproportionally(originalImage, smallFile, SMALL_WIDTH, SMALL_HEIGHT, extension), smallFile);
             resizeImage(originalImage, MEDIUM, MEDIUM_WIDTH, MEDIUM_HEIGHT, extension);
             resizeImage(originalImage, LARGE, LARGE_WIDTH, LARGE_HEIGHT, extension);
         }
@@ -141,7 +141,21 @@ class ImageProcessorTask implements Callable<Void>
         {
             throw new HomeportalServiceException(format("No image writer for extension: '%s'", extension));
         }
+        writeWebp(mediumImage, file);
         mediumImage.getGraphics().dispose();
+    }
+
+    // after the JPG on purpose: a WebP failure must never cost the photo itself
+    private void writeWebp(BufferedImage image, File source)
+    {
+        try
+        {
+            WebpWriter.write(image, WebpWriter.sibling(source));
+        }
+        catch (Exception | LinkageError e)
+        {
+            LOG.warn("WebP not written for {}: {}", source.getName(), e.toString());
+        }
     }
 
     private String getName(String fileName)
