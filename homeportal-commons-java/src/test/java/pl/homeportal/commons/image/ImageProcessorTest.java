@@ -31,12 +31,12 @@ public class ImageProcessorTest
         processor.start();
         processor.join();
 
-        // then
-        assertDecodes("photo_s.jpg", 320, 240);
+        // then - base name is lowercased, extension keeps its case (case-sensitive FS on CI)
+        assertDecodes("photo_s.JPG", 320, 240);
         assertDecodes("photo_s.webp", 320, 240);
-        assertDecodes("photo_m.jpg", 600, 450);
+        assertDecodes("photo_m.JPG", 600, 450);
         assertDecodes("photo_m.webp", 600, 450);
-        assertDecodes("photo_l.jpg", 1024, 768);
+        assertDecodes("photo_l.JPG", 1024, 768);
         assertDecodes("photo_l.webp", 1024, 768);
     }
 
