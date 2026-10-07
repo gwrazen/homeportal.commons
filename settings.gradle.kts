@@ -1,4 +1,4 @@
-rootProject.name = "homeportal-commons"
+rootProject.name = "homeportal.commons"
 
 include(
     "homeportal-commons-java",
